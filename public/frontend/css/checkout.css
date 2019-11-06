@@ -1,0 +1,177 @@
+/*------------------
+  Checkout page
+---------------------*/
+
+.breadcrumb-box {
+    position: relative;
+    padding: 60px 0px;
+}
+
+img.page-info-art {
+    position: absolute;
+    bottom: -30px;
+    right: 0;
+}
+.checkout-form .checkout-title {
+	font-weight: 400;
+	margin-bottom: 50px;
+}
+
+.checkout-form input[type=text],
+.checkout-form input[type=email],
+.checkout-form input[type=password],
+.checkout-form select {
+	width: 100%;
+	border: none;
+	background: #ebebeb;
+	font-size: 14px;
+	height: 52px;
+	margin-bottom: 25px;
+	color: #414141;
+	padding: 5px 20px;
+}
+
+.checkbox-items .ci-item:last-child label {
+	margin-bottom: 0;
+}
+
+.checkbox-items .ci-item input[type=password] {
+	opacity: 0;
+	visibility: hidden;
+	margin-bottom: 0;
+	height: 0;
+	padding: 0 20px;
+	display: block;
+	-webkit-transition: all 0.4s;
+	-o-transition: all 0.4s;
+	transition: all 0.4s;
+}
+
+.checkbox-items .ci-item label {
+	display: block;
+	font-size: 14px;
+	color: #7e7e7e;
+	margin-bottom: 5px;
+	padding-left: 30px;
+	position: relative;
+	cursor: pointer;
+}
+
+.checkbox-items .ci-item label:after {
+	position: absolute;
+	content: "";
+	width: 13px;
+	height: 13px;
+	left: 0;
+	top: 3px;
+	background-color: #f2f4f8;
+	-webkit-transition: all 0.2s ease 0s;
+	-o-transition: all 0.2s ease 0s;
+	transition: all 0.2s ease 0s;
+}
+
+.checkbox-items .ci-item input[type=checkbox] {
+	visibility: hidden;
+	position: absolute;
+}
+
+.checkbox-items .ci-item input[type=checkbox]:checked+label:after {
+	background-color: green;
+}
+
+.checkbox-items .ci-item input[type=checkbox]:checked+label+input[type=password] {
+	height: 52px;
+	opacity: 1;
+	visibility: visible;
+	padding: 5px 20px;
+	margin-bottom: 15px;
+}
+
+.order-card {
+	background: #ebebeb;
+	padding: 34px 40px;
+	border: 2px solid #f4f2f8;
+}
+
+.order-card .btn-full {
+	width: 100%;
+	font-size: 16px;
+	background: #b09d81;
+	padding: 20px 30px;
+	margin-top: 32px;
+}
+
+.order-details {
+	padding: 38px 19px 24px !important;
+	background: #fff;
+}
+
+.od-warp {
+	padding: 0 26px;
+}
+
+.order-table {
+	width: 100%;
+}
+
+.order-table th {
+	font-size: 14px;
+	font-weight: 400;
+	color: #414141;
+}
+
+.order-table td {
+	font-size: 14px;
+	color: #7e7e7e;
+}
+
+.order-table thead th {
+	padding-bottom: 40px;
+}
+
+.order-table tbody td {
+	padding-bottom: 40px;
+}
+
+.payment-method {
+	background: #f5f5f5;
+	padding: 35px 55px 15px;
+	margin-top: 80px;
+}
+
+.payment-method .pm-item {
+	margin-bottom: 15px;
+}
+
+.payment-method label {
+	display: block;
+	font-size: 14px;
+	color: #414141;
+	margin-bottom: 0;
+	padding-left: 30px;
+	position: relative;
+	cursor: pointer;
+}
+
+.payment-method label:after {
+	position: absolute;
+	content: "";
+	width: 11px;
+	height: 11px;
+	left: 0;
+	top: 5px;
+	border: 2px solid #6c6a74;
+	border-radius: 40px;
+	-webkit-transition: all 0.2s ease 0s;
+	-o-transition: all 0.2s ease 0s;
+	transition: all 0.2s ease 0s;
+}
+
+.payment-method input[type=radio] {
+	visibility: hidden;
+	position: absolute;
+}
+
+.payment-method input[type=radio]:checked+label:after {
+	border: 2px solid #e95a5a;
+}
