@@ -53,7 +53,7 @@ class EShopController extends Controller
     public function productDetails($slug)
     {
         $categories = Category::where('status', 1)->orderBy('name', 'ASC')->get();
-    	$product = Product::with('category', 'productImages')->where('slug', $slug)->firstOrfail();
+    	$product = Product::with('category', 'productImages','reviews')->where('slug', $slug)->firstOrfail();
         if ($product) {
     	   $relatedProducts = Product::with('productImages')->where('category_id', $product->category_id)->where('slug','!=', $slug)->take(4)->get();
 

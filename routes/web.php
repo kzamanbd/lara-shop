@@ -18,6 +18,7 @@ Route::post('/districts/list', 'EShopController@districtsList');
 Route::post('/upazila/list', 'EShopController@upazilaList');
 Route::post('/product/shipping', 'EShopController@shipping')->name('shipping');
 Route::get('/product/review/', 'ReviewController@index')->name('review.index');
+Route::post('/product/review/', 'ReviewController@store')->name('review.store');
 
 Route::get('/payment', 'StripePaymentController@stripe')->name('stripe');
 Route::post('/payment/stripe', 'StripePaymentController@stripePost')->name('stripe.post');
@@ -42,23 +43,23 @@ Route::group(['prefix'=>'admin'], function(){
     Route::get('email/resend', 'Admin\VerificationController@resend')->name('verification.resend');
 
     //category management route
-    Route::get('/categories/', 'CategoryController@index')->name('manage.categories');
+    Route::get('/categories/', 'CategoryController@index')->name('categories.index');
     Route::get('/category/new', 'CategoryController@create')->name('category.create');
     Route::post('/category/store', 'CategoryController@store')->name('category.store');
     Route::get('/category/delete/id={id}', 'CategoryController@destroy')->name('category.delete');
 
     //products mamangment rotue
-    Route::get('/products/', 'ProductController@index')->name('manage.products');
+    Route::get('/products/', 'ProductController@index')->name('products.index');
     Route::get('/product/new/', 'ProductController@create')->name('new.product');
-    Route::get('/product/product_edit/id={product_id}', 'ProductController@edit')->name('product.edit');
+    Route::get('/product/product/edit/id={id}', 'ProductController@edit')->name('product.edit');
     
     Route::post('/product/store/', 'ProductController@store')->name('product.store');
     Route::post('/product/update/', 'ProductController@update')->name('product.update');
-    Route::get('/product/multiple-image={product_id}', 'ProductController@productMultipleImage')->name('product.multiple.image');
+    Route::get('/product/multiple-image={id}', 'ProductController@productMultipleImage')->name('product.multiple.image');
     Route::post('/product/multiple/image/store', 'ProductController@productMultipleImageStore')->name('product.multiple.image.store');
-    Route::get('/product/unpublished/id={product_id}','ProductController@productUnpublished')->name('unpublished.product');
-    Route::get('/product/published/id={product_id}', 'ProductController@productPublished')->name('published.product');
-    Route::get('/product/delete/id={product_id}', 'ProductController@destroy')->name('product.delete');
+    Route::get('/product/unpublished/id={id}','ProductController@productUnpublished')->name('unpublished.product');
+    Route::get('/product/published/id={id}', 'ProductController@productPublished')->name('published.product');
+    Route::get('/product/delete/id={id}', 'ProductController@destroy')->name('product.destroy');
 
     //order management route
     Route::get('/order/manage', 'AdminController@orderManage')->name('order.manage');

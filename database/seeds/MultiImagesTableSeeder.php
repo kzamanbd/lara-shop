@@ -1,6 +1,6 @@
 <?php
 
-use App\MultiImages;
+use App\Models\MultiImages;
 use Illuminate\Database\Seeder;
 
 class MultiImagesTableSeeder extends Seeder

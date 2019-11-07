@@ -53,7 +53,7 @@
 
                             @forelse ($carts as $cart)
                                 <tr>
-                                    <td><img src="{{asset('uploads/products/'.$cart->product->product_image)}}" width="80px" alt=""></td>
+                                    <td><img src="{{asset('uploads/products/'.$cart->product->image)}}" width="80px" alt=""></td>
                                     <td><a href="{{ route('/product-details',['slug' => $cart['slug']]) }}">{{$cart->product->name}}</a></td>
                                     <td>{{number_format($cart->product->sale_price, 2,'.', ',')}}</td>
                                     <td><span class="badge">{{$cart->quantity}}</span></td>

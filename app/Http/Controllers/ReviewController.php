@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use Toastr;
 use App\Models\Review;
 use Illuminate\Http\Request;
 
@@ -10,7 +12,7 @@ class ReviewController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth:customer')->except('index');
+        $this->middleware('auth:customer')->except('index', 'store');
     }
 
     /**
@@ -41,7 +43,23 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        return 'Stored';
+        $this->validate($request,[
+            'product_id' => 'required',
+            'name' => 'required',
+            'email' => 'required',
+            'description' => 'required',
+            'rating' => 'required',
+        ]);
+        Review::create([
+            'customer_id' => Auth::guard('customer')->check()?Auth::guard('customer')->id():null,
+            'product_id' => $request->product_id,
+            'name' => $request->name,
+            'email' => $request->email,
+            'description' => $request->description,
+            'rating' => $request->rating,
+        ]);
+        Toastr::success('Product Review Successfully Added', 'Success');
+        return back();
     }
 
     /**

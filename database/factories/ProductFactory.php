@@ -24,6 +24,6 @@ $factory->define(Product::class, function (Faker $faker) {
         'alert_quantity' => '1',
         'quantity' => random_int(5,10),
         'description' => $faker->realText(1000),
-        'product_image' => random_int(1,20).'.jpg'
+        'image' => 'default.jpg'
     ];
 });

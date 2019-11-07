@@ -20,10 +20,9 @@
 
 		<!-- nouislider -->
 		<link type="text/css" rel="stylesheet" href="{{asset('frontend/css/nouislider.min.css')}}"/>
-
 		<!-- Font Awesome Icon -->
 		<link rel="stylesheet" href="{{asset('frontend/css/font-awesome.min.css')}}">
-		<link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+		<link rel="stylesheet" href="{{asset('frontend/css/toastr.min.css')}}">
 		@stack('stylesheet')
 		<!-- Custom stlylesheet -->
 		<link type="text/css" rel="stylesheet" href="{{asset('frontend/css/style.css')}}"/>
@@ -142,7 +141,7 @@
 											@forelse ($carts as $cart)
 												<div class="product-widget">
 													<div class="product-img">
-														<img src="{{asset('uploads/products/'.$cart->product->product_image)}}" alt="">
+														<img src="{{asset('uploads/products/'.$cart->product->image)}}" alt="">
 													</div>
 													<div class="product-body">
 														<h3 class="product-name"><a href="{{ route('/product-details',['slug' => $cart->product->slug]) }}">{{$cart->product->name}}</a></h3>
@@ -322,7 +321,7 @@
 		<script src="{{asset('frontend/js/slick.min.js')}}"></script>
 		<script src="{{asset('frontend/js/nouislider.min.js')}}"></script>
 		<script src="{{asset('frontend/js/jquery.zoom.min.js')}}"></script>
-    	<script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
+		<script src="{{asset('frontend/js/toastr.min.js')}}"></script>
     	{!! Toastr::message() !!}
 		@stack('javascript')
 		<script src="{{asset('frontend/js/main.js')}}"></script>

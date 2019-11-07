@@ -61,12 +61,12 @@
 					<div class="row">
 						<div class="products-tabs">
 							@foreach ($products as $product)
-								<div class="col-sm-4">
+								<div class="col-sm-3 col-xs-6">
 									<!-- product -->
 									<div class="product">
 										<a href="{{ route('/product-details',['slug' => $product->slug]) }}">
 											<div class="product-img">
-												<img src="{{asset('uploads/products/'.$product->product_image)}}" alt="">
+												<img src="{{asset('uploads/products/'.$product->image)}}" alt="">
 												<div class="product-label">
 													@php
 														$price = $product->product_price - $product->sale_price;
@@ -82,13 +82,6 @@
 											<h3 class="product-name"><a href="{{ route('/product-details',['slug' => $product->slug]) }}">{{$product->name}}</a></h3>
 
 											<h4 class="product-price"><span>৳</span> {{number_format($product->sale_price, 2,'.', ',')}} <del class="product-old-price">৳ {{number_format($product->product_price, 2,'.', ',')}}</del></h4>
-											<div class="product-rating">
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-											</div>
 											<div class="product-btns">
 												<a href="" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></a>
 												<a class="add-to-compare"><i class="fa fa-exchange"></i><span class="tooltipp">add to compare</span></a>
@@ -196,7 +189,7 @@
 									<div class="product">
 										<a href="{{ route('/product-details',['slug' => $bastSale->slug]) }}">
 											<div class="product-img">
-												<img src="{{asset('uploads/products/'.$bastSale->product_image)}}" alt="">
+												<img src="{{asset('uploads/products/'.$bastSale->image)}}" alt="">
 												<div class="product-label">
 													<span class="sale">-5%</span>
 													<span class="new">NEW</span>

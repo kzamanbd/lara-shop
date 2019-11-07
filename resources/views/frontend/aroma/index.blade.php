@@ -65,7 +65,7 @@
 	                <div class="col-md-6 col-lg-4 col-xl-3">
 	                    <div class="card text-center card-product">
 	                        <div class="card-product__img">
-	                            <img class="card-img" src="{{asset('uploads/products/'.$product->product_image)}}" alt="">
+	                            <img class="card-img" src="{{asset('uploads/products/'.$product->image)}}" alt="">
 	                            <ul class="card-product__imgOverlay">
 	                                <li><button><i class="ti-search"></i></button></li>
 	                                <li><button><i class="ti-shopping-cart"></i></button></li>
@@ -114,7 +114,7 @@
             	@foreach ($bastSales as $bastSale)
 	                <div class="card text-center card-product">
                         <div class="card-product__img">
-                            <img class="card-img" src="{{asset('uploads/products/'.$bastSale->product_image)}}" alt="">
+                            <img class="card-img" src="{{asset('uploads/products/'.$bastSale->image)}}" alt="">
                             <ul class="card-product__imgOverlay">
                                 <li><button><i class="ti-search"></i></button></li>
                                 <li><button><i class="ti-shopping-cart"></i></button></li>

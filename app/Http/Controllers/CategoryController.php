@@ -16,6 +16,10 @@ class CategoryController extends Controller
         $this->middleware('auth');
     }
 
+    public function slug($string) {
+        return preg_replace('/\s+/u', '-', trim($string));
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -59,9 +63,9 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'name'  => 'required|unique:categories',
-            'status'    => 'required',
-            'image'     => 'image|mimes:jpg,png,jpeg,gif'
+            'name'   => 'required|unique:categories',
+            'status' => 'required',
+            'image'  => 'image|mimes:jpg,png,jpeg,gif'
         ],[
             'name.required'  => 'Please fill out the category name',
             'status.required'    => 'Choose Publication Status'
@@ -70,22 +74,20 @@ class CategoryController extends Controller
             $imageUri = $this->uploadImage($request);
             Category::create([
                 'name'  => $request->name,
-                'slug'      => str_slug($request->name),
+                'slug'      => $this->slug($request->name),
                 'image'     => $imageUri,
                 'status'    => $request->status,
-                'created_at'=> Carbon::now(),
             ]);
         }
         else{
             Category::create([
                 'name'  => $request->name,
-                'slug'      => str_slug($request->name),
-                'status'    => $request->status,
-                'created_at'=> Carbon::now(),
+                'slug'  => $this->slug($request->name),
+                'status'=> $request->status,
             ]);
         }
         $request->session()->flash('status', 'Category Inserted Successfully');
-        return redirect()->route('manage.categories');
+        return redirect()->route('categories.index');
     }
 
     /**
@@ -130,6 +132,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
+        Category::findOrfail($id);
         foreach (Product::where('category_id', $id)->get() as $item){
             Product::where('id', $item->id)->delete();
         }
@@ -140,6 +143,6 @@ class CategoryController extends Controller
         }
         Category::where('id', $id)->delete();
         session()->flash('status', 'Category Deleted Successfully');
-        return redirect()->route('manage.categories');
+        return redirect()->route('categories.index');
     }
 }

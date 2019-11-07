@@ -35,14 +35,14 @@
                                     </ul>
                                 </div>
                             @endif
-                            <img src="{{ asset('uploads/products/'.$product->product_image) }}" width="150">
+                            <img src="{{ asset('uploads/products/'.$product->image) }}" width="150">
                             <hr>
                             <form action="{{ route('product.multiple.image.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <input type="hidden" name="product_id" value="{{$product->id}}">
                                 <div class="form-group">
                                     <label for="file-input" class=" form-control-label">Product Image</label>
-                                    <input type="file" name="product_image[]" id="file-input" class="form-control" multiple>
+                                    <input type="file" name="image[]" id="file-input" class="form-control" multiple>
                                 </div>
                                 <div>
                                     <button id="add-button" type="submit" class="btn btn-success">

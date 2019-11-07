@@ -348,11 +348,11 @@
 
                     <li class="header">Components</li><!-- menu-title -->
                     <li class="{{Request::is('admin/categories')?'active': ''}}">
-                        <a href="{{ route('manage.categories') }}"><i class="fa fa-table"></i> <span>Manage Categories</span></a>
+                        <a href="{{ route('categories.index') }}"><i class="fa fa-table"></i> <span>Manage Categories</span></a>
                     </li>
 
                     <li class="{{Request::is('admin/product/manage')?'active': ''}}">
-                        <a href="{{route('manage.products')}}"> <i class="fa fa-shopping-bag"></i><span>Manage Products</span></a>
+                        <a href="{{route('products.index')}}"> <i class="fa fa-shopping-bag"></i><span>Manage Products</span></a>
                     </li>
 
                     <li class="{{Request::is('admin/order/manage')?'active': ''}}">

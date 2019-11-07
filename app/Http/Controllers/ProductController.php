@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Image;
-use Session;
+use Toastr;
 use Carbon\Carbon;
+use App\Models\Review;
 use App\Models\Product;
 use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\MultiImages;
 use Illuminate\Support\Facades\Storage;
@@ -22,7 +24,7 @@ class ProductController extends Controller
         $this->middleware('auth');
     }
 
-    public function product_slug($string) {
+    public function slug($string) {
         return preg_replace('/\s+/u', '-', trim($string));
     }
 
@@ -31,9 +33,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $categories = Category::where('status', 1)->get();
-        $products = Product::paginate(10)->setPageName('products-manage');
-        return view('backend.products-manage',['products'=> $products, 'categories' => $categories]);
+        $products = Product::with('category')->paginate(10)->setPageName('products-manage');
+        return view('backend.products-manage',['products'=> $products]);
     }
 
     public function create()
@@ -48,16 +49,16 @@ class ProductController extends Controller
      */
     public function validation($request){
         $this->validate($request,[
-            'name'      => 'required',
-            'category_id'       => 'required',
-            'product_price'     => 'required',
-            'sale_price'        => 'required',
-            'product_color'     => 'required',
-            'alert_quantity'    => 'required',
-            'quantity'  => 'required',
-            'description'=> 'required',
-            'product_image'     => 'required|image|mimes:jpg,png,jpeg,gif',
-            'status'            => 'required'
+            'name'          => 'required',
+            'category_id'   => 'required',
+            'product_price' => 'required',
+            'sale_price'    => 'required',
+            'product_color' => 'required',
+            'alert_quantity'=> 'required',
+            'quantity'      => 'required',
+            'description'   => 'required',
+            'image'         => 'required|image|mimes:jpg,png,jpeg,gif',
+            'status'        => 'required'
         ]);
     }
 
@@ -65,20 +66,20 @@ class ProductController extends Controller
      * @param $request
      * @param $imageUri
      */
-    public function productSave($request, $imageUri){
+    public function productStore($request, $imageUri){
         Product::create([
-            'name'      => $request->name,
-            'slug'              => str_slug($request->name),
-            'category_id'       => $request->category_id,
-            'product_price'     => $request->product_price,
-            'sale_price'        => $request->sale_price,
-            'product_color'     => $request->product_color,
-            'alert_quantity'    => $request->alert_quantity,
-            'quantity'  => $request->quantity,
-            'description'=> $request->description,
-            'product_image'     => $imageUri,
-            'status'            => $request->status,
-            'created_at'        => Carbon::now(),
+            'name'          => $request->name,
+            'slug'          => $this->slug($request->name),
+            'category_id'   => $request->category_id,
+            'product_price' => $request->product_price,
+            'sale_price'    => $request->sale_price,
+            'product_color' => $request->product_color,
+            'alert_quantity'=> $request->alert_quantity,
+            'quantity'      => $request->quantity,
+            'description'   => $request->description,
+            'image'         => $imageUri,
+            'status'        => $request->status,
+            'created_at'    => Carbon::now(),
         ]);
     }
 
@@ -87,12 +88,12 @@ class ProductController extends Controller
      * @return string
      */
     public function uploadImage($request){
-        $productImage = $request->file('product_image');
-        $imageName = substr(time(),0,10);
-        $imgExt = strtolower($productImage->getClientOriginalExtension());
-        $imageUri = $imageName.'.'.$imgExt;
+        $image = $request->file('image');
+        $name = 'IMG_'.substr(time(),0,10);
+        $extension = strtolower($image->getClientOriginalExtension());
+        $imageUri = $name.'.'.$extension;
         $directory = 'uploads/products/';
-        Image::make($productImage)->fit('600', '600', function($constraint) {
+        Image::make($image)->fit('600', '600', function($constraint) {
             $constraint->aspectRatio();
         })->save($directory.$imageUri);
         return $imageUri;
@@ -104,7 +105,7 @@ class ProductController extends Controller
      */
     public function productMultipleImage($id)
     {
-        $product = Product::where('id', $id)->first();
+        $product = Product::findOrfail($id);
         return view('backend.product-multiple-image', compact('product'));
     }
 
@@ -116,25 +117,25 @@ class ProductController extends Controller
     public function productMultipleImageStore(Request $request)
     {
         $this->validate($request,[
-            'product_image'     => 'required'
+            'image' => 'required'
         ]);
-        $product_image = Product::where('id', $request->product_id)->first()->product_image;
-        $old_product_image = explode('.', $product_image)[0];
-        $productsImages = $request->file('product_image');
-        foreach($productsImages as $image){
-            $imageExt =  strtolower($image->getClientOriginalExtension());
-            $imageName = 'IMG_'.$old_product_image.substr(time(),0,10).'_'.$request->product_id.'.'.$imageExt;
+
+        $random = strtoupper(Str::random(8));
+        foreach($request->file('image') as $image){
+            $extension =  strtolower($image->getClientOriginalExtension());
+            $name = $random.'_'.$request->product_id.$this->slug($image->getClientOriginalName());
             $directory = 'uploads/products/';
             Image::make($image)->fit('600', '600', function($constraint) {
                 $constraint->aspectRatio();
-            })->save($directory.$imageName);
+            })->save($directory.$name);
             MultiImages::create([
                 'product_id' => $request->product_id,
-                'product_image' => $imageName,
+                'image' => $name,
+                'path' => $directory,
             ]);
         }
-        session()->flash('status', 'Images Successfully Uploaded');
-        return redirect()->route('manage.products');
+        Toastr::success('Images Successfully Uploaded', 'Success');
+        return redirect(route('products.index'));
     }
 
 
@@ -147,13 +148,13 @@ class ProductController extends Controller
     {
         $this->validation($request);
         $imageUri = $this->uploadImage($request);
-        $this->productSave($request, $imageUri);
-        session()->flash('status', 'Product Insert Successfully');
-        return redirect()->route('manage.products');
+        $this->productStore($request, $imageUri);
+        Toastr::success('Product Insert Successfully', 'Success');
+        return redirect(route('products.index'));
     }
 
 
-    public function show()
+    public function show(Product $product)
     {
 
     }
@@ -164,10 +165,10 @@ class ProductController extends Controller
      * @param $product_id
      * @return \Illuminate\Http\Response
      */
-    public function edit($product_id)
+    public function edit($id)
     {
         $categories = Category::all();
-        $product = Product::where('id', $product_id)->first();
+        $product = Product::findOrfail($id);
         return view('backend.product-edit',[
             'product' => $product,
             'categories' => $categories,
@@ -197,14 +198,13 @@ class ProductController extends Controller
      * @param $product_id
      * @return \Illuminate\Http\Response
      */
-    public function productUnpublished($product_id)
+    public function productUnpublished($id)
     {
-        Product::where('id', $product_id)->update([
+        Product::findOrfail($id)->update([
             'status' => 0,
             'updated_at' => Carbon::now(),
         ]);
-        
-        Session()->flash('status', 'Product Unpublished Successfully');
+        Toastr::success('Product Unpublished Successfully', 'Success');
         return back();
     }
 
@@ -212,14 +212,14 @@ class ProductController extends Controller
      * @param $product_id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function productPublished($product_id)
+    public function productPublished($id)
     {
-        Product::where('id', $product_id)->update([
+        Product::findOrfail($id)->update([
             'status' => 1,
             'updated_at' => Carbon::now(),
         ]);
         
-        Session()->flash('status', 'Product Published Successfully');
+        Toastr::success('Product Published Successfully', 'Success');
         return back();
     }
 
@@ -227,14 +227,29 @@ class ProductController extends Controller
      * @param $product_id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function destroy($product_id)
+    public function destroy($id)
     {
-        $imageUri = 'uploads/products/'.Product::find($product_id)->product_image;
-        if ($imageUri) {
-            unlink($imageUri);
+        $path = 'uploads/products/';
+        $product = Product::with('productImages','reviews')->findOrfail($id);
+        if ($product) {
+            if ($product->image != 'default.jpg') {
+                unlink($path.$product->image);
+            }
+            if ($product->productImages) {
+                foreach ($product->productImages as $getImage) {
+                    unlink($path.$getImage->image);
+                    MultiImages::findOrfail($getImage->id)->delete();
+                }
+            }
+            if ($product->reviews) {
+                foreach ($product->reviews as $review) {
+                    Review::findOrfail($review->id)->delete();
+                }
+            }
+
+            $product->delete();
         }
-        Product::where('id', $product_id)->delete();
-        Session()->flash('status', 'Product Delete Successfully');
+        Toastr::success('Product Delete Successfully', 'Success');
         return back();
     }
 }

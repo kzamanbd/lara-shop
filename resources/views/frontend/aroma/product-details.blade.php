@@ -19,13 +19,13 @@
         </div>
     </section>
 
-    <div class="product_image_area">
+    <div class="image_area">
         <div class="container">
             <div class="row s_product_inner">
                 <div class="col-lg-6">
                     <div class="owl-carousel owl-theme s_Product_carousel">
                         <div class="single-prd-item">
-                            <img class="img-fluid" src="{{ asset('uploads/products/'.$product->product_image) }}" alt="">
+                            <img class="img-fluid" src="{{ asset('uploads/products/'.$product->image) }}" alt="">
                         </div>
                         @foreach($productImages as $productImage)
                             <div class="single-prd-item">

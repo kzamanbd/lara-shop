@@ -23,7 +23,7 @@
     	            <div class="box box-info">
                         <div class="box-header">
                             <h3>New Product
-                            <a href="{{route('manage.products')}}" class="btn btn-primary pull-right">Back</a></h3>
+                            <a href="{{route('products.index')}}" class="btn btn-primary pull-right">Back</a></h3>
                         </div>
                         <div class="box-body">
                             @include('includes.error')
@@ -86,7 +86,7 @@
 
                                 <div class="form-group">
                                     <label for="file-input" class=" form-control-label">Product image</label>
-                                    <input type="file" id="file-input" name="product_image" class="form-control">
+                                    <input type="file" id="file-input" name="image" class="form-control">
                                 </div>
 
                                 <div class="form-group">

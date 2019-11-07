@@ -35,11 +35,11 @@
 				<div class="col-md-5 col-md-push-2">
 					<div id="product-main-img">
 						<div class="product-preview">
-							<img src="{{ asset('uploads/products/'.$product->product_image) }}" alt="Image">
+							<img src="{{ asset('uploads/products/'.$product->image) }}" alt="Image">
 						</div>
 						@foreach($product->productImages as $productImage)
 							<div class="product-preview">
-								<img src="{{ asset('uploads/products/'.$productImage->product_image) }}" alt="Image">
+								<img src="{{ asset('uploads/products/'.$productImage->image) }}" alt="Image">
 							</div>
 						@endforeach
 					</div>
@@ -50,11 +50,11 @@
 				<div class="col-md-2  col-md-pull-5">
 					<div id="product-imgs">
 						<div class="product-preview">
-							<img src="{{ asset('uploads/products/'.$product->product_image) }}" alt="Image">
+							<img src="{{ asset('uploads/products/'.$product->image) }}" alt="Image">
 						</div>
 						@foreach($product->productImages as $productImage)
 							<div class="product-preview">
-								<img src="{{ asset('uploads/products/'.$productImage->product_image) }}" alt="Image">
+								<img src="{{ asset('uploads/products/'.$productImage->image) }}" alt="Image">
 							</div>
 						@endforeach
 					</div>
@@ -146,7 +146,7 @@
 						<!-- product tab content -->
 						<div class="tab-content">
 							<!-- tab1  -->
-							<div id="tab1" class="tab-pane fade in active">
+							<div id="tab1" class="tab-pane fade in {{$errors->any()?'':'active'}}">
 								<div class="row">
 									<div class="col-md-12">
 										{!! $product->description !!}
@@ -156,7 +156,8 @@
 							<!-- /tab1  -->
 
 							<!-- tab3  -->
-							<div id="reviews" class="tab-pane fade in">
+							<div id="reviews" class="tab-pane fade in {{$errors->any()?'active':''}}">
+								@include('includes.error')
 								<div class="row">
 									<!-- Rating -->
 									<div class="col-md-3">
@@ -309,10 +310,12 @@
 									<!-- Review Form -->
 									<div class="col-md-3">
 										<div id="review-form">
-											<form class="review-form">
-												<input class="input" type="text" placeholder="Your Name">
-												<input class="input" type="email" placeholder="Your Email">
-												<textarea class="input" placeholder="Your Review"></textarea>
+											<form action="{{ route('review.store') }}" class="review-form" method="post">
+												@csrf
+												<input type="hidden" name="product_id" value="{{$product->id}}">
+												<input class="input" name="name" type="text" placeholder="Your Name" value="{{old('name')}}">
+												<input class="input" name="email" type="email" placeholder="Your Email" value="{{old('email')}}">
+												<textarea class="input" name="description" placeholder="Your Review" value="{{old('description')}}"></textarea>
 												<div class="input-rating">
 													<span>Your Rating: </span>
 													<div class="stars">
@@ -323,7 +326,7 @@
 														<input id="star1" name="rating" value="1" type="radio"><label for="star1"></label>
 													</div>
 												</div>
-												<button class="primary-btn">Submit</button>
+												<button type="submit" class="primary-btn">Submit</button>
 											</form>
 										</div>
 									</div>
@@ -369,7 +372,7 @@
 						<div class="product">
 							<a href="{{ route('/product-details',['slug' => $relatedProduct->slug]) }}">
 								<div class="product-img">
-									<img src="{{asset('uploads/products/'.$product->product_image)}}" alt="">
+									<img src="{{asset('uploads/products/'.$product->image)}}" alt="">
 									<div class="product-label">
 										<!-- <span class="sale">-30%</span> -->
 										<span class="new">NEW</span>
@@ -393,7 +396,7 @@
 									<a class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick view</span></a>
 								</div>
 							</div>
-							<form action="{{route('add.cart')}}" method="POST">
+							<form action="{{route('carts.store')}}" method="POST">
 								@csrf
 								<div class="add-to-cart">
 									<input type="hidden" name="product_id" value="{{$relatedProduct->id}}">

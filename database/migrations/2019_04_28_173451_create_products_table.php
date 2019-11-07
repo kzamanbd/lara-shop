@@ -24,7 +24,7 @@ class CreateProductsTable extends Migration
             $table->string('alert_quantity');
             $table->string('quantity');
             $table->text('description');
-            $table->string('product_image');
+            $table->string('image');
             $table->boolean('status')->default(true);
             $table->boolean('sale_status')->default(false);
             $table->timestamps();

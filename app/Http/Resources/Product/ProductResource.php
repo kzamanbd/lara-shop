@@ -24,7 +24,7 @@ class ProductResource extends JsonResource
             'alert_quantity' =>$this->alert_quantity,
             'quantity'  =>$this->quantity==0?'Stok Out Product':$this->quantity,
             'description'  =>$this->description,
-            'image' =>$this->product_image,
+            'image' =>$this->image,
             'status' =>$this->status,
             'created_at' =>$this->created_at,
             'updated_at' =>$this->updated_at,
