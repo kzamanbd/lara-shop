@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
+
 Route::group(['prefix'=>'v1', 'namespace' => 'EshopApi'], function(){
 	Route::apiResource('/products', 'ProductController');
 	Route::apiResource('/carts', 'CartController');
