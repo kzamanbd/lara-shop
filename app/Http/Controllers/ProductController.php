@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
-use App\Models\ProductsImages;
+use App\Models\MultiImages;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -55,7 +55,7 @@ class ProductController extends Controller
             'product_color'     => 'required',
             'alert_quantity'    => 'required',
             'quantity'  => 'required',
-            'product_description'=> 'required',
+            'description'=> 'required',
             'product_image'     => 'required|image|mimes:jpg,png,jpeg,gif',
             'status'            => 'required'
         ]);
@@ -75,7 +75,7 @@ class ProductController extends Controller
             'product_color'     => $request->product_color,
             'alert_quantity'    => $request->alert_quantity,
             'quantity'  => $request->quantity,
-            'product_description'=> $request->product_description,
+            'description'=> $request->description,
             'product_image'     => $imageUri,
             'status'            => $request->status,
             'created_at'        => Carbon::now(),
@@ -128,7 +128,7 @@ class ProductController extends Controller
             Image::make($image)->fit('600', '600', function($constraint) {
                 $constraint->aspectRatio();
             })->save($directory.$imageName);
-            ProductsImages::create([
+            MultiImages::create([
                 'product_id' => $request->product_id,
                 'product_image' => $imageName,
             ]);
