@@ -23,7 +23,7 @@ $factory->define(Product::class, function (Faker $faker) {
         'product_color' => $faker->colorName,
         'alert_quantity' => '1',
         'quantity' => random_int(5,10),
-        'product_description' => $faker->realText(1000),
+        'description' => $faker->realText(1000),
         'product_image' => random_int(1,20).'.jpg'
     ];
 });
