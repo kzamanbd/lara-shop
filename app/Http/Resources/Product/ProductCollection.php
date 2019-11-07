@@ -18,7 +18,7 @@ class ProductCollection extends Resource
             'name' =>$this->name,
             'category' => $this->category->name,
             'price' =>$this->product_price,
-            'quantity' =>$this->quantity==0?'Stok Out Product':$this->quantity,
+            'quantity' =>$this->quantity==0 ? 'Stok Out Product':$this->quantity,
             'image' =>$this->product_image,
             'href' =>[
                 'url' => route('products.show',$this->id),
