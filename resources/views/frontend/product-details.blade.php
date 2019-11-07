@@ -79,7 +79,7 @@
 							<h3 class="product-price"><span>৳</span> {{number_format($product->sale_price, 2,'.', ',')}} <del class="product-old-price">৳ {{number_format($product->product_price, 2,'.', ',')}}</del></h3>
 							<span class="product-available">{{($product->quantity > 0)?'In Stock '.$product->quantity:'Out Of Stock'}}</span>
 						</div>
-						{!! Str::words($product->product_description, 30)!!}<br><br>
+						{!! Str::words($product->description, 30)!!}<br><br>
 
 						<form action="{{route('carts.store')}}" method="POST">
 							@csrf
@@ -149,7 +149,7 @@
 							<div id="tab1" class="tab-pane fade in active">
 								<div class="row">
 									<div class="col-md-12">
-										{!! $product->product_description !!}
+										{!! $product->description !!}
 									</div>
 								</div>
 							</div>

@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class ReviewController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:customer')->except('index');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +30,7 @@ class ReviewController extends Controller
      */
     public function create()
     {
-        //
+        return 'Created';
     }
 
     /**
@@ -35,7 +41,7 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return 'Stored';
     }
 
     /**

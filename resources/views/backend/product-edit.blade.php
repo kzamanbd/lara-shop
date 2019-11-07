@@ -101,7 +101,7 @@
 
                                 <div class="form-group has-success">
                                     <label class="control-label mb-1">Description:</label>
-                                    <textarea name="product_description" id="product_description" rows="6" class="form-control" placeholder="Description">{{$product->product_description}}</textarea>
+                                    <textarea name="description" id="description" rows="6" class="form-control" placeholder="Description">{{$product->description}}</textarea>
                                 </div>
 
                                 <div class="form-group">
@@ -147,14 +147,14 @@
             var wysiwygareaAvailable = isWysiwygareaAvailable(),
                 isBBCodeBuiltIn = !!CKEDITOR.plugins.get( 'bbcode' );
             return function() {
-                var editorElement = CKEDITOR.document.getById( 'product_description' );
+                var editorElement = CKEDITOR.document.getById( 'description' );
                 if ( isBBCodeBuiltIn ) {
                     editorElement.setHtml(
                         'Hello world!'
                     );
                 }
                 if ( wysiwygareaAvailable ) {
-                    CKEDITOR.replace( 'product_description' );
+                    CKEDITOR.replace( 'description' );
                 } else {
                     editorElement.setAttribute( 'contenteditable', 'true' );
                     CKEDITOR.inline( 'editor' );

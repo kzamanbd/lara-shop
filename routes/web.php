@@ -17,6 +17,7 @@ Route::get('/process/checkout','CartController@index');
 Route::post('/districts/list', 'EShopController@districtsList');
 Route::post('/upazila/list', 'EShopController@upazilaList');
 Route::post('/product/shipping', 'EShopController@shipping')->name('shipping');
+Route::get('/product/review/', 'ReviewController@index')->name('review.index');
 
 Route::get('/payment', 'StripePaymentController@stripe')->name('stripe');
 Route::post('/payment/stripe', 'StripePaymentController@stripePost')->name('stripe.post');
@@ -24,7 +25,7 @@ Route::post('/payment/stripe', 'StripePaymentController@stripePost')->name('stri
 //admin routes
 Route::get('/admin', 'AdminController@index')->name('admin');
 Route::group(['prefix'=>'admin'], function(){
-    Route::get('/join', 'Admin\RegisterController@showRegistrationForm')->name('admin.register');
+    Route::get('/register', 'Admin\RegisterController@showRegistrationForm')->name('admin.register');
     Route::post('/register', 'Admin\RegisterController@register');
     Route::get('/login', 'Admin\LoginController@showLoginForm')->name('admin.login');
     Route::post('/login', 'Admin\LoginController@login');

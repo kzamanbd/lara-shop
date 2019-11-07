@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="{{ asset('backend/css/font-awesome.min.css') }}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ asset('backend/css/ionicons.min.css') }}">
+    @stack('stylesheet')
     <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('backend/css/AdminLTE.min.css') }}">

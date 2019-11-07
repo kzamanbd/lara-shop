@@ -1,6 +1,9 @@
 @extends('backend.layouts.app')
 @section('title','Products Manage')
-
+@push('stylesheet')
+    <link rel="stylesheet" type="text/css" href="{{ asset('backend/css/trumbowyg/trumbowyg.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('backend/css/select2.css') }}">
+@endpush
 @section('content')
     <div class="products">
         <section class="content-header">
@@ -27,16 +30,16 @@
                             @include('includes.message')
                             <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
-                                <div class="form-group has-success">
+                                <div class="form-group">
                                     <label class="control-label mb-3">Product Name:</label>
                                     <input name="name" type="text" class="form-control" placeholder="Enter Product Name" value="{{old('name')}}">
                                 </div>
 
-                                <div class="form-group has-success">
-                                    <select name="category_id" data-placeholder="Choose Product Category..." class="form-control" tabindex="1">
+                                <div class="form-group">
+                                    <select name="category_id" id="category" class="form-control">
                                         <option value="" label="-- Select One --"></option>
                                         @foreach ($categories as $category)
-                                            <option value="{{$category->id}}">{{$category->category}}</option>
+                                            <option value="{{$category->id}}">{{$category->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -76,17 +79,17 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group has-success">
+                                <div class="form-group">
                                     <label class="control-label mb-1">Description:</label>
-                                    <textarea name="product_description" id="product_description" rows="6" class="form-control" placeholder="Description">{{old('product_description')}}</textarea>
+                                    <textarea name="description" id="description" rows="6" class="form-control" placeholder="Description">{{old('description')}}</textarea>
                                 </div>
 
                                 <div class="form-group">
                                     <label for="file-input" class=" form-control-label">Product image</label>
-                                    <input type="file" id="file-input" name="product_image" class="form-control-file">
+                                    <input type="file" id="file-input" name="product_image" class="form-control">
                                 </div>
 
-                                <div class="form-group has-success">
+                                <div class="form-group">
                                     <label class="control-label mb-1">Publication Status:</label>
                                     <input type="radio" name="status" value="1" checked>Published
                                     <input type="radio" name="status" value="0">Unpublished
@@ -106,8 +109,14 @@
 @endsection
 
 @push('javascript')
-    <script src="https://cdn.ckeditor.com/4.13.0/standard/ckeditor.js"></script>
+    <script src="{{ asset('backend/js/trumbowyg/trumbowyg.js') }}"></script>
+    <script src="{{ asset('backend/js/select2.min.js') }}"></script>
     <script>
-        CKEDITOR.replace('product_description');
+        $(document).ready(function(){
+            $('#description').trumbowyg();
+            $('#category').select2({
+                placeholder: 'Choose Product Category...'
+            });
+        });
     </script>
 @endpush

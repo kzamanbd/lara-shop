@@ -24,24 +24,19 @@
                             </h3>
                         </div>
                         <div class="box-body">
-                            @if (Session::get('status'))
-                                <div class="alert alert-success">
-                                    {{Session::get('status')}}
-                                </div>
-                            @endif
                             @include('includes.error')
                             <form action="{{route('category.store')}}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="modal-body">
-                                    <div class="form-group has-success">
+                                    <div class="form-group">
                                         <label class="control-label mb-2">Category Name:</label>
                                         <input name="name" type="text" class="form-control" placeholder="Enter Category Name" value="{{old('name')}}">
                                     </div>
-                                    <div class="form-group has-success">
+                                    <div class="form-group">
                                         <label class="control-label mb-2">Category Image:</label>
-                                        <input name="image" type="file">
+                                        <input name="image" type="file" class="form-control">
                                     </div>
-                                    <div class="form-group has-success">
+                                    <div class="form-group">
                                         <label class="control-label mb-1">Publication Status:</label>
                                         <input type="radio" name="status" value="1" checked>Published
                                         <input type="radio" name="status" value="0">Unpublished

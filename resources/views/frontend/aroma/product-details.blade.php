@@ -64,7 +64,7 @@
     <!--================End Single Product Area =================-->
 
     <!--================Product Description Area =================-->
-    <section class="product_description_area">
+    <section class="description_area">
         <div class="container">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item">
@@ -79,7 +79,7 @@
             </ul>
             <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
-                    {!! $product->product_description !!}
+                    {!! $product->description !!}
                 </div>
 
                 <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
