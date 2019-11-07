@@ -23,7 +23,7 @@ class CreateProductsTable extends Migration
             $table->string('product_color');
             $table->string('alert_quantity');
             $table->string('quantity');
-            $table->text('product_description');
+            $table->text('description');
             $table->string('product_image');
             $table->boolean('status')->default(true);
             $table->boolean('sale_status')->default(false);
