@@ -18,7 +18,7 @@ class ProductResource extends JsonResource
             'name'      =>$this->name,
             'category'  =>$this->category->name,
             'price'     =>$this->product_price,
-            'sale_price'=>$this->sale_price,
+            'price'=>$this->sale_price,
             'discount'  => number_format($this->product_price - $this->sale_price,2,'.',','),
             'color'     =>$this->product_color,
             'alert_quantity' =>$this->alert_quantity,
