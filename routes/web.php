@@ -84,5 +84,5 @@ Route::group(['prefix'=>'customer'], function(){
     Route::get('/profile', 'CustomerController@customerProfile')->name('customer.profile');
 });
 
-Route::get('customer-login/facebook', 'Customer\LoginController@redirectToProvider');
-Route::get('customer-login/facebook/callback', 'Customer\LoginController@handleProviderCallback');
+Route::get('customer/login/{provider}', 'Customer\LoginController@redirectToProvider')->name('customer.socialite');
+Route::get('customer/login/facebook/return', 'Customer\LoginController@providerCallback');

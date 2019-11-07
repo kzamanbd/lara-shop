@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Customer;
 
+use Socialite;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-use Laravel\Socialite\Facades\Socialite;
 
 class LoginController extends Controller
 {
@@ -25,7 +25,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest:customer')->except('logout','customerLogout');
+        $this->middleware('guest:customer')->except('customerLogout');
     }
 
     /**
@@ -35,13 +35,11 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $this->validateLogin($request);
-        if (Auth::guard('customer')->attempt($this->credentials($request), $request->remember)){
-            if ($request->has('previous')) {
-                return Redirect::to($request->previous);
-            }
-            else{
-                return redirect()->route('customer');
-            }
+
+        if ($this->guard()->attempt($this->credentials($request), $request->remember)){
+
+            return $request->has('previous')? Redirect::to($request->previous): redirect(route('customer'));
+
         }
         else{
             return redirect()->back()->with('status', 'Email Or Password Not match!')->withInput($request->only('email','remember'));
@@ -75,8 +73,7 @@ class LoginController extends Controller
      */
     public function customerLogout(Request $request)
     {
-        Auth::guard('customer')->logout();
-        /*$request->session()->invalidate();*/
+        $this->guard()->logout();
         return $this->loggedOut($request) ?: redirect('/');
     }
 
@@ -91,15 +88,19 @@ class LoginController extends Controller
         //
     }
 
+    public function guard(){
+        return Auth::guard('customer');
+    }
+
 
 
 
     //socialite login
 
 
-    public function redirectToProvider()
+    public function redirectToProvider($provider)
     {
-        return Socialite::driver('facebook')->redirect();
+        return Socialite::driver($provider)->redirect();
     }
 
     /**
@@ -107,10 +108,15 @@ class LoginController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function handleProviderCallback()
+    public function providerCallback()
     {
         $customer = Socialite::driver('facebook')->user();
-
-        // $user->token;
+        /*auth()->login($customer, true);
+        return redirect(route('customer'));*/
+        return response()->json([
+            'token' => $customer->token,
+            'name' => $customer->name,
+            'email' => $customer->email,
+        ]);
     }
 }

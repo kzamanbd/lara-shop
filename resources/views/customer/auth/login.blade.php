@@ -71,8 +71,8 @@
             <div class="row">
                 <div class="col-xs-12">
                     <a href="{{route('customer.register')}}" class="btn btn-success btn-flat btn-block">Create Account</a>
-                    <button type="button" class="btn btn-primary btn-flat btn-block"><i class="ti-facebook"></i>Sign in with facebook</button>
-                    <button type="button" class="btn btn-success btn-flat btn-block"><i class="ti-twitter"></i>Sign in with twitter</button>
+                    <a href="{{ route('customer.socialite','facebook') }}" class="btn btn-primary btn-flat btn-block"><i class="ti-facebook"></i>Sign in with facebook</a>
+                    <a href="" class="btn btn-success btn-flat btn-block"><i class="ti-twitter"></i>Sign in with twitter</a>
                 </div>
                 <!-- /.col -->
             </div>
