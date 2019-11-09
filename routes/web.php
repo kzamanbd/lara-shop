@@ -1,5 +1,14 @@
 <?php
 
+//cache clear commend
+Route::get('/cache', function (){
+    Artisan::call('view:clear');
+    Artisan::call('config:clear');
+    Artisan::call('config:cache');
+    return "Success <a href='/'>Back</a>";
+});
+
+
 //frontend route
 Route::get('/', 'EShopController@index')->name('/');
 Route::get('/product/details/product={slug}', 'EShopController@productDetails')->name('/product-details');
