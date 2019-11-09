@@ -33,7 +33,7 @@
                                         <input name="name" type="text" class="form-control" placeholder="Enter Category Name" value="{{old('name')}}">
                                     </div>
                                     <div class="form-group">
-                                        <label class="control-label mb-2">Category Image:</label>
+                                        <label class="control-label mb-2">Image:</label>
                                         <input name="image" type="file" class="form-control">
                                     </div>
                                     <div class="form-group">

@@ -19,7 +19,7 @@
             <div class="col-md-12">
                 <div class="box box-info">
                     <div class="box-header">
-                        <h4>OrderDetails Details Invoice</h4>
+                        <h4>Order Details Details Invoice</h4>
                     </div>
                     <div class="box-body">
                         <h4 class="card-title">Product Shipping Details</h4>

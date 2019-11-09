@@ -17,7 +17,6 @@
 
         <!-- Main content -->
         <section class="content">
-             <!-- Info boxes -->
              <div class="row">
                  <div class="col-md-4 col-sm-6 col-xs-12">
                      <div class="info-box">
@@ -27,7 +26,6 @@
                              <span class="info-box-text">Total Sale</span>
                              <span class="info-box-number">{{number_format(App\Models\Order::all()->sum('sub_total'),2,'.',',')}}<small> ৳</small></span>
                          </div>
-                         <!-- /.info-box-content -->
                      </div>
                      <!-- /.info-box -->
                  </div>
