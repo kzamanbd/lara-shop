@@ -1,18 +1,18 @@
 <?php
 
 //cache clear commend
-Route::get('/cache', function (){
+Route::get('/clear', function (){
     Artisan::call('view:clear');
     Artisan::call('config:clear');
     Artisan::call('config:cache');
-    return "Success <a href='/'>Back</a>";
+    return redirect(url('/'));
 });
 
 
 //frontend route
 Route::get('/', 'EShopController@index')->name('/');
 Route::get('/product/details/product={slug}', 'EShopController@productDetails')->name('/product-details');
-Route::get('/products/{slug}', 'EShopController@categoryProducts')->name('category.products');
+Route::get('/products-category/{slug}', 'EShopController@categoryProducts')->name('category.products');
 
 Route::get('/product/cart', 'CartController@index')->name('carts.index');
 Route::post('/product/cart-store/', 'CartController@store')->name('carts.store');
