@@ -12,7 +12,7 @@ class SettingsTableSeeder extends Seeder
      */
     public function run()
     {
-        Setting::insert([
+        Setting::create([
             'phone' => '+8801721279241',
             'email' => 'zaman7.info@gmail.com',
             'address' => 'Mymensingh, Bangladesh',

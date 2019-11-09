@@ -12,6 +12,6 @@ class MultiImagesTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(MultiImages::class,20)->create();
+        factory(MultiImages::class)->create();
     }
 }
