@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Image;
-use Toastr;
 use Carbon\Carbon;
 use App\Models\Review;
 use App\Models\Product;
@@ -12,6 +11,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\MultiImages;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
 {
@@ -134,7 +134,7 @@ class ProductController extends Controller
                 'path' => $directory,
             ]);
         }
-        Toastr::success('Images Successfully Uploaded', 'Success');
+        Session::flash('success','Images Successfully Uploaded');
         return redirect(route('products.index'));
     }
 
@@ -149,7 +149,7 @@ class ProductController extends Controller
         $this->validation($request);
         $imageUri = $this->uploadImage($request);
         $this->productStore($request, $imageUri);
-        Toastr::success('Product Insert Successfully', 'Success');
+        Session::flash('success','Product Insert Successfully');
         return redirect(route('products.index'));
     }
 
@@ -204,7 +204,7 @@ class ProductController extends Controller
             'status' => 0,
             'updated_at' => Carbon::now(),
         ]);
-        Toastr::success('Product Unpublished Successfully', 'Success');
+        Session::flash('success','Product Unpublished Successfully');
         return back();
     }
 
@@ -219,7 +219,7 @@ class ProductController extends Controller
             'updated_at' => Carbon::now(),
         ]);
         
-        Toastr::success('Product Published Successfully', 'Success');
+        Session::flash('success','Product Published Successfully');
         return back();
     }
 
@@ -249,7 +249,7 @@ class ProductController extends Controller
 
             $product->delete();
         }
-        Toastr::success('Product Delete Successfully', 'Success');
+        Session::flash('success', 'Product Delete Successfully');
         return back();
     }
 }

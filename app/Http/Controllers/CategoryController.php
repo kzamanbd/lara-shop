@@ -86,7 +86,7 @@ class CategoryController extends Controller
                 'status'=> $request->status,
             ]);
         }
-        $request->session()->flash('status', 'Category Inserted Successfully');
+        $request->session()->flash('success', 'Category Inserted Successfully');
         return redirect()->route('categories.index');
     }
 
@@ -142,7 +142,7 @@ class CategoryController extends Controller
             unlink($path);
         }
         Category::where('id', $id)->delete();
-        session()->flash('status', 'Category Deleted Successfully');
+        session()->flash('success', 'Category Deleted Successfully');
         return redirect()->route('categories.index');
     }
 }

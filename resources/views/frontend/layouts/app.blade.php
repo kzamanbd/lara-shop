@@ -322,7 +322,9 @@
 		<script src="{{asset('frontend/js/nouislider.min.js')}}"></script>
 		<script src="{{asset('frontend/js/jquery.zoom.min.js')}}"></script>
 		<script src="{{asset('frontend/js/toastr.min.js')}}"></script>
-    	{!! Toastr::message() !!}
+    	<script type="text/javascript">
+	        @include('includes.toastr')
+	    </script>
 		@stack('javascript')
 		<script src="{{asset('frontend/js/main.js')}}"></script>
 

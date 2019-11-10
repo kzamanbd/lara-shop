@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use PDF;
 use Auth;
 use Image;
-use Toastr;
 use Carbon\Carbon;
 use App\Models\Order;
 use App\Models\Product;
@@ -13,6 +12,7 @@ use App\Models\Billing;
 use App\Models\Category;
 use App\Models\Shipping;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
 {
@@ -34,7 +34,7 @@ class AdminController extends Controller
     public function index()
     {
         $orders = Order::take(4)->orderBy('id', 'DESC')->get();
-        Toastr::success(Auth::user()->name.' You Are Login', 'Welcome', ["positionClass" => "toast-top-right"]);
+        Session::flash('success',Auth::user()->name.' You Are Login');
         return view('backend.dashboard',['orders' => $orders]);
     }
 
