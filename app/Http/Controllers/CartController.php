@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Toastr;
 use App\Models\Cart;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -62,7 +61,7 @@ class CartController extends Controller
                     'quantity' => $request->quantity?$request->quantity:1,
                 ]);
             }
-            Toastr::success('Product Successfully Added To Cart!', 'Success');
+            Session::flash('success', 'Product Successfully Added To Cart!');
             if($request->quantity){
                 return redirect(route('carts.index'));
             }
@@ -72,7 +71,7 @@ class CartController extends Controller
             
         }
         else{
-            Toastr::success('Product Stock Out! Chose Another Products!', 'Success');
+            Session::flash('success', 'Product Stock Out! Chose Another Products!');
             return back();
         }
     }
@@ -122,7 +121,7 @@ class CartController extends Controller
     
     public function destroy(Cart $cart, $id){
         Cart::findOrfail($id)->delete();
-        Toastr::success('Item Successfully Cleared', 'Success');
+        Session::flash('success','Item Successfully Cleared');
         return back();
     }
 }

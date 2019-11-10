@@ -15,19 +15,16 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
-
     <!-- Styles -->
     <link rel="stylesheet" href="{{ asset('backend/css/bootstrap.min.css') }}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="{{ asset('backend/css/font-awesome.min.css') }}">
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ asset('backend/css/ionicons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('backend/css/toastr.min.css') }}">
     @stack('stylesheet')
-    <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ asset('backend/css/AdminLTE.min.css') }}">
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-         folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="{{ asset('backend/css/skins/_all-skins.min.css') }}">
     <link rel="stylesheet" href="{{ asset('backend/css/skins/skin-purple.css') }}">
     <!-- Date Picker -->
@@ -422,10 +419,6 @@
     <!-- jQuery UI 1.11.4 -->
     <script src="{{ asset('backend/js/jquery-ui.min.js') }}"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-    <script>
-        $.widget.bridge('uibutton', $.ui.button);
-
-    </script>
     <!-- Bootstrap 3.3.7 -->
     <script src="{{ asset('backend/js/bootstrap.min.js') }}"></script>
     <!-- datepicker -->
@@ -436,8 +429,10 @@
     <script src="{{ asset('backend/js/jquery.slimscroll.min.js') }}"></script>
     <!-- FastClick -->
     <script src="{{ asset('backend/js/fastclick.js') }}"></script>
-    <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
-    {!! Toastr::message() !!}
+    <script src="{{ asset('backend/js/toastr.min.js') }}"></script>
+    <script type="text/javascript">
+        @include('includes.toastr')
+    </script>
     @stack('javascript')
     <!-- AdminLTE App -->
     <script src="{{ asset('backend/js/adminlte.min.js') }}"></script>

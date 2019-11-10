@@ -52,7 +52,7 @@ class CustomerController extends Controller
             'zip_code' 	=> $request->zip_code,
             'created_at'=> Carbon::now(),
         ]);
-        $request->session()->flash('status', 'Profile Inserted Successfully');
+        $request->session()->flash('success', 'Profile Inserted Successfully');
     	return back();
     }
 
@@ -73,7 +73,7 @@ class CustomerController extends Controller
             'zip_code'  => $request->zip_code,
             'updated_at'=> Carbon::now(),
         ]);
-        $request->session()->flash('status', 'Profile Updated Successfully');
+        $request->session()->flash('success', 'Profile Updated Successfully');
         return back();
     }
 
@@ -94,7 +94,7 @@ class CustomerController extends Controller
             Billing::where('order_id', $id)->delete();
         }
 
-        session()->flash('status', 'Order Successfully Canceled, Your Order Id has '.$shipping_id);
+        session()->flash('success', 'Order Successfully Canceled, Your Order Id has '.$shipping_id);
         return back();
         
     }
