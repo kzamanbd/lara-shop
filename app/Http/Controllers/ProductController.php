@@ -9,7 +9,7 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Models\MultiImages;
+use App\Models\ProductImages;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Session;
 
@@ -128,7 +128,7 @@ class ProductController extends Controller
             Image::make($image)->fit('600', '600', function($constraint) {
                 $constraint->aspectRatio();
             })->save($directory.$name);
-            MultiImages::create([
+            ProductImages::create([
                 'product_id' => $request->product_id,
                 'image' => $name,
                 'path' => $directory,
@@ -238,7 +238,7 @@ class ProductController extends Controller
             if ($product->productImages) {
                 foreach ($product->productImages as $getImage) {
                     unlink($path.$getImage->image);
-                    MultiImages::findOrfail($getImage->id)->delete();
+                    ProductImages::findOrfail($getImage->id)->delete();
                 }
             }
             if ($product->reviews) {
