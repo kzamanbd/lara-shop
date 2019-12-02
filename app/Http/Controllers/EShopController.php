@@ -13,7 +13,7 @@ use App\Models\Category;
 use App\Models\District;
 use App\Models\Shipping;
 use App\Models\Division;
-use App\Models\MultiImages;
+use App\Models\ProductImages;
 use Illuminate\Http\Request;
 use App\Mail\OrderConfirmationMail;
 use Illuminate\Support\Facades\Mail;
