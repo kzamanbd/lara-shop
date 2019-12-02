@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Auth;
-use Toastr;
 use App\Models\Review;
 use Illuminate\Http\Request;
 
@@ -58,7 +57,7 @@ class ReviewController extends Controller
             'description' => $request->description,
             'rating' => $request->rating,
         ]);
-        Toastr::success('Product Review Successfully Added', 'Success');
+        Session::flash('success','Product Review Successfully Added');
         return back();
     }
 
