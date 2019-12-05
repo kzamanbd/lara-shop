@@ -24,9 +24,14 @@ class ProductController extends Controller
         $this->middleware('auth');
     }
 
+    /**
+     * @param $string
+     * @return null|string|string[]
+     */
     public function slug($string) {
         return preg_replace('/\s+/u', '-', trim($string));
     }
+
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
@@ -37,11 +42,15 @@ class ProductController extends Controller
         return view('backend.products-manage',['products'=> $products]);
     }
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function create()
     {
         $categories = Category::where('status', 1)->get();
         return view('backend.product-new',['categories' => $categories]);
     }
+
 
     /**
      * @param $request
@@ -83,15 +92,35 @@ class ProductController extends Controller
         ]);
     }
 
+
+    public function productUpdate($request, $imageUri = null){
+        Product::where('id', $request->product_id)->update([
+            'name'          => $request->name,
+            'slug'          => $this->slug($request->name),
+            'category_id'   => $request->category_id,
+            'product_price' => $request->product_price,
+            'sale_price'    => $request->sale_price,
+            'product_color' => $request->product_color,
+            'alert_quantity'=> $request->alert_quantity,
+            'quantity'      => $request->quantity,
+            'description'   => $request->description,
+            'status'        => $request->status,
+            'updated_at'    => Carbon::now(),
+        ]);
+        if ($imageUri) {
+            Product::where('id', $request->product_id)->update(['image' => $imageUri]);
+        }
+    }
+
+
     /**
      * @param $request
      * @return string
      */
     public function uploadImage($request){
         $image = $request->file('image');
-        $name = 'IMG_'.substr(time(),0,10);
-        $extension = strtolower($image->getClientOriginalExtension());
-        $imageUri = $name.'.'.$extension;
+        $name = $this->slug($image->getClientOriginalName());
+        $imageUri = 'IMG_'.$name;
         $directory = 'uploads/products/';
         Image::make($image)->fit('600', '600', function($constraint) {
             $constraint->aspectRatio();
@@ -120,10 +149,8 @@ class ProductController extends Controller
             'image' => 'required'
         ]);
 
-        $random = strtoupper(Str::random(8));
         foreach($request->file('image') as $image){
-            $extension =  strtolower($image->getClientOriginalExtension());
-            $name = $random.'_'.$request->product_id.$this->slug($image->getClientOriginalName());
+            $name = $request->product_id.'_'.$this->slug($image->getClientOriginalName());
             $directory = 'uploads/products/';
             Image::make($image)->fit('600', '600', function($constraint) {
                 $constraint->aspectRatio();
@@ -162,7 +189,7 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param $product_id
+     * @param $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -175,27 +202,41 @@ class ProductController extends Controller
         ]);
     }
 
+
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return array
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request)
     {
-        /*$this->validation($request);
-        $imageUri = $this->uploadImage($request);
-        $this->updateDatabase($request, $imageUri);
-        Session()->flash('status', 'Product Update Successfully');
-        return redirect()->route('/product-edit');*/
-        return $request->all();
+        $this->validate($request, [
+            'name' => 'required',
+            'category_id' => 'required',
+            'product_price' => 'required',
+            'sale_price' => 'required',
+            'product_color' => 'required',
+            'alert_quantity' => 'required',
+            'quantity' => 'required',
+            'description' => 'required',
+            'status' => 'required'
+        ]);
+        if ($request->has('image')) {
+            $imageUri = $this->uploadImage($request);
+            $this->productUpdate($request, $imageUri);
+        }
+        else{
+            $this->productUpdate($request);
+        }
+        Session::flash('success', 'Product Update Successfully');
+        return redirect(route('products.index'));
+        //return $request->all();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param $product_id
+     * @param $id
      * @return \Illuminate\Http\Response
      */
     public function productUnpublished($id)
@@ -209,7 +250,7 @@ class ProductController extends Controller
     }
 
     /**
-     * @param $product_id
+     * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function productPublished($id)
@@ -224,7 +265,7 @@ class ProductController extends Controller
     }
 
     /**
-     * @param $product_id
+     * @param $id
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
@@ -246,7 +287,6 @@ class ProductController extends Controller
                     Review::findOrfail($review->id)->delete();
                 }
             }
-
             $product->delete();
         }
         Session::flash('success', 'Product Delete Successfully');
