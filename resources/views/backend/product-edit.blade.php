@@ -1,8 +1,9 @@
 @extends('backend.layouts.app')
-@section('title')
-    Product Add
-@endsection
-
+@section('title', 'Product Edit')
+@push('stylesheet')
+    <link rel="stylesheet" type="text/css" href="{{ asset('backend/css/trumbowyg/trumbowyg.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('backend/css/select2.css') }}">
+@endpush
 @section('content')
     <div class="order-manage">
         <!-- Content Header (Page header) -->
@@ -26,34 +27,20 @@
                             <h3>Product Edit Form</h3>
                         </div>
                         <div class="box-body">
-                            @if ($errors->any())
-							    <div class="alert alert-danger">
-							        <ul class="nav flex-column">
-							            @foreach ($errors->all() as $error)
-							                <li>{{ $error }}</li>
-							            @endforeach
-							        </ul>
-							    </div>
-							@endif
-                            @if (Session::get('status'))
-                                <div class="alert alert-success">
-                                    {{Session::get('status')}}
-                                </div>
-                            @endif
+                            @include('includes.error')
 
-                            <form action="{{ route('product.update') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('products.update') }}" method="POST" enctype="multipart/form-data">
 								@csrf
                                 <input type="hidden" name="product_id" value="{{$product->id}}">
-                                <div class="form-group has-success">
+                                <div class="form-group">
                                     <label class="control-label mb-3">Product Name:</label>
                                     <input name="name" type="text" class="form-control" placeholder="Enter Product Name" value="{{$product->name}}">
                                 </div>
 
-                                <div class="form-group has-success">
-                                    <select name="category_id" data-placeholder="Choose Product Category..." class="standardSelect form-control" tabindex="1">
-                                        <option value="" label="default"></option>
+                                <div class="form-group">
+                                    <select name="category_id" class="standardSelect form-control" tabindex="1">
                                         @foreach ($categories as $category)
-                                            <option value="{{$category->id}}" {{($product->category_id == $category->id)?"selected" : ""}}>{{$category->category}}</option>
+                                            <option value="{{$category->id}}" {{($product->category_id == $category->id)?"selected" : ""}}>{{$category->name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -70,6 +57,15 @@
                                     </div>
                                     <div class="col-sm-3">
                                         <div class="form-group">
+                                            <label class="control-label mb-2">Sale Price:</label>
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><i class="fa fa-usd"></i></div>
+                                                <input name="sale_price" type="text" class="form-control" placeholder="Enter Sale Price" value="{{$product->sale_price}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
                                             <label class="control-label mb-2">Product Quantity:</label>
                                             <div class="input-group">
                                                 <div class="input-group-addon"><i class="fa fa-plus-square-o"></i></div>
@@ -78,7 +74,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-2">
                                         <div class="form-group">
                                             <label class="control-label mb-2">Product Color:</label>
                                             <div class="input-group">
@@ -88,7 +84,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-2">
                                         <div class="form-group">
                                             <label class="control-label mb-2">Alert Quantity:</label>
                                             <div class="input-group">
@@ -99,29 +95,24 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group has-success">
+                                <div class="form-group">
                                     <label class="control-label mb-1">Description:</label>
                                     <textarea name="description" id="description" rows="6" class="form-control" placeholder="Description">{{$product->description}}</textarea>
                                 </div>
 
                                 <div class="form-group">
-                                     <label for="file-input" class=" form-control-label">Product image:</label>
-                                    <input type="file" id="file-input" name="image" class="form-control-file">
+                                    <label for="file-input" class=" form-control-label">Product image:</label><br>
+                                    <img src="{{ asset('uploads/products/'.$product->image) }}" id="privie w" width="100px" alt="image">
+                                    <input type="file" id="file -input" name="image" class="form-control">
                                 </div>
 
-                                <div class="form-group has-success">
+                                <div class="form-group">
                                     <label class="control-label mb-1">Publication Status:</label>
-                                    @if ($product->status == 1 )
-                                        <input type="radio" name="status" value="1" checked>Published
-                                        <input type="radio" name="status" value="0">Unpublished
-                                    @else
-                                        <input type="radio" name="status" value="1">Published
-                                        <input type="radio" name="status" value="0" checked>Unpublished
-                                    @endif
-                                        {{-- expr --}}
+                                    <input type="radio" name="status" value="1" {{$product->status == 1?'checked':''}}>Published
+                                    <input type="radio" name="status" value="0" {{$product->status == 1?'':'checked'}}>Unpublished
                                 </div>
-                                <div class="col-sm-4 offset-sm-4">
-                                    <button id="add-button" type="submit" class="btn btn-lg btn-outline-success btn-block">
+                                <div class="form-group">
+                                    <button id="add-button" type="submit" class="btn btn-success">
                                         <span id="add-button-amount">Update Product</span>
                                         <span id="add-product-sending" style="display:none;">Sending…</span>
                                     </button>
@@ -135,48 +126,29 @@
     </div>
 @endsection
 @push('javascript')
-    <script src="{{asset('public/backend/assets/js/lib/chosen/chosen.jquery.min.js')}}"></script>
-    <script src="//cdn.ckeditor.com/4.11.3/standard/ckeditor.js"></script>
-    <script type="text/javascript">
-
-        if (CKEDITOR.env.ie && CKEDITOR.env.version < 9 )
-            CKEDITOR.tools.enableHtml5Elements( document );
-        CKEDITOR.config.height = 250;
-        CKEDITOR.config.width = 'auto';
-        var initSample = ( function() {
-            var wysiwygareaAvailable = isWysiwygareaAvailable(),
-                isBBCodeBuiltIn = !!CKEDITOR.plugins.get( 'bbcode' );
-            return function() {
-                var editorElement = CKEDITOR.document.getById( 'description' );
-                if ( isBBCodeBuiltIn ) {
-                    editorElement.setHtml(
-                        'Hello world!'
-                    );
-                }
-                if ( wysiwygareaAvailable ) {
-                    CKEDITOR.replace( 'description' );
-                } else {
-                    editorElement.setAttribute( 'contenteditable', 'true' );
-                    CKEDITOR.inline( 'editor' );
-                }
-            };
-
-            function isWysiwygareaAvailable() {
-                if ( CKEDITOR.revision == ( '%RE' + 'V%' ) ) {
-                    return true;
-                }
-
-                return !!CKEDITOR.plugins.get( 'wysiwygarea' );
-            }
-        } )();
-        initSample();
-    </script>
+    <script src="{{ asset('backend/js/trumbowyg/trumbowyg.js') }}"></script>
+    <script src="{{ asset('backend/js/select2.min.js') }}"></script>
     <script>
-        jQuery(document).ready(function() {
-            jQuery(".standardSelect").chosen({
-                disable_search_threshold: 10,
-                no_results_text: "Oops, nothing found!",
-                width: "100%"
+        $(document).ready(function(){
+            $('#description').trumbowyg();
+            $('#category_id').select2({
+                placeholder: 'Choose Product Category...'
+            });
+
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function(e) {
+                        $('#priview').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            $("#file-input").change(function() {
+                readURL(this);
             });
         });
     </script>

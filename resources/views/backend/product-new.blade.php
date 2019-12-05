@@ -28,7 +28,7 @@
                         <div class="box-body">
                             @include('includes.error')
                             @include('includes.message')
-                            <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
                                     <label class="control-label mb-3">Product Name:</label>

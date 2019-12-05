@@ -14,11 +14,11 @@ Route::get('/', 'EShopController@index')->name('/');
 Route::get('/product/details/product={slug}', 'EShopController@productDetails')->name('/product-details');
 Route::get('/products-category/{slug}', 'EShopController@categoryProducts')->name('category.products');
 
-Route::get('/product/cart', 'CartController@index')->name('carts.index');
-Route::post('/product/cart-store/', 'CartController@store')->name('carts.store');
-Route::get('/product/cart/{id}/', 'CartController@destroy')->name('carts.destroy');
+Route::get('/products/cart', 'CartController@index')->name('carts.index');
+Route::post('/products/cart-store/', 'CartController@store')->name('carts.store');
+Route::get('/products/cart/{id}/', 'CartController@destroy')->name('carts.destroy');
 
-Route::get('/product/search', 'EShopController@search')->name('search.show');
+Route::get('/products/search', 'EShopController@search')->name('search.show');
 Route::post('/search/product', 'EShopController@searchAjax');
 Route::post('/process/checkout', 'EShopController@checkout')->name('checkout');
 Route::get('/process/checkout','CartController@index');
@@ -55,20 +55,20 @@ Route::group(['prefix'=>'admin'], function(){
     Route::get('/categories/', 'CategoryController@index')->name('categories.index');
     Route::get('/category/new', 'CategoryController@create')->name('category.create');
     Route::post('/category/store', 'CategoryController@store')->name('category.store');
-    Route::get('/category/delete/id={id}', 'CategoryController@destroy')->name('category.delete');
+    Route::get('/category/delete/{id}', 'CategoryController@destroy')->name('category.delete');
 
     //products mamangment rotue
     Route::get('/products/', 'ProductController@index')->name('products.index');
-    Route::get('/product/new/', 'ProductController@create')->name('new.product');
-    Route::get('/product/product/edit/id={id}', 'ProductController@edit')->name('product.edit');
+    Route::get('/products/new/', 'ProductController@create')->name('new.product');
+    Route::get('/products/{id}', 'ProductController@edit')->name('product.edit');
     
-    Route::post('/product/store/', 'ProductController@store')->name('product.store');
-    Route::post('/product/update/', 'ProductController@update')->name('product.update');
-    Route::get('/product/multiple-image={id}', 'ProductController@productMultipleImage')->name('product.multiple.image');
-    Route::post('/product/multiple/image/store', 'ProductController@productMultipleImageStore')->name('product.multiple.image.store');
-    Route::get('/product/unpublished/id={id}','ProductController@productUnpublished')->name('unpublished.product');
-    Route::get('/product/published/id={id}', 'ProductController@productPublished')->name('published.product');
-    Route::get('/product/delete/id={id}', 'ProductController@destroy')->name('product.destroy');
+    Route::post('/products/store/', 'ProductController@store')->name('products.store');
+    Route::post('/products/update/', 'ProductController@update')->name('products.update');
+    Route::get('/products/images/{id}', 'ProductController@productMultipleImage')->name('product.multiple.image');
+    Route::post('/products/image/store', 'ProductController@productMultipleImageStore')->name('product.multiple.image.store');
+    Route::get('/products/unpublished/{id}','ProductController@productUnpublished')->name('unpublished.product');
+    Route::get('/products/published/{id}', 'ProductController@productPublished')->name('published.product');
+    Route::get('/products/delete/{id}', 'ProductController@destroy')->name('product.destroy');
 
     //order management route
     Route::get('/order/manage', 'AdminController@orderManage')->name('order.manage');
