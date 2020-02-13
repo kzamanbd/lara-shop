@@ -48,7 +48,7 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::where('status', 1)->get();
-        return view('backend.product-new',['categories' => $categories]);
+        return view('backend.product-create',['categories' => $categories]);
     }
 
 

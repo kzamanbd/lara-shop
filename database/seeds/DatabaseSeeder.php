@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
+use App\Admin;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -17,6 +17,11 @@ class DatabaseSeeder extends Seeder
         $this->call(ProductsTableSeeder::class);
         $this->call(UpazilaTableSeeder::class);
         $this->call(SettingsTableSeeder::class);
-
+        Admin::create([
+            'name' => 'Admin',
+            'email' => 'login@gmail.com',
+            'password' => bcrypt('12345678'),
+            'email_verified_at' => now(),
+        ]);
     }
 }

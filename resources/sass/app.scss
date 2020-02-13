@@ -1,12 +1,15 @@
 
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
 
 // Variables
 @import 'variables';
 
 // Bootstrap
-@import '~bootstrap/scss/bootstrap.min.css';
+@import '~bootstrap/scss/bootstrap';
+@import '~font-awesome/css/font-awesome.min.css';
+@import '~overlayscrollbars/css/OverlayScrollbars.min.css';
+@import '~admin-lte/dist/css/adminlte.min.css';
+@import "toastr";
 
 .navbar-laravel {
   background-color: #fff;

@@ -7,11 +7,11 @@
     <div class="content">
 		<div class="row">
 	        <div class="col-md-8 offset-md-2">
-	            <div class="box">
-                    <div class="box-header">
+	            <div class="card">
+                    <div class="card-header">
                         <strong class="card-title">Customer Information</strong>
                     </div>
-                    <div class="box-body">
+                    <div class="card-body">
                         <div id="pay-invoice">
                             <div class="card-body">
                                 <div class="card-title">

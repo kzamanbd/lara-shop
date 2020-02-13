@@ -48,7 +48,7 @@ return [
     'facebook' => [
         'client_id' => '828614384220916',
         'client_secret' => '95c52bcfc6ffa4494bde0933362787c1',
-        'redirect' => 'http://127.0.0.1:8000/customer/login/facebook/return',
+        'redirect' => 'http://127.0.0.1:8000/oauth/login/facebook/return',
     ],
 
 ];
