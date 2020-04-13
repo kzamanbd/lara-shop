@@ -43,7 +43,7 @@
                                 <th>Price</th>
                                 <th>Quantity</th>
                                 <th>Total</th>
-                                <th>Action</th>
+                                <th class="text-center">Action</th>
                             </tr>
                             @php
                                 $subTotal = 0;
@@ -54,11 +54,11 @@
                             @forelse ($carts as $cart)
                                 <tr>
                                     <td><img src="{{asset('uploads/products/'.$cart->product->image)}}" width="80px" alt=""></td>
-                                    <td><a href="{{ route('/product-details',['slug' => $cart['slug']]) }}">{{$cart->product->name}}</a></td>
+                                    <td><a href="#">{{$cart->product->name}}</a></td>
                                     <td>{{number_format($cart->product->sale_price, 2,'.', ',')}}</td>
                                     <td><span class="badge">{{$cart->quantity}}</span></td>
                                     <td>{{number_format($cart->product->sale_price*$cart->quantity, 2,'.', ',')}}</td>
-                                    <td><a href="{{ route('carts.destroy',$cart->id) }}" class="btn btn-danger"><i class="fa fa-trash"></i></a></td>
+                                    <td class="text-center"><a href="{{ route('carts.destroy',$cart->id) }}" class="btn btn-danger"><i class="fa fa-trash"></i></a></td>
                                 </tr>
                                 @php
                                     $price = $cart->product->sale_price*$cart->quantity;

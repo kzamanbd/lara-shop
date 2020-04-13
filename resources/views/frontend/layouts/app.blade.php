@@ -314,8 +314,7 @@
 		</footer>
 		<!-- /FOOTER -->
 
-		<!-- jQuery Plugins -->
-		{{--<script src="https://code.jquery.com/jquery.min.js"></script>--}}
+		<!-- scripts -->
 		<script src="{{asset('frontend/js/jquery.min.js')}}"></script>
 		<script src="{{asset('frontend/js/bootstrap.min.js')}}"></script>
 		<script src="{{asset('frontend/js/slick.min.js')}}"></script>
@@ -323,6 +322,8 @@
 		<script src="{{asset('frontend/js/jquery.zoom.min.js')}}"></script>
 		<script src="{{asset('frontend/js/toastr.min.js')}}"></script>
     	<script type="text/javascript">
+			toastr.options.closeButton = true;
+            toastr.options.progressBar = true;
 	        @include('includes.toastr')
 	    </script>
 		@stack('javascript')
