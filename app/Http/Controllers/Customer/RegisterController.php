@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Customer;
 
-use App\Customer;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -12,14 +12,6 @@ use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
-
-    /**
-     * CustomerRegisterController constructor.
-     */
-    public function __construct()
-    {
-        $this->middleware('guest:customer');
-    }
 
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View

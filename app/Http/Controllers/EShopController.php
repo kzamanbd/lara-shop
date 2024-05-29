@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Customer;
+
 use Carbon\Carbon;
 use App\Models\Cart;
 use App\Models\Order;
@@ -16,6 +16,7 @@ use App\Models\Division;
 use App\Models\ProductImages;
 use Illuminate\Http\Request;
 use App\Mail\OrderConfirmationMail;
+use App\Models\Customer;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -28,15 +29,16 @@ class EShopController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    function index(){
-    	$categories = Category::where('status', 1)->get();
-        $products = Product::with('category')->where('status', 1)->paginate(8)->setPageName('product-page');
-    	$bastSales = Product::with('category')->where('status', 1)->where('sale_status',1)->paginate(8)->setPageName('best-sale');
+    function index()
+    {
+        $categories = Category::where('status', 1)->get();
+        $products = Product::with('category')->where('status', 1)->paginate(8);
+        $bastSales = Product::with('category')->where('status', 1)->where('sale_status', 1)->paginate(8);
 
-        return view('frontend.index',[
+        return view('frontend.index', [
             'products'      => $products,
-            'bastSales'		=> $bastSales,
-            'categories' 	=> $categories,
+            'bastSales'        => $bastSales,
+            'categories'     => $categories,
         ]);
 
         /*return view('frontend.aroma.index',[
@@ -53,23 +55,22 @@ class EShopController extends Controller
     public function productDetails($slug)
     {
         $categories = Category::where('status', 1)->orderBy('name', 'ASC')->get();
-    	$product = Product::with('category', 'productImages','reviews')->where('slug', $slug)->firstOrfail();
+        $product = Product::with('category', 'productImages', 'reviews')->where('slug', $slug)->firstOrfail();
         if ($product) {
-    	   $relatedProducts = Product::with('productImages')->where('category_id', $product->category_id)->where('slug','!=', $slug)->take(4)->get();
+            $relatedProducts = Product::with('productImages')->where('category_id', $product->category_id)->where('slug', '!=', $slug)->take(4)->get();
 
-            return  view('frontend.product-details',[
+            return  view('frontend.product-details', [
                 'product'           => $product,
                 'categories'        => $categories,
                 'relatedProducts'   => $relatedProducts,
             ]);
 
-            return  view('frontend.aroma.product-details',[
+            return  view('frontend.aroma.product-details', [
                 'product'           => $product,
                 'categories'        => $categories,
                 'relatedProducts'   => $relatedProducts,
             ]);
-        }
-    	else{
+        } else {
             return redirect()->route('/');
         }
     }
@@ -84,19 +85,16 @@ class EShopController extends Controller
             $category_id = Category::where('slug', $slug)->firstOrfail()->id;
             if (Product::where('category_id', $category_id)->exists()) {
                 $products = Product::where('category_id', $category_id)->where('status', 1)->inRandomOrder()->paginate(8);
-                return  view('frontend.product-category',[
+                return  view('frontend.product-category', [
                     'products' => $products,
                     'slug' => $slug,
                 ]);
-            }
-            else{
+            } else {
                 return redirect()->route('/');
-            }            
-        }
-        else{
+            }
+        } else {
             return redirect()->route('/');
         }
-    	
     }
 
 
@@ -104,9 +102,8 @@ class EShopController extends Controller
      * @param string $product_id
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function addToWishList($product_id='')
+    public function addToWishList($product_id = '')
     {
-
     }
 
 
@@ -117,25 +114,23 @@ class EShopController extends Controller
      */
     public function search(Request $request)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'search' => 'required'
         ]);
-        if ($request->category == 'all'){
+        if ($request->category == 'all') {
             $search_input = $request->search;
-            $products = Product::where('name', 'LIKE', '%'.$search_input.'%')->get();
-            return  view('frontend.search',[
+            $products = Product::where('name', 'LIKE', '%' . $search_input . '%')->get();
+            return  view('frontend.search', [
                 'products' => $products,
             ]);
-        }
-        else{
+        } else {
             $search_input = $request->search;
             $category_id = Category::where('slug', $request->category)->firstOrfail()->id;
-            $products = Product::where('name', 'LIKE', '%'.$search_input.'%')->where('category_id', $category_id)->get();
-            return  view('frontend.search',[
+            $products = Product::where('name', 'LIKE', '%' . $search_input . '%')->where('category_id', $category_id)->get();
+            return  view('frontend.search', [
                 'products' => $products,
             ]);
         }
-
     }
 
     /**
@@ -145,10 +140,10 @@ class EShopController extends Controller
     public function searchAjax(Request $request)
     {
         $search_input = $request->search_input;
-        $products = Product::where('name', 'LIKE', '%'.$search_input.'%')->get();
+        $products = Product::where('name', 'LIKE', '%' . $search_input . '%')->get();
         $stringToSend = "";
         foreach ($products as $product) {
-            $stringToSend .= "<li><a href='".route('/product-details',['slug' => $product->slug])."'>".$product->name."</a></li>";
+            $stringToSend .= "<li><a href='" . route('/product-details', ['slug' => $product->slug]) . "'>" . $product->name . "</a></li>";
         }
         return $stringToSend;
     }
@@ -161,20 +156,19 @@ class EShopController extends Controller
      */
     public function checkout(Request $request)
     {
-        $this->validate($request,[
-            'sub_total' =>'required',
-            'shipping_method' =>'required',
-        ],[
+        $this->validate($request, [
+            'sub_total' => 'required',
+            'shipping_method' => 'required',
+        ], [
             'sub_total.required' => 'Please Select Shipping Method',
         ]);
         $divisions = Division::all();
-        return view('frontend.checkout',[
+        return view('frontend.checkout', [
             'divisions' => $divisions,
             'total_qty' => $request->total_qty,
             'sub_total' => $request->sub_total,
             'shipping_method' => $request->shipping_method,
         ]);
-        
     }
 
     /**
@@ -184,9 +178,9 @@ class EShopController extends Controller
     public function districtsList(Request $request)
     {
         $stringToSend = "<option>District *</option>";
-        $districts = District::where('division_id',$request->division_id)->get();
+        $districts = District::where('division_id', $request->division_id)->get();
         foreach ($districts as $district) {
-            $stringToSend .= "<option value='".$district->id."'>".$district->bn_name."</option>";
+            $stringToSend .= "<option value='" . $district->id . "'>" . $district->bn_name . "</option>";
         }
         return $stringToSend;
     }
@@ -198,18 +192,19 @@ class EShopController extends Controller
     public function upazilaList(Request $request)
     {
         $stringToSend = "<option>Upazila *</option>";
-        $upazilas = Upazila::where('district_id',$request->district_id)->get();
+        $upazilas = Upazila::where('district_id', $request->district_id)->get();
         foreach ($upazilas as $upazila) {
-            $stringToSend .= "<option value='".$upazila->id."'>".$upazila->bn_name."</option>";
+            $stringToSend .= "<option value='" . $upazila->id . "'>" . $upazila->bn_name . "</option>";
         }
         return $stringToSend;
     }
 
-    public function CreateAccount($request){
-        if($request->create_account){
-            $this->validate($request,[
-                'email' =>['required', 'string', 'email', 'unique:customers'],
-                'password' =>'required',
+    public function CreateAccount($request)
+    {
+        if ($request->create_account) {
+            $this->validate($request, [
+                'email' => ['required', 'string', 'email', 'unique:customers'],
+                'password' => 'required',
             ]);
             $customer_id = Customer::insertGetId([
                 'name' => $request->name,
@@ -218,16 +213,16 @@ class EShopController extends Controller
                 'password' => Hash::make($request->password),
             ]);
             return $customer_id;
-        }
-        else{
+        } else {
             $customer_id = null;
         }
     }
 
 
-    public function productShipping($request, $customer_id = null){
-        $shipping_id =Shipping::insertGetId([
-            'customer_id'   => Auth::guard('customer')->check()?Auth::guard('customer')->id():$customer_id,
+    public function productShipping($request, $customer_id = null)
+    {
+        $shipping_id = Shipping::insertGetId([
+            'customer_id'   => Auth::guard('customer')->check() ? Auth::guard('customer')->id() : $customer_id,
             'name'          => $request->name,
             'email'         => $request->email,
             'phone'  => $request->phone,
@@ -242,10 +237,11 @@ class EShopController extends Controller
         ]);
         return $shipping_id;
     }
-    
-    public function productSale($request, $shipping_id, $customer_id = null){
+
+    public function productSale($request, $shipping_id, $customer_id = null)
+    {
         $order_id = Order::insertGetId([
-            'customer_id'   => Auth::guard('customer')->check()?Auth::guard('customer')->id():$customer_id,
+            'customer_id'   => Auth::guard('customer')->check() ? Auth::guard('customer')->id() : $customer_id,
             'shipping_id'   => $shipping_id,
             'sub_total'     => $request->sub_total,
             'created_at'    => Carbon::now(),
@@ -253,21 +249,22 @@ class EShopController extends Controller
         return $order_id;
     }
 
-    public function productBilling($order_id, $shipping_id, $customer_id = null){
+    public function productBilling($order_id, $shipping_id, $customer_id = null)
+    {
         $carts = Cart::where('session_id', session()->getId())->get();
-        foreach ($carts as $cart){
+        foreach ($carts as $cart) {
             Billing::create([
                 'order_id' => $order_id,
-                'product_id' =>$cart->product_id,
-                'quantity' =>$cart->quantity,
+                'product_id' => $cart->product_id,
+                'quantity' => $cart->quantity,
                 'product_unit_price' => $cart->product->sale_price,
                 'created_at'    => Carbon::now(),
             ]);
 
-            Product::find($cart->product_id)->decrement('quantity',$cart->quantity);
+            Product::find($cart->product_id)->decrement('quantity', $cart->quantity);
         }
         Cart::truncate();
-        $shipping = Shipping::where('id',$shipping_id)->firstOrfail();
+        $shipping = Shipping::where('id', $shipping_id)->firstOrfail();
         Mail::to($shipping->email)->send(new OrderConfirmationMail($shipping));
     }
     /**
@@ -275,40 +272,38 @@ class EShopController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function shipping(Request $request){
+    public function shipping(Request $request)
+    {
         //return $request->all();
 
-        $this->validate($request,[
-            'name' =>'required|string',
-            'division_id' =>'required',
-            'district_id' =>'required',
-            'upazila_id' =>'required',
-            'phone' =>'required|string',
-            'zip_code' =>'required|string',
-            'phone' =>'required|string',
-            'email' =>'required|string',
-            'address' =>'required|string',
-            'payment_type' =>'required',
-            'shipping_method' =>'required',
+        $this->validate($request, [
+            'name' => 'required|string',
+            'division_id' => 'required',
+            'district_id' => 'required',
+            'upazila_id' => 'required',
+            'phone' => 'required|string',
+            'zip_code' => 'required|string',
+            'phone' => 'required|string',
+            'email' => 'required|string',
+            'address' => 'required|string',
+            'payment_type' => 'required',
+            'shipping_method' => 'required',
         ]);
 
         $customer_id = $this->CreateAccount($request);
 
-        if ($request->payment_type == 'cash'){
+        if ($request->payment_type == 'cash') {
             $shipping_id = $this->productShipping($request, $customer_id);
             $order_id = $this->productSale($request, $shipping_id, $customer_id);
             $this->productBilling($order_id, $shipping_id);
             session()->flash('cart_status', 'Your Order Successfully Completed, <a href="https://mail.google.com" target="_blank">Please Check Confirmation Email Mail</a>');
             return redirect('/');
-        }
-        else{
+        } else {
             $shipping_id = $this->productShipping($request);
             $order_id = $this->productSale($request, $shipping_id);
             $this->productBilling($order_id, $shipping_id);
             Session::put('sub_total', $request->sub_total);
             return redirect()->route('stripe');
         }
-
     }
-
 }

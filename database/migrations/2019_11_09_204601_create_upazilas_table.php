@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUpazilasTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class CreateUpazilasTable extends Migration
     public function up()
     {
         Schema::create('upazilas', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->unsignedTinyInteger('district_id');
             $table->string('name');
             $table->string('bn_name');
@@ -31,4 +31,4 @@ class CreateUpazilasTable extends Migration
     {
         Schema::dropIfExists('upazilas');
     }
-}
+};

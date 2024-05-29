@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductImagesTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -14,12 +14,11 @@ class CreateProductImagesTable extends Migration
     public function up()
     {
         Schema::create('product_images', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedTinyInteger('product_id');
+            $table->id();
+            $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->string('image');
             $table->string('path')->nullable();
             $table->timestamps();
-            //$table->foreign('product_id')->references('id')->on('products')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 
@@ -32,4 +31,4 @@ class CreateProductImagesTable extends Migration
     {
         Schema::dropIfExists('multi_images');
     }
-}
+};

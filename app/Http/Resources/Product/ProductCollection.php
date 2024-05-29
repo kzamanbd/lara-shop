@@ -2,9 +2,9 @@
 
 namespace App\Http\Resources\Product;
 
-use Illuminate\Http\Resources\Json\Resource;
+use Illuminate\Http\Resources\Json\JsonResource;
 
-class ProductCollection extends Resource
+class ProductCollection extends JsonResource
 {
     /**
      * Transform the resource collection into an array.
@@ -15,13 +15,13 @@ class ProductCollection extends Resource
     public function toArray($request)
     {
         return [
-            'name' =>$this->name,
+            'name' => $this->name,
             'category' => $this->category->name,
-            'price' =>$this->product_price,
-            'quantity' =>$this->quantity==0 ? 'Stok Out Product':$this->quantity,
-            'image' =>$this->image,
-            'href' =>[
-                'url' => route('products.show',$this->id),
+            'price' => $this->product_price,
+            'quantity' => $this->quantity == 0 ? 'Stok Out Product' : $this->quantity,
+            'image' => $this->image,
+            'href' => [
+                'url' => route('products.show', $this->id),
             ],
         ];
     }

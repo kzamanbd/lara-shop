@@ -16,17 +16,11 @@ class LoginController extends Controller
     /**
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function showLoginForm(){
+    public function showLoginForm()
+    {
         return view('customer.auth.login');
     }
 
-    /**
-     * CustomerLoginController constructor.
-     */
-    public function __construct()
-    {
-        $this->middleware('guest:customer')->except('customerLogout');
-    }
 
     /**
      * @param Request $request
@@ -36,21 +30,19 @@ class LoginController extends Controller
     {
         $this->validateLogin($request);
 
-        if ($this->guard()->attempt($this->credentials($request), $request->remember)){
+        if ($this->guard()->attempt($this->credentials($request), $request->remember)) {
 
-            return $request->has('previous')? Redirect::to($request->previous): redirect(route('customer'));
-
+            return $request->has('previous') ? Redirect::to($request->previous) : redirect(route('customer'));
+        } else {
+            return redirect()->back()->with('status', 'Email Or Password Not match!')->withInput($request->only('email', 'remember'));
         }
-        else{
-            return redirect()->back()->with('status', 'Email Or Password Not match!')->withInput($request->only('email','remember'));
-        }
-
     }
 
     /**
      * @param $request
      */
-    protected function validateLogin($request){
+    protected function validateLogin($request)
+    {
         $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string|min:8',
@@ -61,7 +53,8 @@ class LoginController extends Controller
      * @param $request
      * @return array
      */
-    protected function credentials($request){
+    protected function credentials($request)
+    {
         return [
             'email' => $request->email,
             'password' => $request->password
@@ -88,35 +81,8 @@ class LoginController extends Controller
         //
     }
 
-    public function guard(){
+    public function guard()
+    {
         return Auth::guard('customer');
-    }
-
-
-
-
-    //socialite login
-
-
-    public function redirectToProvider($provider)
-    {
-        return Socialite::driver($provider)->redirect();
-    }
-
-    /**
-     * Obtain the user information from GitHub.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function providerCallback()
-    {
-        $customer = Socialite::driver('facebook')->user();
-        /*auth()->login($customer, true);
-        return redirect(route('customer'));*/
-        return response()->json([
-            'token' => $customer->token,
-            'name' => $customer->name,
-            'email' => $customer->email,
-        ]);
     }
 }

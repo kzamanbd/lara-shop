@@ -31,7 +31,9 @@
 
                             <div class="info-box-content">
                                 <span class="info-box-text">Total Sale</span>
-                                <span class="info-box-number">{{number_format(App\Models\Order::all()->sum('sub_total'),2,'.',',')}}<small> ৳</small></span>
+                                <span
+                                    class="info-box-number">{{ number_format(App\Models\Order::all()->sum('sub_total'), 2, '.', ',') }}<small>
+                                        ৳</small></span>
                             </div>
                             <!-- /.info-box-content -->
                         </div>
@@ -44,7 +46,7 @@
 
                             <div class="info-box-content">
                                 <span class="info-box-text">Sales</span>
-                                <span class="info-box-number">{{App\Models\Order::all()->count()}}</span>
+                                <span class="info-box-number">{{ App\Models\Order::all()->count() }}</span>
                             </div>
                             <!-- /.info-box-content -->
                         </div>
@@ -61,7 +63,7 @@
 
                             <div class="info-box-content">
                                 <span class="info-box-text">Total Customers</span>
-                                <span class="info-box-number">{{App\Customer::all()->count()}}</span>
+                                <span class="info-box-number">{{ App\Models\Customer::all()->count() }}</span>
                             </div>
                             <!-- /.info-box-content -->
                         </div>

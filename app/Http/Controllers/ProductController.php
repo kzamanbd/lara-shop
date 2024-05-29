@@ -2,33 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Image;
 use Carbon\Carbon;
 use App\Models\Review;
 use App\Models\Product;
 use App\Models\Category;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\ProductImages;
-use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
 {
 
     /**
-     * AdminProductController constructor.
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
      * @param $string
      * @return null|string|string[]
      */
-    public function slug($string) {
+    public function slug($string)
+    {
         return preg_replace('/\s+/u', '-', trim($string));
     }
 
@@ -38,8 +29,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::with('category')->paginate(10)->setPageName('products-manage');
-        return view('backend.products-manage',['products'=> $products]);
+        $products = Product::with('category')->paginate(10);
+        return view('backend.products-manage', ['products' => $products]);
     }
 
     /**
@@ -48,7 +39,7 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::where('status', 1)->get();
-        return view('backend.product-create',['categories' => $categories]);
+        return view('backend.product-create', ['categories' => $categories]);
     }
 
 
@@ -56,14 +47,15 @@ class ProductController extends Controller
      * @param $request
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function validation($request){
-        $this->validate($request,[
+    public function validation($request)
+    {
+        $this->validate($request, [
             'name'          => 'required',
             'category_id'   => 'required',
             'product_price' => 'required',
             'sale_price'    => 'required',
             'product_color' => 'required',
-            'alert_quantity'=> 'required',
+            'alert_quantity' => 'required',
             'quantity'      => 'required',
             'description'   => 'required',
             'image'         => 'required|image|mimes:jpg,png,jpeg,gif',
@@ -75,7 +67,8 @@ class ProductController extends Controller
      * @param $request
      * @param $imageUri
      */
-    public function productStore($request, $imageUri){
+    public function productStore($request, $imageUri)
+    {
         Product::create([
             'name'          => $request->name,
             'slug'          => $this->slug($request->name),
@@ -83,7 +76,7 @@ class ProductController extends Controller
             'product_price' => $request->product_price,
             'sale_price'    => $request->sale_price,
             'product_color' => $request->product_color,
-            'alert_quantity'=> $request->alert_quantity,
+            'alert_quantity' => $request->alert_quantity,
             'quantity'      => $request->quantity,
             'description'   => $request->description,
             'image'         => $imageUri,
@@ -93,7 +86,8 @@ class ProductController extends Controller
     }
 
 
-    public function productUpdate($request, $imageUri = null){
+    public function productUpdate($request, $imageUri = null)
+    {
         Product::where('id', $request->product_id)->update([
             'name'          => $request->name,
             'slug'          => $this->slug($request->name),
@@ -101,7 +95,7 @@ class ProductController extends Controller
             'product_price' => $request->product_price,
             'sale_price'    => $request->sale_price,
             'product_color' => $request->product_color,
-            'alert_quantity'=> $request->alert_quantity,
+            'alert_quantity' => $request->alert_quantity,
             'quantity'      => $request->quantity,
             'description'   => $request->description,
             'status'        => $request->status,
@@ -117,14 +111,15 @@ class ProductController extends Controller
      * @param $request
      * @return string
      */
-    public function uploadImage($request){
+    public function uploadImage($request)
+    {
         $image = $request->file('image');
         $name = $this->slug($image->getClientOriginalName());
-        $imageUri = 'IMG_'.$name;
+        $imageUri = 'IMG_' . $name;
         $directory = 'uploads/products/';
-        Image::make($image)->fit('600', '600', function($constraint) {
+        Image::make($image)->fit('600', '600', function ($constraint) {
             $constraint->aspectRatio();
-        })->save($directory.$imageUri);
+        })->save($directory . $imageUri);
         return $imageUri;
     }
 
@@ -145,23 +140,23 @@ class ProductController extends Controller
      */
     public function productMultipleImageStore(Request $request)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'image' => 'required'
         ]);
 
-        foreach($request->file('image') as $image){
-            $name = $request->product_id.'_'.$this->slug($image->getClientOriginalName());
+        foreach ($request->file('image') as $image) {
+            $name = $request->product_id . '_' . $this->slug($image->getClientOriginalName());
             $directory = 'uploads/products/';
-            Image::make($image)->fit('600', '600', function($constraint) {
+            Image::make($image)->fit('600', '600', function ($constraint) {
                 $constraint->aspectRatio();
-            })->save($directory.$name);
+            })->save($directory . $name);
             ProductImages::create([
                 'product_id' => $request->product_id,
                 'image' => $name,
                 'path' => $directory,
             ]);
         }
-        Session::flash('success','Images Successfully Uploaded');
+        Session::flash('success', 'Images Successfully Uploaded');
         return redirect(route('products.index'));
     }
 
@@ -176,14 +171,13 @@ class ProductController extends Controller
         $this->validation($request);
         $imageUri = $this->uploadImage($request);
         $this->productStore($request, $imageUri);
-        Session::flash('success','Product Insert Successfully');
+        Session::flash('success', 'Product Insert Successfully');
         return redirect(route('products.index'));
     }
 
 
     public function show(Product $product)
     {
-
     }
 
     /**
@@ -196,7 +190,7 @@ class ProductController extends Controller
     {
         $categories = Category::all();
         $product = Product::findOrfail($id);
-        return view('backend.product-edit',[
+        return view('backend.product-edit', [
             'product' => $product,
             'categories' => $categories,
         ]);
@@ -224,8 +218,7 @@ class ProductController extends Controller
         if ($request->has('image')) {
             $imageUri = $this->uploadImage($request);
             $this->productUpdate($request, $imageUri);
-        }
-        else{
+        } else {
             $this->productUpdate($request);
         }
         Session::flash('success', 'Product Update Successfully');
@@ -245,7 +238,7 @@ class ProductController extends Controller
             'status' => 0,
             'updated_at' => Carbon::now(),
         ]);
-        Session::flash('success','Product Unpublished Successfully');
+        Session::flash('success', 'Product Unpublished Successfully');
         return back();
     }
 
@@ -259,8 +252,8 @@ class ProductController extends Controller
             'status' => 1,
             'updated_at' => Carbon::now(),
         ]);
-        
-        Session::flash('success','Product Published Successfully');
+
+        Session::flash('success', 'Product Published Successfully');
         return back();
     }
 
@@ -271,14 +264,14 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $path = 'uploads/products/';
-        $product = Product::with('productImages','reviews')->findOrfail($id);
+        $product = Product::with('productImages', 'reviews')->findOrfail($id);
         if ($product) {
             if ($product->image != 'default.jpg') {
-                unlink($path.$product->image);
+                unlink($path . $product->image);
             }
             if ($product->productImages) {
                 foreach ($product->productImages as $getImage) {
-                    unlink($path.$getImage->image);
+                    unlink($path . $getImage->image);
                     ProductImages::findOrfail($getImage->id)->delete();
                 }
             }

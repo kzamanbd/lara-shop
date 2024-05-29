@@ -2,21 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Image;
-use Carbon\Carbon;
+
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 class CategoryController extends Controller
 {
 
-    public function __construct()
+    public function slug($string)
     {
-        $this->middleware('auth');
-    }
-
-    public function slug($string) {
         return preg_replace('/\s+/u', '-', trim($string));
     }
 
@@ -28,7 +24,7 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
-        return view('backend.category-manage',['categories' => $categories]);
+        return view('backend.category-manage', ['categories' => $categories]);
     }
 
     /**
@@ -42,15 +38,16 @@ class CategoryController extends Controller
     }
 
 
-    public function uploadImage($request){
+    public function uploadImage($request)
+    {
         $categoryImage = $request->file('image');
-        $imageName = substr(time(),0,10);
+        $imageName = substr(time(), 0, 10);
         $imgExt = strtolower($categoryImage->getClientOriginalExtension());
-        $imageUri = $imageName.'.'.$imgExt;
+        $imageUri = $imageName . '.' . $imgExt;
         $directory = 'uploads/categories/';
-        Image::make($categoryImage)->fit('600', '400', function($constraint) {
+        Image::make($categoryImage)->fit('600', '400', function ($constraint) {
             $constraint->aspectRatio();
-        })->save($directory.$imageUri);
+        })->save($directory . $imageUri);
         return $imageUri;
     }
 
@@ -62,11 +59,11 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'name'   => 'required|unique:categories',
             'status' => 'required',
             'image'  => 'image|mimes:jpg,png,jpeg,gif'
-        ],[
+        ], [
             'name.required'  => 'Please fill out the category name',
             'status.required'    => 'Choose Publication Status'
         ]);
@@ -78,12 +75,11 @@ class CategoryController extends Controller
                 'image'     => $imageUri,
                 'status'    => $request->status,
             ]);
-        }
-        else{
+        } else {
             Category::create([
                 'name'  => $request->name,
                 'slug'  => $this->slug($request->name),
-                'status'=> $request->status,
+                'status' => $request->status,
             ]);
         }
         $request->session()->flash('success', 'Category Inserted Successfully');
@@ -133,12 +129,12 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         Category::findOrfail($id);
-        foreach (Product::where('category_id', $id)->get() as $item){
+        foreach (Product::where('category_id', $id)->get() as $item) {
             Product::where('id', $item->id)->delete();
         }
 
-        if(Category::find($id)->image != 'default.jpg'){
-            $path = 'uploads/categories/'.Category::find($id)->image;
+        if (Category::find($id)->image != 'default.jpg') {
+            $path = 'uploads/categories/' . Category::find($id)->image;
             unlink($path);
         }
         Category::where('id', $id)->delete();

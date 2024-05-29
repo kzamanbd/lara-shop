@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateShippingsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class CreateShippingsTable extends Migration
     public function up()
     {
         Schema::create('shippings', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->unsignedTinyInteger('customer_id')->nullable();
             $table->string('name');
             $table->string('email');
@@ -42,4 +42,4 @@ class CreateShippingsTable extends Migration
     {
         Schema::dropIfExists('shippings');
     }
-}
+};
