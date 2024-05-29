@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('shippings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedTinyInteger('customer_id')->nullable();
+            $table->foreignId('customer_id')->constrained('users')->onDelete('cascade');
             $table->string('name');
             $table->string('email');
             $table->string('phone');
@@ -29,7 +29,6 @@ return new class extends Migration
             $table->string('shipping_method');
             $table->boolean('status')->default(false);
             $table->timestamps();
-            //$table->foreign('customer_id')->references('id')->on('customers')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

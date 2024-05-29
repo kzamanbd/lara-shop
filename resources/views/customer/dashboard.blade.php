@@ -57,7 +57,7 @@
 
                         <div class="info-box-content">
                             <span class="info-box-text">Total Customers</span>
-                            <span class="info-box-number">{{ App\Models\Customer::all()->count() }}</span>
+                            <span class="info-box-number">0</span>
                         </div>
                         <!-- /.info-box-content -->
                     </div>
@@ -70,7 +70,7 @@
                 <div class="col-md-12">
                     <div class="box box-info">
                         <div class="box-header">
-                            <h4>Welcome <em>{{ ucwords(Auth::guard('customer')->user()->name) }}</em>!. Your Order Details
+                            <h4>Welcome <em>{{ ucwords(Auth::user()->name) }}</em>!. Your Order Details
                             </h4>
                         </div>
                         <div class="box-body">
@@ -93,10 +93,10 @@
                                         <td>{{ $order->shipping->payment_status == 0 ? 'Pending' : 'Success' }}</td>
                                         <td class="text-center">
                                             <div class="btn-group">
-                                                <a href="{{ route('customer.order.details', ['order_id' => $order->shipping_id]) }}"
+                                                <a href="{{ route('customer.order.details', $order->shipping_id) }}"
                                                     class="btn btn-outline-success btn-sm">Order Details <i
                                                         class="fa fa-eye" aria-hidden="true"></i></a>
-                                                <a href="{{ route('customer.order.cancel', ['id' => $order->id]) }}"
+                                                <a href="{{ route('customer.order.cancel', $order->id) }}"
                                                     class="btn btn-outline-danger btn-sm">Cancel <i class="fa fa-remove"
                                                         aria-hidden="true"></i></a>
                                             </div>

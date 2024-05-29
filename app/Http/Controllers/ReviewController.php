@@ -2,17 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
 use App\Models\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class ReviewController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth:customer')->except('index', 'store');
-    }
 
     /**
      * Display a listing of the resource.
@@ -42,7 +38,7 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
+        $this->validate($request, [
             'product_id' => 'required',
             'name' => 'required',
             'email' => 'required',
@@ -50,14 +46,14 @@ class ReviewController extends Controller
             'rating' => 'required',
         ]);
         Review::create([
-            'customer_id' => Auth::guard('customer')->check()?Auth::guard('customer')->id():null,
+            'customer_id' => Auth::id(),
             'product_id' => $request->product_id,
             'name' => $request->name,
             'email' => $request->email,
             'description' => $request->description,
             'rating' => $request->rating,
         ]);
-        Session::flash('success','Product Review Successfully Added');
+        Session::flash('success', 'Product Review Successfully Added');
         return back();
     }
 

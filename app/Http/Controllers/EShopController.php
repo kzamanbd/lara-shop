@@ -13,10 +13,10 @@ use App\Models\Category;
 use App\Models\District;
 use App\Models\Shipping;
 use App\Models\Division;
-use App\Models\ProductImages;
 use Illuminate\Http\Request;
 use App\Mail\OrderConfirmationMail;
 use App\Models\Customer;
+use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
@@ -203,10 +203,10 @@ class EShopController extends Controller
     {
         if ($request->create_account) {
             $this->validate($request, [
-                'email' => ['required', 'string', 'email', 'unique:customers'],
+                'email' => ['required', 'string', 'email', 'unique:users'],
                 'password' => 'required',
             ]);
-            $customer_id = Customer::insertGetId([
+            $customer_id = User::insertGetId([
                 'name' => $request->name,
                 'email' => $request->email,
                 'phone' => $request->phone,
@@ -222,7 +222,7 @@ class EShopController extends Controller
     public function productShipping($request, $customer_id = null)
     {
         $shipping_id = Shipping::insertGetId([
-            'customer_id'   => Auth::guard('customer')->check() ? Auth::guard('customer')->id() : $customer_id,
+            'customer_id'   => Auth::check() ? Auth::id() : $customer_id,
             'name'          => $request->name,
             'email'         => $request->email,
             'phone'  => $request->phone,
@@ -241,7 +241,7 @@ class EShopController extends Controller
     public function productSale($request, $shipping_id, $customer_id = null)
     {
         $order_id = Order::insertGetId([
-            'customer_id'   => Auth::guard('customer')->check() ? Auth::guard('customer')->id() : $customer_id,
+            'customer_id'   => Auth::check() ? Auth::id() : $customer_id,
             'shipping_id'   => $shipping_id,
             'sub_total'     => $request->sub_total,
             'created_at'    => Carbon::now(),

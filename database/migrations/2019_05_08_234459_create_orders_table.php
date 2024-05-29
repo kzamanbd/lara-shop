@@ -15,11 +15,10 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->unsignedTinyInteger('customer_id')->nullable();
+            $table->foreignId('customer_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->integer('shipping_id');
             $table->decimal('sub_total', 8, 2);
             $table->timestamps();
-            //$table->foreign('shipping_id')->references('id')->on('shippings')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

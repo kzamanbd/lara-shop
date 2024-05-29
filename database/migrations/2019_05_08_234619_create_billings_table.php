@@ -15,12 +15,11 @@ return new class extends Migration
     {
         Schema::create('billings', function (Blueprint $table) {
             $table->id();
-            $table->unsignedTinyInteger('order_id');
+            $table->foreignId('order_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->integer('product_id');
             $table->integer('quantity');
             $table->decimal('product_unit_price', 8, 2);
             $table->timestamps();
-            //$table->foreign('sale_id')->references('id')->on('sales')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

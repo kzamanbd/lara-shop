@@ -13,23 +13,25 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
+        User::factory(10)->create();
+        User::factory()->create([
+            'name' => 'Admin User',
+            'email' => 'admin@example.com',
+            'role' => 'admin',
+            'email_verified_at' => now(),
+        ]);
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
-        $this->call(CategoryTableSeeder::class);
-        $this->call(DistrictTableSeeder::class);
-        $this->call(DivisionTableSeeder::class);
-        $this->call(ProductsTableSeeder::class);
-        $this->call(UpazilaTableSeeder::class);
-        $this->call(SettingsTableSeeder::class);
-        User::create([
-            'name' => 'Admin',
-            'email' => 'login@gmail.com',
-            'password' => bcrypt('12345678'),
-            'email_verified_at' => now(),
+
+        $this->call([
+            DistrictTableSeeder::class,
+            DivisionTableSeeder::class,
+            UpazilaTableSeeder::class,
+            CategoryTableSeeder::class,
+            ProductsTableSeeder::class,
+            SettingsTableSeeder::class,
         ]);
     }
 }

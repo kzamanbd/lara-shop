@@ -2,23 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
 use Carbon\Carbon;
 use App\Models\Order;
 use App\Models\Billing;
 use App\Models\Shipping;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class CustomerController extends Controller
 {
-    public function index()
-    {
-        $orders = Order::where('customer_id', Auth::guard('customer')->id())->get();
-        return view('customer.dashboard', ['orders' => $orders]);
-    }
-
     public function editProfileForm()
     {
         return view('customer.profile-edit');
@@ -27,7 +21,7 @@ class CustomerController extends Controller
 
     public function customerProfile()
     {
-        dd(Customer::where('id', Auth::guard('customer')->id())->first());
+        dd(User::where('id', Auth::id())->first());
     }
 
 
@@ -51,7 +45,7 @@ class CustomerController extends Controller
         //     'zip_code'     => $request->zip_code,
         //     'created_at' => Carbon::now(),
         // ]);
-        $request->session()->flash('success', 'Profile Inserted Successfully');
+        Session::flash('success', 'Profile Inserted Successfully');
         return back();
     }
 
@@ -73,7 +67,7 @@ class CustomerController extends Controller
         //     'zip_code'  => $request->zip_code,
         //     'updated_at' => Carbon::now(),
         // ]);
-        $request->session()->flash('success', 'Profile Updated Successfully');
+        Session::flash('success', 'Profile Updated Successfully');
         return back();
     }
 

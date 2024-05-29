@@ -63,7 +63,7 @@
 
                             <div class="info-box-content">
                                 <span class="info-box-text">Total Customers</span>
-                                <span class="info-box-number">{{ App\Models\Customer::all()->count() }}</span>
+                                <span class="info-box-number">0</span>
                             </div>
                             <!-- /.info-box-content -->
                         </div>

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('slug')->unique();
-            $table->unsignedTinyInteger('category_id');
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->decimal('product_price', 8, 2);
             $table->decimal('sale_price', 8, 2);
             $table->string('product_color');
@@ -28,7 +28,6 @@ return new class extends Migration
             $table->boolean('status')->default(true);
             $table->boolean('sale_status')->default(false);
             $table->timestamps();
-            //$table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('carts', function (Blueprint $table) {
             $table->id();
             $table->string('session_id');
-            $table->unsignedTinyInteger('product_id');
+            $table->foreignId('product_id')->constrained()->onDelete('cascade');
             $table->string('quantity');
             $table->timestamps();
         });

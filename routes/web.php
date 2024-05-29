@@ -11,13 +11,12 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\CustomerController;
-
-use App\Http\Controllers\Customer\LoginController;
-use App\Http\Controllers\Customer\RegisterController;
+use App\Http\Controllers\DashboardController;
+use Livewire\Volt\Volt;
 
 Route::view('/', 'welcome');
 
-Route::view('dashboard', 'dashboard')
+Route::get('dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
@@ -71,7 +70,7 @@ Route::prefix('payment')->group(function () {
 });
 
 Route::middleware('auth')->prefix('admin')->group(function () {
-    Route::get('/', [AdminController::class, 'index'])->name('admin');
+    Route::get('/', [DashboardController::class, 'index'])->name('admin');
     Route::prefix('categories')->group(function () {
         Route::get('/', [CategoryController::class, 'index'])->name('categories.index');
         Route::get('create', [CategoryController::class, 'create'])->name('category.create');
@@ -99,14 +98,10 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 });
 
 Route::prefix('customer')->group(function () {
-    Route::get('/', [CustomerController::class, 'index'])->name('customer');
-    Route::get('login', [LoginController::class, 'showLoginForm'])->middleware('guest:customer')->name('customer.login');
-    Route::post('login', [LoginController::class, 'login'])->name('customer.login');
-    Route::get('register', [RegisterController::class, 'showRegistrationForm'])->middleware('guest:customer')->name('customer.register');
-    Route::post('register', [RegisterController::class, 'register'])->name('customer.register');
+    Route::get('/', [DashboardController::class, 'index'])->name('customer');
+    Volt::route('login', 'pages.auth.login')->name('login');
 
-    Route::middleware('auth:customer')->group(function () {
-        Route::post('logout', [LoginController::class, 'customerLogout'])->name('customer.logout');
+    Route::middleware('auth')->group(function () {
         Route::get('order-details/{id}', [CustomerController::class, 'orderDetails'])->name('customer.order.details');
         Route::get('order-cancel/{id}', [CustomerController::class, 'orderCancel'])->name('customer.order.cancel');
         Route::get('profile', [CustomerController::class, 'customerProfile'])->name('customer.profile');

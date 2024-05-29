@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Category;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 
@@ -82,7 +83,7 @@ class CategoryController extends Controller
                 'status' => $request->status,
             ]);
         }
-        $request->session()->flash('success', 'Category Inserted Successfully');
+        Session::flash('success', 'Category Inserted Successfully');
         return redirect()->route('categories.index');
     }
 
