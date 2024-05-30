@@ -1,0 +1,14 @@
+@layer components {
+    .card {
+        @apply rounded-md bg-white shadow-sm dark:bg-dark;
+    }
+    .card-header {
+        @apply dark--text border-b border-dashed border-gray-200 p-4 font-semibold dark:border-gray-700;
+    }
+    .card-body {
+        @apply p-4;
+    }
+    .variant--bordered .card {
+        @apply border border-gray-200 dark:border-gray-700;
+    }
+}

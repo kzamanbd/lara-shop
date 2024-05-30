@@ -1,0 +1,58 @@
+/* typography */
+h1 {
+    @apply text-4xl font-semibold;
+}
+h2 {
+    @apply text-3xl font-semibold;
+}
+h3 {
+    @apply text-2xl font-semibold;
+}
+h4 {
+    @apply text-xl font-semibold;
+}
+h5 {
+    @apply text-lg font-semibold;
+}
+h6 {
+    @apply text-sm font-semibold;
+}
+
+.text-10 {
+    font-size: 0.625rem;
+}
+.text-11 {
+    font-size: 0.688rem;
+}
+.text-13 {
+    font-size: 0.813rem;
+}
+.text-15 {
+    font-size: 0.938rem;
+}
+.text-16 {
+    font-size: 1rem;
+}
+.text-17 {
+    font-size: 1.063rem;
+}
+.text-19 {
+    font-size: 1.188rem;
+}
+.text-21 {
+    font-size: 1.313rem;
+}
+.text-22 {
+    font-size: 1.375rem;
+}
+[class*='icon-[mdi-'] {
+    @apply h-5 w-5;
+}
+/* Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+.no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}

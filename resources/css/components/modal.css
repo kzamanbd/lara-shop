@@ -1,0 +1,62 @@
+@layer components {
+    .modal {
+        @apply fixed inset-0 z-[999] hidden h-full w-full flex-col overflow-y-auto overflow-x-hidden px-4 py-10;
+    }
+    .modal-full {
+        @apply p-0;
+    }
+    .modal-dialog {
+        @apply relative z-[1001] mx-auto w-full max-w-xl origin-center scale-90 transform opacity-0 transition-all duration-500 ease-in-out;
+    }
+
+    .modal-sm .modal-dialog {
+        @apply max-w-md;
+    }
+
+    .modal-lg .modal-dialog {
+        @apply max-w-3xl;
+    }
+
+    .modal-full .modal-dialog {
+        @apply h-screen max-w-full;
+    }
+
+    .modal-full .modal-content {
+        @apply rounded-none;
+    }
+
+    .modal.show .modal-dialog {
+        @apply scale-100 opacity-100;
+    }
+    .modal-centered {
+        @apply justify-center;
+    }
+    .modal-content {
+        @apply relative flex h-full w-full flex-col overflow-hidden rounded-md bg-white shadow-xl dark:bg-slate-800;
+    }
+
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+        @apply px-4 py-4;
+    }
+
+    .modal-header {
+        @apply border-b border-b-slate-200 dark:border-b-slate-600;
+    }
+
+    .modal-body {
+        @apply flex-grow overflow-auto;
+    }
+
+    .modal-footer {
+        @apply border-t border-t-slate-300 dark:border-t-slate-600;
+    }
+
+    .modal-backdrop {
+        @apply fixed inset-0 z-[1000] h-full w-full bg-black opacity-0 transition-opacity duration-500 ease-in-out;
+    }
+    .modal-backdrop.show {
+        @apply opacity-40;
+    }
+}

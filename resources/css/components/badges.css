@@ -1,0 +1,80 @@
+@layer components {
+    .badge {
+        @apply inline-block rounded-full bg-gray-600 px-2 py-0.5 text-center text-xs font-semibold uppercase leading-4 text-white;
+    }
+    .badge-primary {
+        @apply bg-primary;
+    }
+    .badge-secondary {
+        @apply bg-secondary;
+    }
+    .badge-success {
+        @apply bg-success;
+    }
+    .badge-danger {
+        @apply bg-danger;
+    }
+    .badge-warning {
+        @apply bg-warning;
+    }
+    .badge-info {
+        @apply bg-info;
+    }
+    .badge-light {
+        @apply bg-light;
+    }
+    .badge-dark {
+        @apply bg-dark;
+    }
+    .badge-pill {
+        @apply rounded-full;
+    }
+    .badge-lg {
+        @apply text-base leading-5;
+    }
+    .badge-sm {
+        @apply text-sm leading-3;
+    }
+    .badge-outline-primary {
+        @apply border border-primary bg-transparent text-primary;
+    }
+    .badge-outline-secondary {
+        @apply border border-secondary bg-transparent text-secondary;
+    }
+    .badge-outline-success {
+        @apply border border-success bg-transparent text-success;
+    }
+    .badge-outline-danger {
+        @apply border border-danger bg-transparent text-danger;
+    }
+    .badge-outline-warning {
+        @apply border border-warning bg-transparent text-warning;
+    }
+    .badge-outline-info {
+        @apply border border-info bg-transparent text-info;
+    }
+    .badge-outline-light {
+        @apply border border-light bg-transparent text-light;
+    }
+    .badge-outline-dark {
+        @apply border border-dark bg-transparent text-dark;
+    }
+    .badge-outline {
+        @apply border border-gray-600 bg-transparent text-gray-600;
+    }
+    .badge-link {
+        @apply bg-transparent text-primary;
+    }
+    .badge-link:hover {
+        @apply text-primary-dark;
+    }
+    .badge-link:focus {
+        @apply text-primary-dark;
+    }
+    .badge-link:active {
+        @apply text-primary-darker;
+    }
+    .badge-link:disabled {
+        @apply text-gray-400;
+    }
+}

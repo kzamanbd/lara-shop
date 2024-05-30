@@ -91,7 +91,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
         Route::get('delete/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
     });
 
-    Route::get('order/manage', [AdminController::class, 'orderManage'])->name('order.manage');
+    Route::get('local-sales', [AdminController::class, 'orderManage'])->name('order.manage');
     Route::get('order/details={id}', [AdminController::class, 'orderDetails'])->name('admin.order.details');
     Route::get('invoice/print={id}', [AdminController::class, 'orderInvoices'])->name('admin.order.invoice');
     Route::get('settings', [SettingsController::class, 'index'])->name('admin.settings');

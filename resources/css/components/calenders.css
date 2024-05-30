@@ -1,0 +1,20 @@
+@layer components {
+    .fc-button-group {
+        @apply space-x-2;
+    }
+    button.fc-next-button.fc-button.fc-button-primary {
+        @apply bg-blue-500 hover:bg-blue-700;
+    }
+}
+/* calender */
+.fc-button.fc-button-primary,
+.fc-prev-button.fc-button.fc-button-primary,
+.fc-next-button.fc-button.fc-button-primary {
+    @apply btn btn-outline-primary rounded-md border-primary bg-transparent capitalize duration-300 hover:border-primary focus:border-none active:bg-primary active:text-white;
+}
+.fc-today-button.fc-button.fc-button-primary {
+    @apply btn btn-outline-primary inline-block rounded-md bg-primary text-white;
+}
+.fc-button.fc-button-primary.fc-button-active {
+    @apply btn btn-outline-primary rounded-md !border-primary !bg-primary text-white focus:border-none active:bg-primary active:text-white;
+}

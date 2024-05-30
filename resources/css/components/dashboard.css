@@ -1,0 +1,11 @@
+@layer components {
+    .d-nav {
+        @apply flex flex-wrap text-center text-sm font-medium text-gray-500 dark:border-gray-700 dark:text-gray-400;
+    }
+    .d-nav-item {
+        @apply inline-block rounded-t-lg p-4 py-2 uppercase hover:bg-gray-50 hover:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-gray-300;
+    }
+    .d-nav-item.active {
+        @apply bg-gray-100 text-blue-600 dark:bg-gray-800 dark:text-blue-500;
+    }
+}

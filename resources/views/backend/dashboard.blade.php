@@ -1,25 +1,19 @@
-@extends('backend.layouts.app')
-@section('title', 'Dashboard')
+<x-app-layout>
+    <x-slot name="header">
+        <ol class="breadcrumb-nav">
+            <li class="inline-flex items-center">
+                <a href="/" class="breadcrumb-item"> Dashboard </a>
+            </li>
 
-@section('content')
+            <li aria-current="page">
+                <div class="flex items-center">
+                    <span class="icon-[mdi--chevron-right]"></span>
+                    <span class="breadcrumb-item-current"> Overview </span>
+                </div>
+            </li>
+        </ol>
+    </x-slot>
     <div class="dashboard">
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Dashboard</h1>
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Dashboard</li>
-                        </ol>
-                    </div><!-- /.col -->
-                </div><!-- /.row -->
-            </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content-header -->
-
         <!-- Main content -->
         <section class="content">
             <div class="container-fluid">
@@ -32,8 +26,9 @@
                             <div class="info-box-content">
                                 <span class="info-box-text">Total Sale</span>
                                 <span
-                                    class="info-box-number">{{ number_format(App\Models\Order::all()->sum('sub_total'), 2, '.', ',') }}<small>
-                                        ৳</small></span>
+                                    class="info-box-number">{{ number_format(App\Models\Order::all()->sum('sub_total'), 2, '.', ',') }}
+                                    <small>৳</small>
+                                </span>
                             </div>
                             <!-- /.info-box-content -->
                         </div>
@@ -59,7 +54,8 @@
 
                     <div class="col-12 col-sm-6 col-md-3">
                         <div class="info-box mb-3">
-                            <span class="info-box-icon bg-success elevation-1"><i class="fa fa-shopping-cart"></i></span>
+                            <span class="info-box-icon bg-success elevation-1"><i
+                                    class="fa fa-shopping-cart"></i></span>
 
                             <div class="info-box-content">
                                 <span class="info-box-text">Total Customers</span>
@@ -90,4 +86,4 @@
         </section>
         <!-- /.content -->
     </div>
-@endsection
+</x-app-layout>
