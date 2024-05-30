@@ -34,6 +34,6 @@ class OrderConfirmationMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Order Confirmation Email')->view('vendor.mails.order-confirmation',['shipping' => $this->shipping]);
+        return $this->subject('Order Confirmation Email')->view('emails.order-confirmation', ['shipping' => $this->shipping]);
     }
 }
