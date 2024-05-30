@@ -35,16 +35,6 @@ class CustomerController extends Controller
             'phone' => 'required|string|max:14|unique:c_profiles',
             'zip_code'    => 'required|string',
         ]);
-
-        // CProfile::insert([
-        //     'user_id'     => Auth::user()->id,
-        //     'first_name' => $request->first_name,
-        //     'last_name' => $request->last_name,
-        //     'address'     => $request->address,
-        //     'phone' => $request->phone,
-        //     'zip_code'     => $request->zip_code,
-        //     'created_at' => Carbon::now(),
-        // ]);
         Session::flash('success', 'Profile Inserted Successfully');
         return back();
     }

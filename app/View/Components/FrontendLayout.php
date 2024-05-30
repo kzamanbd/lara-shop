@@ -21,7 +21,7 @@ class FrontendLayout extends Component
     public function __construct(string $title = '')
     {
         $this->title = $title;
-        $this->settings = Setting::latest()->first();
+        $this->settings = Setting::latest()->first() ?? new Setting();
         $this->categories = Category::where('status', 1)->get();
         $this->carts = Cart::where('session_id', session()->getId())->get();
     }

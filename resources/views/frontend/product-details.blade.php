@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <ul class="breadcrumb-tree">
-                        <li><a href="{{ route('/') }}">Home</a></li>
+                        <li><a href="{{ route('home') }}">Home</a></li>
                         <li><a href="#">All Categories</a></li>
                         <li><a
                                 href="{{ route('category.products', ['slug' => $product->category->slug]) }}">{{ $product->category->name }}</a>
@@ -387,7 +387,7 @@
                     <!-- product -->
                     <div class="col-md-3 col-xs-6">
                         <div class="product">
-                            <a href="{{ route('/product-details', ['slug' => $relatedProduct->slug]) }}">
+                            <a href="{{ route('product-details', ['slug' => $relatedProduct->slug]) }}">
                                 <div class="product-img">
                                     <img src="{{ asset('uploads/products/' . $product->image) }}" alt="">
                                     <div class="product-label">

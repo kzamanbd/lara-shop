@@ -26,7 +26,7 @@
                                 <div class="col-sm-3">
                                     <!-- product -->
                                     <div class="product">
-                                        <a href="{{ route('/product-details', ['slug' => $product->slug]) }}">
+                                        <a href="{{ route('product-details', ['slug' => $product->slug]) }}">
                                             <div class="product-img">
                                                 <img src="{{ asset('uploads/products/' . $product->image) }}"
                                                     alt="">
@@ -39,7 +39,7 @@
                                         <div class="product-body">
                                             <p class="product-category">{{ $product->category->name }}</p>
                                             <h3 class="product-name"><a
-                                                    href="{{ route('/product-details', ['slug' => $product->slug]) }}">{{ $product->name }}</a>
+                                                    href="{{ route('product-details', ['slug' => $product->slug]) }}">{{ $product->name }}</a>
                                             </h3>
 
                                             <h4 class="product-price"><span>৳</span>

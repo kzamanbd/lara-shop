@@ -11,7 +11,7 @@
                 <div class="col-md-12">
                     <div class="breadcrumb-box">
                         <ul class="breadcrumb-tree">
-                            <li><a href="{{ route('/') }}">Home</a></li>
+                            <li><a href="{{ route('home') }}">Home</a></li>
                             <li class="active">Cart</li>
                         </ul>
                         <img src="{{ asset('frontend/img/page-info-art.png') }}" alt="" class="page-info-art">
@@ -50,12 +50,13 @@
 
                             @forelse ($carts as $cart)
                                 <tr>
-                                    <td><img src="{{ asset('uploads/products/' . $cart->product->image) }}" width="80px"
-                                            alt=""></td>
+                                    <td><img src="{{ asset('uploads/products/' . $cart->product->image) }}"
+                                            width="80px" alt=""></td>
                                     <td><a href="#">{{ $cart->product->name }}</a></td>
                                     <td>{{ number_format($cart->product->sale_price, 2, '.', ',') }}</td>
                                     <td><span class="badge">{{ $cart->quantity }}</span></td>
-                                    <td>{{ number_format($cart->product->sale_price * $cart->quantity, 2, '.', ',') }}</td>
+                                    <td>{{ number_format($cart->product->sale_price * $cart->quantity, 2, '.', ',') }}
+                                    </td>
                                     <td class="text-center"><a href="{{ route('carts.destroy', $cart->id) }}"
                                             class="btn btn-danger"><i class="fa fa-trash"></i></a></td>
                                 </tr>
@@ -74,7 +75,7 @@
                         <div class="row">
                             <div class="col-sm-4">
                                 <div class="shipping-btn-c">
-                                    <h3><a class="btn btn-success" href="{{ route('/') }}">Continue Shopping</a>
+                                    <h3><a class="btn btn-success" href="{{ route('home') }}">Continue Shopping</a>
                                     </h3>
                                 </div>
                             </div>

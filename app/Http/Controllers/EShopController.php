@@ -71,7 +71,7 @@ class EShopController extends Controller
                 'relatedProducts'   => $relatedProducts,
             ]);
         } else {
-            return redirect()->route('/');
+            return redirect()->route('home');
         }
     }
 
@@ -89,12 +89,9 @@ class EShopController extends Controller
                     'products' => $products,
                     'slug' => $slug,
                 ]);
-            } else {
-                return redirect()->route('/');
             }
-        } else {
-            return redirect()->route('/');
         }
+        return redirect()->route('home');
     }
 
 
@@ -143,7 +140,7 @@ class EShopController extends Controller
         $products = Product::where('name', 'LIKE', '%' . $search_input . '%')->get();
         $stringToSend = "";
         foreach ($products as $product) {
-            $stringToSend .= "<li><a href='" . route('/product-details', ['slug' => $product->slug]) . "'>" . $product->name . "</a></li>";
+            $stringToSend .= "<li><a href='" . route('product-details',  $product->slug) . "'>" . $product->name . "</a></li>";
         }
         return $stringToSend;
     }

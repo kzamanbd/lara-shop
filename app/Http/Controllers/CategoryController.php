@@ -41,14 +41,9 @@ class CategoryController extends Controller
 
     public function uploadImage($request)
     {
-        $categoryImage = $request->file('image');
-        $imageName = substr(time(), 0, 10);
-        $imgExt = strtolower($categoryImage->getClientOriginalExtension());
-        $imageUri = $imageName . '.' . $imgExt;
-        $directory = 'uploads/categories/';
-        Image::make($categoryImage)->fit('600', '400', function ($constraint) {
-            $constraint->aspectRatio();
-        })->save($directory . $imageUri);
+        $image = $request->file('image');
+        $name = $this->slug($image->getClientOriginalName());
+        $imageUri = $request->file('image')->storeAs('categories', $name);
         return $imageUri;
     }
 

@@ -50,12 +50,6 @@ class AdminController extends Controller
     public function orderInvoices($id)
     {
 
-        $check_order = Shipping::where('id', $id)->exists();
-        if ($check_order) {
-            $order_details = Shipping::where('id', $id)->first();
-            // $sale_details = Sale::where('shipping_id', $id)->first();
-        } else {
-            return back();
-        }
+        return Shipping::find($id);
     }
 }

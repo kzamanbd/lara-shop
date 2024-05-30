@@ -22,7 +22,7 @@
                     <!-- product -->
                     <div class="col-md-3 col-xs-6">
                         <div class="product">
-                            <a href="{{ route('/product-details', ['slug' => $product->slug]) }}">
+                            <a href="{{ route('product-details', ['slug' => $product->slug]) }}">
                                 <div class="product-img">
                                     <img src="{{ asset('uploads/products/' . $product->image) }}" alt="">
                                     <div class="product-label">

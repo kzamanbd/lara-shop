@@ -43,14 +43,23 @@
             <div id="top-header">
                 <div class="container">
                     <ul class="header-links pull-left">
-                        <li><a href="tel:{{ $settings ? $settings->phone : '+8801721279141' }}"><i
-                                    class="fa fa-phone"></i>
-                                {{ $settings ? $settings->phone : '+8801721279141' }}</a></li>
-                        <li><a href="mailto:{{ $settings ? $settings->email : 'zaman7.info@gmail.com' }}"><i
-                                    class="fa fa-envelope-o"></i>
-                                {{ $settings ? $settings->email : 'zaman7.info@gmail.com' }}</a></li>
-                        <li><a href="#"><i class="fa fa-map-marker"></i>
-                                {{ $settings ? $settings->address : 'Mymensingh, Bangladesh' }}</a></li>
+                        <li><a href="tel:{{ $settings->phone }}">
+                                <i class="fa fa-phone"></i>
+                                {{ $settings->phone }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="mailto:{{ $settings->email }}">
+                                <i class="fa fa-envelope-o"></i>
+                                {{ $settings->email }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-map-marker"></i>
+                                {{ $settings->address }}
+                            </a>
+                        </li>
                     </ul>
                     <ul class="header-links pull-right">
                         <li><a href="#"><i class="fa fa-dollar"></i> BDT</a></li>
@@ -79,12 +88,12 @@
                 <!-- container -->
                 <div class="container">
                     <!-- row -->
-                    <div class="row">
+                    <div class="row" style="display: flex; align-items:center">
                         <!-- LOGO -->
                         <div class="col-md-3">
                             <div class="header-logo">
-                                <a href="{{ route('/') }}" class="logo">
-                                    <img src="{{ asset('frontend/img/logo.png') }}" alt="">
+                                <a href="{{ route('home') }}" class="logo">
+                                    <h1 style="margin: 0; color: white;">CharmCart</h1>
                                 </a>
                             </div>
                         </div>
@@ -145,8 +154,11 @@
                                                             alt="">
                                                     </div>
                                                     <div class="product-body">
-                                                        <h3 class="product-name"><a
-                                                                href="{{ route('/product-details', ['slug' => $cart->product->slug]) }}">{{ $cart->product->name }}</a>
+                                                        <h3 class="product-name">
+                                                            <a
+                                                                href="{{ route('product-details', ['slug' => $cart->product->slug]) }}">
+                                                                {{ $cart->product->name }}
+                                                            </a>
                                                         </h3>
                                                         <h4 class="product-price"><span
                                                                 class="qty">{{ $cart->quantity }} x
@@ -215,7 +227,7 @@
                     <!-- NAV -->
 
                     <ul class="main-nav nav navbar-nav">
-                        <li class="{{ Request::is('/') ? 'active' : '' }}"><a href="{{ route('/') }}">Home</a>
+                        <li class="{{ Request::is('/') ? 'active' : '' }}"><a href="{{ route('home') }}">Home</a>
                         </li>
                         @foreach ($categories as $category)
                             <li
@@ -246,16 +258,25 @@
                         <div class="col-md-3 col-xs-6">
                             <div class="footer">
                                 <h3 class="footer-title">About Us</h3>
-                                <p>{{ Str::words($settings ? $settings->about_us : 'Lorem', 20) }}</p>
+                                <p>{{ Str::words($settings->about_us, 20) }}</p>
                                 <ul class="footer-links">
-                                    <li><a href="tel:{{ $settings ? $settings->phone : '+8801721279141' }}"><i
-                                                class="fa fa-phone"></i>
-                                            {{ $settings ? $settings->phone : '+8801721279141' }}</a></li>
-                                    <li><a href="mailto:{{ $settings ? $settings->email : 'zaman7.info@gmail.com' }}"><i
-                                                class="fa fa-envelope-o"></i>
-                                            {{ $settings ? $settings->email : 'zaman7.info@gmail.com' }}</a></li>
-                                    <li><a href="#"><i class="fa fa-map-marker"></i>
-                                            {{ $settings ? $settings->address : 'Mymensingh, Bangladesh' }}</a></li>
+                                    <li>
+                                        <a href="tel:{{ $settings->phone }}">
+                                            <i class="fa fa-phone"></i>
+                                            {{ $settings->phone }}
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="mailto:{{ $settings->email }}">
+                                            <i class="fa fa-envelope-o"></i>
+                                            {{ $settings->email }}
+                                        </a>
+                                    </li>
+                                    <li><a href="#">
+                                            <i class="fa fa-map-marker"></i>
+                                            {{ $settings->address }}
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>

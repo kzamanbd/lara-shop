@@ -11,7 +11,7 @@
                 <div class="col-md-12">
                     <div class="breadcrumb-box">
                         <ul class="breadcrumb-tree">
-                            <li><a href="{{ route('/') }}">Home</a></li>
+                            <li><a href="{{ route('home') }}">Home</a></li>
                             <li class="active">Checkout</li>
                         </ul>
                         <img src="{{ asset('frontend/img/page-info-art.png') }}" alt="" class="page-info-art">

@@ -15,8 +15,8 @@ class SettingsTableSeeder extends Seeder
     public function run()
     {
         Setting::create([
-            'phone' => '+8801721279241',
-            'email' => 'zaman7.info@gmail.com',
+            'phone' => '+8801716724245',
+            'email' => 'kzamanbn@gmail.com',
             'address' => 'Mymensingh, Bangladesh',
             'about_us' => 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut.',
             'created_at' => now(),

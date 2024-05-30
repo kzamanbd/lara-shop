@@ -7,10 +7,6 @@ use Illuminate\Http\Request;
 
 class SettingsController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -19,7 +15,7 @@ class SettingsController extends Controller
     public function index()
     {
         $settings = Setting::take(1)->orderBy('id', 'DESC')->first();
-        return view('backend.settings',['settings' => $settings]);
+        return view('backend.settings', ['settings' => $settings]);
     }
 
     /**

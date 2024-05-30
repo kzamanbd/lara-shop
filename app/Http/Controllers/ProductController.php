@@ -115,11 +115,7 @@ class ProductController extends Controller
     {
         $image = $request->file('image');
         $name = $this->slug($image->getClientOriginalName());
-        $imageUri = 'IMG_' . $name;
-        $directory = 'uploads/products/';
-        Image::make($image)->fit('600', '600', function ($constraint) {
-            $constraint->aspectRatio();
-        })->save($directory . $imageUri);
+        $imageUri = $request->file('image')->storeAs('products', $name);
         return $imageUri;
     }
 
@@ -145,11 +141,8 @@ class ProductController extends Controller
         ]);
 
         foreach ($request->file('image') as $image) {
-            $name = $request->product_id . '_' . $this->slug($image->getClientOriginalName());
-            $directory = 'uploads/products/';
-            Image::make($image)->fit('600', '600', function ($constraint) {
-                $constraint->aspectRatio();
-            })->save($directory . $name);
+            $name = $this->slug($image->getClientOriginalName());
+            $directory = $image->storeAs('products', $name);
             ProductImages::create([
                 'product_id' => $request->product_id,
                 'image' => $name,

@@ -64,7 +64,7 @@
                                 <div class="col-sm-3 col-xs-6">
                                     <!-- product -->
                                     <div class="product">
-                                        <a href="{{ route('/product-details', ['slug' => $product->slug]) }}">
+                                        <a href="{{ route('product-details', ['slug' => $product->slug]) }}">
                                             <div class="product-img">
                                                 <img src="{{ asset('uploads/products/' . $product->image) }}"
                                                     alt="">
@@ -80,8 +80,10 @@
                                         </a>
                                         <div class="product-body">
                                             <p class="product-category">{{ $product->category->name }}</p>
-                                            <h3 class="product-name"><a
-                                                    href="{{ route('/product-details', ['slug' => $product->slug]) }}">{{ $product->name }}</a>
+                                            <h3 class="product-name">
+                                                <a href="{{ route('product-details', $product->slug) }}">
+                                                    {{ $product->name }}
+                                                </a>
                                             </h3>
 
                                             <h4 class="product-price"><span>৳</span>
@@ -201,7 +203,7 @@
                                 <div class="col-sm-4">
                                     <!-- product -->
                                     <div class="product">
-                                        <a href="{{ route('/product-details', ['slug' => $bastSale->slug]) }}">
+                                        <a href="{{ route('product-details', $bastSale->slug) }}">
                                             <div class="product-img">
                                                 <img src="{{ asset('uploads/products/' . $bastSale->image) }}"
                                                     alt="">
@@ -214,7 +216,7 @@
                                         <div class="product-body">
                                             <p class="product-category">{{ $bastSale->category->name }}</p>
                                             <h3 class="product-name"><a
-                                                    href="{{ route('/product-details', ['slug' => $product->slug]) }}">{{ $bastSale->name }}</a>
+                                                    href="{{ route('product-details', ['slug' => $product->slug]) }}">{{ $bastSale->name }}</a>
                                             </h3>
 
                                             <h4 class="product-price"><span>৳</span>
