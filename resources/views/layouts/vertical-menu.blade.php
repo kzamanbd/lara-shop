@@ -96,7 +96,7 @@
                 </li>
 
                 <li class="tw-menu-item">
-                    <a href="{{ route('categories.index') }}" class="tw-menu-link">
+                    <a href="{{ route('category.index') }}" class="tw-menu-link">
                         <span class="icon-[mdi--shape-outline]"></span>
                         <span class="tw-link-label">Categories</span>
                     </a>

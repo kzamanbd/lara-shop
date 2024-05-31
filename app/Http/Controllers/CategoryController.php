@@ -79,7 +79,7 @@ class CategoryController extends Controller
             ]);
         }
         Session::flash('success', 'Category Inserted Successfully');
-        return redirect()->route('categories.index');
+        return redirect()->route('category.index');
     }
 
     /**
@@ -135,6 +135,6 @@ class CategoryController extends Controller
         }
         Category::where('id', $id)->delete();
         session()->flash('success', 'Category Deleted Successfully');
-        return redirect()->route('categories.index');
+        return redirect()->route('category.index');
     }
 }

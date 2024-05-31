@@ -1,5 +1,5 @@
 @extends('backend.layouts.app')
-@section('title','Products Manage')
+@section('title', 'Products Manage')
 
 @section('content')
     <div class="products">
@@ -19,14 +19,17 @@
             </div><!-- /.container-fluid -->
         </div>
 
-    	<div class="content">
+        <div class="content">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="card card-info">
                             <div class="card-header">
                                 <h3>Products Manage Table
-                                <a href="{{route('new.product')}}" class="btn btn-primary pull-right">New Product</a></h3>
+                                    <a href="{{ route('products.create') }}" class="btn btn-primary pull-right">
+                                        New Product
+                                    </a>
+                                </h3>
                             </div>
                             <div class="card-body">
                                 @include('includes.error')
@@ -46,36 +49,47 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        @forelse($products as $product)
-                                            <tr>
-                                                <td class="text-center">{{$loop->index+1}}</td>
-                                                <td>{{$product->name}}</td>
-                                                <td>{{$product->category->name}}</td>
-                                                <td>{{$product->product_price}}</td>
-                                                <td>{{$product->quantity}}</td>
-                                                <td><img src="{{ asset('uploads/products/'.$product->image) }}" width="100px" alt="Images"></td>
-                                                <td>{{($product->status == 1)?'Published' :'Unpublished'}}</td>
-                                                <td class="text-center">
-                                                    <div class="btn-group-vertical">
-                                                        <a href="{{ route('product.multiple.image',['id' => $product->id]) }}" title="Upload Multiple Image" class="btn btn-info btn-sm"><i class="fa fa-upload" aria-hidden="true"></i></a>
-                                                        @if($product->status == 1)
-                                                            <a href="{{ route('unpublished.product',['id' => $product->id]) }}" class="btn btn-success btn-sm"><i class="fa fa-toggle-off"></i></a>
-                                                        @else
-                                                            <a href="{{ route('published.product',['id' => $product->id]) }}" class="btn btn-success btn-sm"><i class="fa fa-toggle-on" aria-hidden="true"></i></a>
-                                                        @endif
-                                                        <a href="{{ route('product.edit',['id' => $product->id]) }}" class="btn btn-info btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                                                        <a href="{{route('product.destroy',['id' => $product->id])}}" class="btn btn-danger btn-sm"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="9" class="text-center">No Data In this Table</td>
-                                            </tr>
-                                        @endforelse
+                                            @forelse($products as $product)
+                                                <tr>
+                                                    <td class="text-center">{{ $loop->index + 1 }}</td>
+                                                    <td>{{ $product->name }}</td>
+                                                    <td>{{ $product->category->name }}</td>
+                                                    <td>{{ $product->product_price }}</td>
+                                                    <td>{{ $product->quantity }}</td>
+                                                    <td><img src="{{ asset('uploads/products/' . $product->image) }}"
+                                                            width="100px" alt="Images"></td>
+                                                    <td>{{ $product->status == 1 ? 'Published' : 'Unpublished' }}</td>
+                                                    <td class="text-center">
+                                                        <div class="btn-group-vertical">
+                                                            <a href="{{ route('products.image', $product->id) }}"
+                                                                title="Upload Multiple Image" class="btn btn-info btn-sm"><i
+                                                                    class="fa fa-upload" aria-hidden="true"></i></a>
+                                                            @if ($product->status == 1)
+                                                                <a href="{{ route('unpublished.product', $product->id) }}"
+                                                                    class="btn btn-success btn-sm"><i
+                                                                        class="fa fa-toggle-off"></i></a>
+                                                            @else
+                                                                <a href="{{ route('published.product', $product->id) }}"
+                                                                    class="btn btn-success btn-sm"><i
+                                                                        class="fa fa-toggle-on" aria-hidden="true"></i></a>
+                                                            @endif
+                                                            <a href="{{ route('products.edit', $product->id) }}"
+                                                                class="btn btn-info btn-sm"><i class="fa fa-pencil-square-o"
+                                                                    aria-hidden="true"></i></a>
+                                                            <a href="{{ route('products.destroy', $product->id) }}"
+                                                                class="btn btn-danger btn-sm"><i class="fa fa-trash-o"
+                                                                    aria-hidden="true"></i></a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="9" class="text-center">No Data In this Table</td>
+                                                </tr>
+                                            @endforelse
                                         </tbody>
                                     </table>
-                                    {{$products->links()}}
+                                    {{ $products->links() }}
                                 </div>
                             </div>
                         </div>

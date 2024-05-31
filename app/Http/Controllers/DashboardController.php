@@ -11,13 +11,15 @@ class DashboardController extends Controller
     public function index()
     {
         // check current route is customer
-        if (request()->is('customer*')) {
+        $user = auth()->user();
+        if (request()->routeIs('customer') || $user->role == 'user') {
             $orders = Order::where('customer_id', auth()->id())->get();
             return view('customer.dashboard', ['orders' => $orders]);
         }
-        if (auth()->user()->role == 'admin') {
+
+        if ($user->role == 'admin') {
             $orders = Order::take(4)->orderBy('id', 'DESC')->get();
-            Session::flash('success', auth()->user()->name . ' You Are Login');
+            Session::flash('success', $user->name . ' You Are Login');
             return view('backend.dashboard', ['orders' => $orders]);
         }
         return abort(403, 'Unauthorized');

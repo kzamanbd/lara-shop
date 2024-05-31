@@ -30,7 +30,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="{{ route('categories.index') }}" class="nav-link">
+                    <a href="{{ route('category.index') }}" class="nav-link">
                         <i class="nav-icon fa fa-table"></i>
                         <p>Manage Categories</p>
                     </a>

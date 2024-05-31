@@ -12,13 +12,13 @@ class LogoutController extends Controller
     /**
      * Log the current user out of the application.
      */
-    public function __invoke(): void
+    public function __invoke()
     {
         Auth::guard('web')->logout();
 
         Session::invalidate();
         Session::regenerateToken();
 
-        redirect()->route('home')->with('success', 'You are now logged out.');
+        return redirect()->route('home')->with('success', 'You are now logged out.');
     }
 }

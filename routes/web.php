@@ -58,32 +58,23 @@ Route::post('process/checkout', [EShopController::class, 'checkout'])->name('che
 Route::post('districts/list', [EShopController::class, 'districtsList']);
 Route::post('upazila/list', [EShopController::class, 'upazilaList']);
 
-Route::middleware('auth')->prefix('adm')->group(function () {
+Route::middleware('auth')->prefix('feature')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin');
-    Route::prefix('category')->group(function () {
-        Route::get('/', [CategoryController::class, 'index'])->name('categories.index');
-        Route::get('create', [CategoryController::class, 'create'])->name('category.create');
-        Route::post('store', [CategoryController::class, 'store'])->name('category.store');
-        Route::get('delete/{id}', [CategoryController::class, 'destroy'])->name('category.delete');
-    });
 
-    Route::prefix('product')->group(function () {
-        Route::get('/', [ProductController::class, 'index'])->name('products.index');
-        Route::get('create', [ProductController::class, 'create'])->name('new.product');
-        Route::get('/{id}/edit', [ProductController::class, 'edit'])->name('product.edit');
-        Route::post('store', [ProductController::class, 'store'])->name('products.store');
-        Route::post('update', [ProductController::class, 'update'])->name('products.update');
-        Route::get('images/{id}', [ProductController::class, 'productMultipleImage'])->name('product.multiple.image');
+    Route::resource('category', CategoryController::class);
+    Route::resource('products', ProductController::class);
+
+    Route::prefix('products')->group(function () {
+        Route::get('image/{id}', [ProductController::class, 'productMultipleImage'])->name('products.image');
         Route::post('image/store', [ProductController::class, 'productMultipleImageStore'])->name('product.multiple.image.store');
         Route::get('unpublished/{id}', [ProductController::class, 'productUnpublished'])->name('unpublished.product');
         Route::get('published/{id}', [ProductController::class, 'productPublished'])->name('published.product');
-        Route::get('delete/{id}', [ProductController::class, 'destroy'])->name('product.destroy');
     });
 
+    Route::get('config', [SettingsController::class, 'index'])->name('admin.settings');
     Route::get('local-sales', [AdminController::class, 'orderManage'])->name('order.manage');
     Route::get('order-details/{id}', [AdminController::class, 'orderDetails'])->name('admin.order.details');
     Route::get('invoice/print={id}', [AdminController::class, 'orderInvoices'])->name('admin.order.invoice');
-    Route::get('settings', [SettingsController::class, 'index'])->name('admin.settings');
 });
 
 Route::prefix('customer')->group(function () {
@@ -91,8 +82,8 @@ Route::prefix('customer')->group(function () {
     Volt::route('login', 'pages.auth.login')->name('login');
 
     Route::middleware('auth')->group(function () {
+        Route::get('profile', [CustomerController::class, 'customerProfile'])->name('customer.profile');
         Route::get('order-details/{id}', [CustomerController::class, 'orderDetails'])->name('customer.order.details');
         Route::get('order-cancel/{id}', [CustomerController::class, 'orderCancel'])->name('customer.order.cancel');
-        Route::get('profile', [CustomerController::class, 'customerProfile'])->name('customer.profile');
     });
 });
