@@ -1,46 +1,35 @@
 /*
-Theme Name: TwiLightUI - Tailwind CSS Admin Template
+Theme Name: PrimeDash - Tailwind CSS Admin Template
 Support: kzamanbn@gmail.com
-Description: TwiLightUI - TwilightUI is a modern, clean and very detailed UI kit. We designed 60+ beautiful UI pages, 500+ elements, 50+ icons. It's very easy to used and customize.
+Description: PrimeDash - PrimeDash is a modern, clean and very detailed UI kit. We designed 60+ beautiful UI pages, 500+ elements, 50+ icons. It's very easy to used and customize.
 Version: 1.0
 */
-
-/* CSS Index
-============================
-00. Global CSS
-01. Variable CSS
-02. Common CSS
-03. Button
-04. Header
-05. Search
-============================ */
 
 /*=============================
 1. Google Fonts
 ===============================*/
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;900&display=swap');
 
-@import "./plugins.css";
-@import "./base.css";
-@import "./typography.css";
-@import "./components/navbar.css";
-@import "./components/horizontal-menu.css";
-@import "./components/vertical-menu.css";
-@import "./components/footer.css";
-@import "./components/common-ui.css";
-@import "./components/badges.css";
-@import "./components/cards.css";
-@import "./components/buttons.css";
-@import "./components/forms.css";
-@import "./components/alerts.css";
-@import "./components/breadcrumb.css";
-@import "./components/dropdown.css";
-@import "./components/tables.css";
-@import "./components/drawer.css";
-@import "./components/modal.css";
-@import "./components/dashboard.css";
-@import "./components/login.css";
-@import "./components/calenders.css";
-@import "./components/tooltip.css";
-@import "./components/datatable.css";
-@import "./components/file-upload.css";
+/* Base */
+@import './tailwind.css';
+/* Core */
+@import './core/layout.css';
+@import './core/horizontal-menu.css';
+@import './core/vertical-menu.css';
+@import './core/badges.css';
+@import './core/cards.css';
+@import './core/buttons.css';
+@import './core/forms.css';
+@import './core/breadcrumb.css';
+@import './core/dropdown.css';
+@import './core/tables.css';
+@import './core/modal.css';
+/* Extra Plugin */
+@import './plugins.css';
+/* Features */
+@import './common-ui.css';
+@import './features/file-upload.css';
+@import './features/datatable.css';
+@import './features/dashboard.css';
+@import './features/chat-apps.css';
+@import './features/mailbox.css';

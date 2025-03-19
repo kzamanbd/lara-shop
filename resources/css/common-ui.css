@@ -1,0 +1,233 @@
+@layer components {
+    .upcoming-events-list li {
+        @apply relative mb-6;
+    }
+
+    .notification-container li .un-read {
+        @apply border-primary-300 border-l-4 border-solid;
+    }
+
+    /* todo list */
+    .todo-list-wrapper {
+        @apply dark:bg-dark rounded-xl border border-gray-100 bg-white shadow-sm dark:border-gray-700 print:border-0; /* from core/cards.css */
+        @apply absolute z-10 hidden h-full w-[20rem] max-w-full flex-none space-y-4 rounded-r-none p-4 xl:relative xl:block xl:h-auto xl:rounded-r-md;
+    }
+
+    .timeline {
+        @apply relative;
+    }
+    .timeline::before {
+        @apply border-primary-300 absolute top-18 bottom-12 -ml-1.5 w-1 border border-dashed content-[''];
+        inset-inline-start: 20%;
+        margin-inline-start: -1.5px;
+    }
+    .timeline > li {
+        @apply relative min-h-[3.125rem] px-0 py-[0.938rem];
+    }
+    .timeline .timeline-time {
+        @apply absolute top-[3.188rem] w-[18%];
+        inset-inline-start: 0;
+    }
+    .timeline .timeline-time .date,
+    .timeline .timeline-time .time {
+        @apply block font-medium;
+    }
+    .timeline .timeline-time .date {
+        @apply mb-0 text-[0.6rem] leading-[1] text-gray-400;
+    }
+    .timeline .timeline-time .time {
+        @apply text-[1.125rem] leading-[1.5rem] text-gray-400;
+    }
+    .timeline .timeline-icon {
+        @apply absolute top-[3.188rem] w-[10%] text-center;
+        inset-inline-start: 15%;
+    }
+    .timeline .timeline-icon a {
+        @apply inline-block h-[0.625rem] w-[0.625rem] rounded-full border text-[0.875rem] leading-[0.625rem];
+        @apply border-primary-300 text-primary border-2 border-solid;
+    }
+    .timeline .timeline-body {
+        @apply relative rounded-lg bg-white p-[0.875rem] pr-[1.25rem] pl-[1.25rem] shadow-sm md:top-[2.5rem] dark:bg-gray-600;
+        margin-inline-start: 22%;
+        margin-inline-end: 18%;
+    }
+    .timeline .timeline-body > div + div {
+        @apply mt-[0.938rem];
+    }
+    .timeline-load-more {
+        @apply mt-[3.5rem] mb-[1.5rem];
+    }
+    .timeline li:last-child::before {
+        @apply hidden;
+    }
+    @media (max-width: 575.98px) {
+        .timeline .timeline-icon a {
+            @apply hidden;
+        }
+        .timeline li:before {
+            @apply hidden;
+        }
+        .timeline-body .media {
+            @apply flex-col;
+        }
+        .timeline-body .media .main-img-user {
+            @apply mb-[0.625rem];
+        }
+        .timeline .timeline-time {
+            @apply absolute z-10 w-full;
+        }
+        .timeline-main-content {
+            @apply flex-col;
+        }
+        .timeline .timeline-body {
+            @apply relative m-0;
+        }
+        .timeline-badge {
+            @apply absolute top-[0.45rem];
+            inset-inline-start: 1.15rem;
+        }
+        .timeline .timeline-time .date,
+        .timeline .timeline-time .time {
+            @apply inline-flex;
+        }
+        .timeline .timeline-time .time {
+            @apply mx-[0.313rem] text-[0.688rem] text-gray-400;
+        }
+    }
+
+    /* sortable */
+    .sortable-item-card {
+        @apply rounded-md bg-[#f4f4f4] p-3 pb-5 shadow dark:bg-[#262e40];
+    }
+
+    /* progress bar */
+    .striped-progress-bar {
+        background-image: linear-gradient(
+            45deg,
+            hsla(0, 0%, 100%, 0.15) 25%,
+            transparent 0,
+            transparent 50%,
+            hsla(0, 0%, 100%, 0.15) 0,
+            hsla(0, 0%, 100%, 0.15) 75%,
+            transparent 0,
+            transparent
+        );
+        background-size: 1rem 1rem;
+    }
+    .animated-progress-bar {
+        background-image: linear-gradient(
+            45deg,
+            hsla(0, 0%, 100%, 0.15) 25%,
+            transparent 0,
+            transparent 50%,
+            hsla(0, 0%, 100%, 0.15) 0,
+            hsla(0, 0%, 100%, 0.15) 75%,
+            transparent 0,
+            transparent
+        );
+        background-size: 1rem 1rem;
+    }
+    .striped-progress-bar2 {
+        background-image: linear-gradient(
+            45deg,
+            hsla(0, 0%, 100%, 0.15) 25%,
+            transparent 0,
+            transparent 50%,
+            hsla(0, 0%, 100%, 0.15) 0,
+            hsla(0, 0%, 100%, 0.15) 75%,
+            transparent 0,
+            transparent
+        );
+        background-size: 1rem 1rem;
+    }
+    .striped-progress-bar3 {
+        background-image: linear-gradient(
+            45deg,
+            hsla(0, 0%, 100%, 0.15) 25%,
+            transparent 0,
+            transparent 50%,
+            hsla(0, 0%, 100%, 0.15) 0,
+            hsla(0, 0%, 100%, 0.15) 75%,
+            transparent 0,
+            transparent
+        );
+        background-size: 1rem 1rem;
+    }
+    .pstriped-rogress-bar4 {
+        background-image: linear-gradient(
+            45deg,
+            hsla(0, 0%, 100%, 0.15) 25%,
+            transparent 0,
+            transparent 50%,
+            hsla(0, 0%, 100%, 0.15) 0,
+            hsla(0, 0%, 100%, 0.15) 75%,
+            transparent 0,
+            transparent
+        );
+        background-size: 1rem 1rem;
+    }
+    .animated-rogress-bar5 {
+        background-image: linear-gradient(
+            45deg,
+            hsla(0, 0%, 100%, 0.15) 25%,
+            transparent 0,
+            transparent 50%,
+            hsla(0, 0%, 100%, 0.15) 0,
+            hsla(0, 0%, 100%, 0.15) 75%,
+            transparent 0,
+            transparent
+        );
+        background-size: 1rem 1rem;
+    }
+    .animated-rogress-bar6 {
+        background-image: linear-gradient(
+            45deg,
+            hsla(0, 0%, 100%, 0.15) 25%,
+            transparent 0,
+            transparent 50%,
+            hsla(0, 0%, 100%, 0.15) 0,
+            hsla(0, 0%, 100%, 0.15) 75%,
+            transparent 0,
+            transparent
+        );
+        background-size: 1rem 1rem;
+    }
+    .animated-rogress-bar7 {
+        background-image: linear-gradient(
+            45deg,
+            hsla(0, 0%, 100%, 0.15) 25%,
+            transparent 0,
+            transparent 50%,
+            hsla(0, 0%, 100%, 0.15) 0,
+            hsla(0, 0%, 100%, 0.15) 75%,
+            transparent 0,
+            transparent
+        );
+        background-size: 1rem 1rem;
+    }
+
+    .timeline-widget {
+        @apply relative before:absolute before:top-0 before:left-12 before:h-full before:w-0.5 before:bg-gray-100 dark:before:bg-black/20;
+    }
+    .timeline-widget .timeline-widget-list {
+        @apply relative mb-6 border-gray-200 before:absolute before:top-0 before:left-11 before:h-3 before:w-3 before:rounded-full before:border before:border-gray-200 before:bg-gray-100 dark:border-gray-700 dark:before:bg-gray-800;
+    }
+    .timeline-widget .timeline-widget-list:last-child {
+        @apply mb-0;
+    }
+    .timeline-widget .timeline-widget-list .timeline-widget-content {
+        @apply max-w-[20rem];
+    }
+    .icon-container {
+        @apply border-dark/20 dark:border-dark flex h-14 w-14 items-center justify-center rounded-md border bg-white;
+    }
+}
+.jvm-tooltip {
+    position: absolute;
+}
+.jvm-tooltip.active {
+    @apply rounded bg-purple-400 px-2 py-1 text-white shadow-lg;
+}
+.jvm-tooltip:not(.active) {
+    display: none;
+}
