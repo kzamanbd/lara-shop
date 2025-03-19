@@ -51,9 +51,9 @@ Route::prefix('product')->group(function () {
     Route::get('search', [EShopController::class, 'search'])->name('search.show');
 });
 
-Route::get('process/checkout', [CartController::class, 'index']);
+Route::get('checkout', [CartController::class, 'index'])->name('checkout');
+Route::post('checkout', [EShopController::class, 'checkout']);
 Route::post('search/product', [EShopController::class, 'searchAjax']);
-Route::post('process/checkout', [EShopController::class, 'checkout'])->name('checkout');
 
 Route::post('districts', [EShopController::class, 'districtsList']);
 Route::post('upazilas', [EShopController::class, 'upazilaList']);
