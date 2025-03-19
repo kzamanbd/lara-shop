@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use Carbon\Carbon;
-use App\Models\Review;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\ProductImages;
-use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
@@ -175,7 +173,7 @@ class ProductController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\View\View
      */
     public function edit($id)
     {
@@ -190,7 +188,7 @@ class ProductController extends Controller
 
     /**
      * @param Request $request
-     * @return array
+     * @return \Illuminate\Http\RedirectResponse
      * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request)
@@ -221,7 +219,7 @@ class ProductController extends Controller
      * Remove the specified resource from storage.
      *
      * @param $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function productUnpublished($id)
     {
