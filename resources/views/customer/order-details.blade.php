@@ -2,12 +2,8 @@
 @section('title', 'Order Details')
 @section('content')
     <div class="orderDetails">
-        <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>
-                Customer
-                <small>/ Eshop</small>
-            </h1>
+            <h1>Customer App</h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                 <li class="active">Order Details</li>
@@ -18,14 +14,14 @@
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="box box-info">
-                        <div class="box-header">
-                            <h4 class="card-title">Order Details Invoice</h4>
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h5 class="card-title">Order Details Invoice</h5>
                         </div>
-                        <div class="box-body">
-                            <h4 class="card-title">Product Shipping Details</h4>
-                            <div class="table-responsive">
-                                <table class="table table-hover table-bordered">
+                        <div class="card-body">
+                            <h5 class="card-title">Product Shipping Details</h5>
+                            <div class="table-responsive table-rounded">
+                                <table class="tw-table table-bordered">
                                     <tr>
                                         <th>id</th>
                                         <th>Name</th>
@@ -50,10 +46,10 @@
 
                         </div>
 
-                        <div class="box-body">
-                            <h4 class="card-title">Bill Details</h4>
-                            <div class="table-responsive">
-                                <table class="table table-bordered">
+                        <div class="card-body">
+                            <h5 class="card-title">Bill Details</h5>
+                            <div class="table-responsive table-rounded">
+                                <table class="tw-table table-bordered">
                                     <tr>
                                         <th>Product Name</th>
                                         <th>Product Quantity</th>
@@ -77,7 +73,8 @@
                                     <tr>
                                         <td colspan="4"></td>
                                         <th>Total Amount</th>
-                                        <td>BDT: ৳ {{ number_format($orderDetails->order->sub_total, 2, '.', ',') }} Tk only
+                                        <td>BDT: ৳ {{ number_format($orderDetails->order->sub_total, 2, '.', ',') }} Tk
+                                            only
                                         </td>
                                     </tr>
                                 </table>

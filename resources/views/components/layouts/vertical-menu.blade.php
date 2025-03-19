@@ -81,6 +81,12 @@
                         <span class="tw-link-label">Categories</span>
                     </a>
                 </li>
+                <li class="tw-menu-item">
+                    <a href="{{ route('admin.settings') }}" class="tw-menu-link">
+                        <span class="icon-[mdi--gear]"></span>
+                        <span class="tw-link-label">Settings</span>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- app switcher dropdown -->
@@ -114,8 +120,8 @@
 
             <div class="hs-dropdown-menu dropdown-menu">
                 <button class="tw-nav-footer-item group">
-                    <svg class="size-5 shrink-0 dark:text-neutral-500" xmlns="http://www.w3.org/2000/svg" width="16"
-                        height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <svg class="size-5 shrink-0 dark:text-neutral-500" xmlns="http://www.w3.org/2000/svg"
+                        width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                         <path
                             d="M7 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z">
                         </path>

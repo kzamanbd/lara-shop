@@ -7,10 +7,7 @@
     <div class="dashboard">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>
-                Customer
-                <small>/ Eshop</small>
-            </h1>
+            <h1>Customer App</h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                 <li class="active">Dashboard</li>
@@ -20,61 +17,48 @@
         <!-- Main content -->
         <section class="content">
             <!-- Info boxes -->
-            <div class="row">
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                    <div class="info-box">
-                        <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
+            <div class="grid grid-cols-3 gap-4 mb-4">
 
-                        <div class="info-box-content">
-                            <span class="info-box-text">Buy Amount</span>
-                            <span class="info-box-number">{{ number_format($orders->sum('sub_total'), 2, '.', ',') }}
-                                <small>৳</small></span>
-                        </div>
-                        <!-- /.info-box-content -->
+                <div class="card">
+                    <div class="card-body">
+                        <span class="info-card-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
+                        <span class="info-card-text">Buy Amount:</span>
+                        <span class="info-card-number">{{ number_format($orders->sum('sub_total'), 2, '.', ',') }}
+                            <small>৳</small></span>
                     </div>
-                    <!-- /.info-box -->
+                    <!-- /.card-body -->
                 </div>
+                <!-- /.card -->
 
-                <!-- fix for small devices only -->
-                <div class="clearfix visible-sm-block"></div>
-
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                    <div class="info-box">
-                        <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
-
-                        <div class="info-box-content">
-                            <span class="info-box-text">Total Orders</span>
-                            <span class="info-box-number">{{ number_format($orders->count(), 2, '.', ',') }}</span>
-                        </div>
-                        <!-- /.info-box-content -->
+                <div class="card">
+                    <div class="card-body">
+                        <span class="info-card-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
+                        <span class="info-card-text">Total Orders:</span>
+                        <span class="info-card-number">{{ $orders->count() }}</span>
                     </div>
-                    <!-- /.info-box -->
+                    <!-- /.card-body -->
                 </div>
-                <!-- /.col -->
-                <div class="col-md-4 col-sm-6 col-xs-12">
-                    <div class="info-box">
-                        <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+                <!-- /.card -->
 
-                        <div class="info-box-content">
-                            <span class="info-box-text">Total Customers</span>
-                            <span class="info-box-number">0</span>
-                        </div>
-                        <!-- /.info-box-content -->
+                <div class="card">
+                    <div class="card-body">
+                        <span class="info-card-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+                        <span class="info-card-text">Total Refund:</span>
+                        <span class="info-card-number">0</span>
                     </div>
-                    <!-- /.info-box -->
+                    <!-- /.card-body -->
                 </div>
-                <!-- /.col -->
+                <!-- /.card -->
             </div>
             <!-- /.row -->
             <div class="row">
                 <div class="col-md-12">
-                    <div class="box box-info">
-                        <div class="box-header">
-                            <h4>Welcome <em>{{ ucwords(Auth::user()->name) }}</em>!. Your Order Details
-                            </h4>
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h5>Welcome <em>{{ ucwords(Auth::user()->name) }}</em>!. Your Order Details</h5>
                         </div>
-                        <div class="box-body">
-                            <table class="table table-hover table-bordered">
+                        <div class="card-body table-rounded">
+                            <table class="tw-table table-bordered">
                                 @forelse($orders as $order)
                                     <tr>
                                         <td colspan="6"><strong>Order Number: {{ $loop->index + 1 }}</strong></td>

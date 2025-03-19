@@ -11,33 +11,21 @@
     <title>@yield('title') :: Customer</title>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('backend/css/app.css') }}">
-
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="hold-transition skin-green sidebar-mini">
-    <div class="wrapper" id="app">
-
-        <!-- Content Wrapper. Contains page content -->
+<body class="tw--wrapper">
+    <div class="w-5xl mx-auto" id="app">
         <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
             @yield('content')
-
         </div>
-        <!-- /.content-wrapper -->
-        <footer class="main-footer">
+        <footer class="main-footer mt-4">
             <div class="pull-right hidden-xs">
                 <b>Version</b> 2.4.18
             </div>
-            <strong>Copyright &copy; 2014-2019 <a href="https://github.com/zaman7">Zaman</a>.</strong> All rights
-            reserved.
+            <p>Copyright &copy; 2014-2019 <a href="https://github.com/kzamanbd">DraftScripts</a>.</p>
         </footer>
     </div>
-    <!-- ./wrapper -->
-
-    <!-- jQuery -->
-    <script src="{{ asset('backend/js/app.js') }}"></script>
 </body>
 
 </html>
-

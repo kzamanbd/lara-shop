@@ -39,13 +39,13 @@ Route::get('/clear', function () {
 //frontend route
 Route::get('/', [EShopController::class, 'index'])->name('home');
 
+Route::get('cart', [CartController::class, 'index'])->name('carts.index');
 Route::prefix('product')->group(function () {
     Route::get('/{slug}', [EShopController::class, 'productDetails'])->name('product-details');
     Route::get('review', [ReviewController::class, 'index'])->name('review.index');
     Route::post('review', [ReviewController::class, 'store'])->name('review.store');
     Route::post('shipping', [EShopController::class, 'shipping'])->name('shipping');
     Route::get('category/{slug}', [EShopController::class, 'categoryProducts'])->name('category.products');
-    Route::get('cart', [CartController::class, 'index'])->name('carts.index');
     Route::post('cart-store', [CartController::class, 'store'])->name('carts.store');
     Route::get('cart/{id}', [CartController::class, 'destroy'])->name('carts.destroy');
     Route::get('search', [EShopController::class, 'search'])->name('search.show');

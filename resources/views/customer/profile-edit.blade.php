@@ -9,7 +9,7 @@
             <div class="col-md-8 offset-md-2">
                 <div class="card">
                     <div class="card-header">
-                        <strong class="card-title">Customer Information</strong>
+                        <h5 class="card-title">Customer Information</h5>
                     </div>
                     <div class="card-body">
                         <div id="pay-invoice">

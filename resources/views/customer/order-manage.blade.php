@@ -5,10 +5,7 @@
     <div class="dashboard">
         <!-- Content Header (Page header) -->
         <section class="content-header">
-            <h1>
-                Customer
-                <small>/ Eshop</small>
-            </h1>
+            <h1>Customer App</h1>
             <ol class="breadcrumb">
                 <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
                 <li class="active">Orders Manage</li>
@@ -19,13 +16,13 @@
         <section class="content">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="box box-info">
-                        <div class="box-header">
-                            <h4 class="card-title">Products Manage Table</h4>
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h5 class="card-title">Products Manage Table</h5>
                         </div>
-                        <div class="box-body">
-                            <div class="table-responsive">
-                                <table id="bootstrap-data-table" class="table table-hover table-bordered">
+                        <div class="card-body ">
+                            <div class="table-responsive table-rounded">
+                                <table id="bootstrap-data-table" class="tw-table table-bordered">
                                     <thead>
                                         <tr>
                                             <th class="text-center">SL No</th>
