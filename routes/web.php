@@ -1,6 +1,5 @@
 <?php
 
-use Livewire\Volt\Volt;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EShopController;
@@ -12,6 +11,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
+use App\Livewire\Auth\Login;
 
 Route::view('/', 'welcome');
 
@@ -79,7 +79,7 @@ Route::middleware('auth')->prefix('feature')->group(function () {
 
 Route::prefix('customer')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('customer');
-    Volt::route('login', 'pages.auth.login')->name('login');
+    Route::get('login', Login::class)->name('login');
 
     Route::middleware('auth')->group(function () {
         Route::get('profile', [CustomerController::class, 'customerProfile'])->name('customer.profile');

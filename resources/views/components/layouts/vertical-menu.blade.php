@@ -103,9 +103,9 @@
                         </span>
                         <span class="block dark:text-neutral-500"> notion.so </span>
                     </div>
-                    <svg class="ms-auto size-4 shrink-0" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
-                        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round">
+                    <svg class="ms-auto size-4 shrink-0" xmlns="http://www.w3.org/2000/svg" width="24"
+                        height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
                         <path d="m7 15 5 5 5-5"></path>
                         <path d="m7 9 5-5 5 5"></path>
                     </svg>
@@ -134,15 +134,15 @@
                         <span class="block text-xs dark:text-neutral-500"> notion.so </span>
                     </span>
                     <svg class="ms-auto size-4 shrink-0 dark:text-neutral-200" xmlns="http://www.w3.org/2000/svg"
-                        width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                        stroke-linecap="round" stroke-linejoin="round">
+                        width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="20 6 9 17 4 12"></polyline>
                     </svg>
                 </button>
 
                 <button class="tw-nav-footer-item group">
-                    <svg class="size-5 shrink-0 dark:text-neutral-500" xmlns="http://www.w3.org/2000/svg" width="16"
-                        height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <svg class="size-5 shrink-0 dark:text-neutral-500" xmlns="http://www.w3.org/2000/svg"
+                        width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                         <path
                             d="M7 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z">
                         </path>
@@ -168,7 +168,11 @@
                     Add another project
                 </button>
                 <div class="user-group-divider"></div>
-                <button class="tw-nav-footer-item group">Sign out</button>
+                <form method="POST" action="{{ route('logout') }}" class="w-full">
+                    @csrf
+                    <button type="submit" class="tw-nav-footer-item group">Sign out</button>
+                </form>
+
             </div>
         </div>
     </div>
