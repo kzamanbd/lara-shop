@@ -13,4 +13,8 @@ export default defineConfig({
     server: {
         cors: true,
     },
+    build: {
+        target: 'esnext',
+        chunkSizeWarningLimit: 1000, // 1000KiB
+    },
 });
