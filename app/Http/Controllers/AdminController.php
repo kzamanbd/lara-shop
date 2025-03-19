@@ -17,7 +17,6 @@ class AdminController extends Controller
     public function index()
     {
         $orders = Order::take(4)->orderBy('id', 'DESC')->get();
-        Session::flash('success', Auth::user()->name . ' You Are Login');
         return view('backend.dashboard', ['orders' => $orders]);
     }
 

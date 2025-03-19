@@ -1,0 +1,89 @@
+@layer components {
+    .badge {
+        @apply inline-block rounded-full bg-gray-600 px-2 py-0.5 text-center text-xs leading-4 font-semibold text-white;
+    }
+    .badge-primary {
+        @apply bg-primary;
+    }
+    .badge-secondary {
+        @apply bg-secondary;
+    }
+    .badge-success {
+        @apply bg-success;
+    }
+    .badge-danger {
+        @apply bg-danger;
+    }
+    .badge-warning {
+        @apply bg-warning;
+    }
+    .badge-info {
+        @apply bg-info;
+    }
+    .badge-light {
+        @apply bg-light;
+    }
+    .badge-dark {
+        @apply bg-dark;
+    }
+    .badge-pill {
+        @apply rounded-full;
+    }
+    .badge-lg {
+        @apply text-base leading-5;
+    }
+    .badge-sm {
+        @apply text-sm leading-3;
+    }
+    .badge-outline-primary {
+        @apply border-primary text-primary border bg-transparent;
+    }
+    .badge-outline-secondary {
+        @apply border-secondary text-secondary border bg-transparent;
+    }
+    .badge-outline-success {
+        @apply border-success text-success border bg-transparent;
+    }
+    .badge-outline-danger {
+        @apply border-danger text-danger border bg-transparent;
+    }
+    .badge-outline-warning {
+        @apply border-warning text-warning border bg-transparent;
+    }
+    .badge-outline-info {
+        @apply border-info text-info border bg-transparent;
+    }
+    .badge-outline-light {
+        @apply border-light text-light border bg-transparent;
+    }
+    .badge-outline-dark {
+        @apply border-dark text-dark border bg-transparent;
+    }
+    .badge-outline {
+        @apply border border-gray-600 bg-transparent text-gray-600;
+    }
+    .badge-link {
+        @apply text-primary bg-transparent;
+    }
+    .badge-link:hover {
+        @apply text-primary-900;
+    }
+    .badge-link:focus {
+        @apply text-primary-900;
+    }
+    .badge-link:active {
+        @apply text-primary-950;
+    }
+    .badge-link:disabled {
+        @apply text-gray-400;
+    }
+
+    /* Avatar */
+    .avatar {
+        @apply inline-flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 object-cover dark:bg-gray-700;
+    }
+    /* avatar avatar-sm */
+    .avatar-sm {
+        @apply h-8 w-8 text-sm;
+    }
+}

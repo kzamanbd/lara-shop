@@ -19,7 +19,6 @@ class DashboardController extends Controller
 
         if ($user->role == 'admin') {
             $orders = Order::take(4)->orderBy('id', 'DESC')->get();
-            Session::flash('success', $user->name . ' You Are Login');
             return view('backend.dashboard', ['orders' => $orders]);
         }
         return abort(403, 'Unauthorized');

@@ -1,0 +1,30 @@
+@layer components {
+    .card {
+        @apply dark:bg-dark rounded-xl border border-gray-100 bg-white shadow-xs dark:border-gray-700 print:border-0;
+    }
+    .card-header {
+        @apply border-b border-dashed border-gray-200 px-5 py-3 dark:border-gray-700 print:border-0;
+    }
+    .card-body {
+        @apply p-5;
+    }
+    .variant--bordered .card {
+        @apply border border-gray-200 dark:border-gray-700;
+    }
+    .card-footer {
+        @apply border-t border-dashed border-gray-200 px-5 py-3 dark:border-gray-700 print:border-0;
+    }
+    /* accordion */
+    .tw-accordion {
+        @apply rounded border px-5 py-3;
+    }
+    .tw-accordion-content {
+        @apply hidden overflow-hidden transition-[height] duration-300;
+    }
+    .login-card {
+        @apply relative z-[1] w-full max-w-md rounded-md before:absolute before:bg-[url('/images/login-left.png')] dark:border dark:border-gray-500;
+        @apply before:top-[-70px] before:left-[-45px] before:z-[-1] before:h-[244px] before:w-[244px];
+        @apply after:absolute after:bg-[url('/images/login-right.png')];
+        @apply after:right-[-50px] after:bottom-[-50px] after:z-[-1] after:h-[244px] after:w-[244px];
+    }
+}
