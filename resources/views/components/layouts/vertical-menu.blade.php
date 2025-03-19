@@ -64,7 +64,7 @@
                 <li class="tw-menu-item">
                     <a href="{{ route('order.manage') }}" class="tw-menu-link">
                         <span class="icon-[mdi--shape-outline]"></span>
-                        <span class="tw-link-label">Local Sales</span>
+                        <span class="tw-link-label">Orders</span>
                     </a>
                 </li>
 
