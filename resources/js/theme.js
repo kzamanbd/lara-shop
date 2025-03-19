@@ -38,7 +38,7 @@ window.Quill = Quill;
     loading?.remove();
 
     // vertical menu active
-    let currentPath = window.location.pathname === '/' ? '/index.html' : window.location.pathname;
+    let currentPath = window.location.href;
     const menuItem = document.querySelector(`.tw-nav-menu a[href="${currentPath}"]`);
 
     if (menuItem) {

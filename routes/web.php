@@ -55,8 +55,8 @@ Route::get('process/checkout', [CartController::class, 'index']);
 Route::post('search/product', [EShopController::class, 'searchAjax']);
 Route::post('process/checkout', [EShopController::class, 'checkout'])->name('checkout');
 
-Route::post('districts/list', [EShopController::class, 'districtsList']);
-Route::post('upazila/list', [EShopController::class, 'upazilaList']);
+Route::post('districts', [EShopController::class, 'districtsList']);
+Route::post('upazilas', [EShopController::class, 'upazilaList']);
 
 Route::middleware('auth')->prefix('feature')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin');
