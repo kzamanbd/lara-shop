@@ -115,8 +115,8 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <img src="{{ asset('uploads/products/' . $product->image) }}" id="priview"
-                                            width="100px" alt="image">
+                                        <img src="{{ $product->image_url }}" id="priview" width="100px"
+                                            alt="image">
                                         <label for="exampleInputFile">Image</label>
                                         <div class="input-group">
                                             <div class="custom-file">

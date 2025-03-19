@@ -32,11 +32,11 @@
                 <div class="col-md-5 col-md-push-2">
                     <div id="product-main-img">
                         <div class="product-preview">
-                            <img src="{{ asset('uploads/products/' . $product->image) }}" alt="Image">
+                            <img src="{{ $product->image_url }}" alt="Image">
                         </div>
                         @foreach ($product->productImages as $productImage)
                             <div class="product-preview">
-                                <img src="{{ asset('uploads/products/' . $productImage->image) }}" alt="Image">
+                                <img src="{{ $productImage->image_url }}" alt="Image">
                             </div>
                         @endforeach
                     </div>
@@ -47,11 +47,11 @@
                 <div class="col-md-2  col-md-pull-5">
                     <div id="product-imgs">
                         <div class="product-preview">
-                            <img src="{{ asset('uploads/products/' . $product->image) }}" alt="Image">
+                            <img src="{{ $product->image_url }}" alt="Image">
                         </div>
                         @foreach ($product->productImages as $productImage)
                             <div class="product-preview">
-                                <img src="{{ asset('uploads/products/' . $productImage->image) }}" alt="Image">
+                                <img src="{{ $productImage->image_url }}" alt="Image">
                             </div>
                         @endforeach
                     </div>
@@ -389,7 +389,7 @@
                         <div class="product">
                             <a href="{{ route('product-details', ['slug' => $relatedProduct->slug]) }}">
                                 <div class="product-img">
-                                    <img src="{{ asset('uploads/products/' . $product->image) }}" alt="">
+                                    <img src="{{ $product->image_url }}" alt="">
                                     <div class="product-label">
                                         <!-- <span class="sale">-30%</span> -->
                                         <span class="new">NEW</span>
@@ -415,7 +415,8 @@
                                     <a href="" class="add-to-wishlist"><i class="fa fa-heart-o"></i><span
                                             class="tooltipp">add to wishlist</span></a>
                                     <a class="add-to-compare"><i class="fa fa-exchange"></i><span
-                                            class="tooltipp">add to compare</span></a>
+                                            class="tooltipp">add to
+                                            compare</span></a>
                                     <a class="quick-view"><i class="fa fa-eye"></i><span class="tooltipp">quick
                                             view</span></a>
                                 </div>
@@ -425,7 +426,8 @@
                                 <div class="add-to-cart">
                                     <input type="hidden" name="product_id" value="{{ $relatedProduct->id }}">
                                     <button type="submit" class="add-to-cart-btn"><i
-                                            class="fa fa-shopping-cart"></i> add to cart</button>
+                                            class="fa fa-shopping-cart"></i> add to
+                                        cart</button>
                                 </div>
                             </form>
                         </div>

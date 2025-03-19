@@ -1,5 +1,5 @@
 @extends('backend.layouts.app')
-@section('title','Product Multiple Image Upload')
+@section('title', 'Product Multiple Image Upload')
 
 @section('content')
     <div class="products">
@@ -41,9 +41,10 @@
                                         </ul>
                                     </div>
                                 @endif
-                                <img src="{{ asset('uploads/products/'.$product->image) }}" width="150">
+                                <img src="{{ $product->image_url }}" width="150">
                                 <hr>
-                                <form action="{{ route('product.multiple.image.store') }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('product.multiple.image.store') }}" method="POST"
+                                    enctype="multipart/form-data">
                                     @csrf
                                     <input type="hidden" name="product_id" value="{{$product->id}}">
                                     <div class="form-group">

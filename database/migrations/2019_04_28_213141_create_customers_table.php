@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('city', 30)->nullable();
             $table->string('postcode', 20)->nullable();
             $table->string('phone', 20)->nullable();
-            $table->double('balance', 20, 2)->default(0.00);
+            $table->double('balance')->default(0.00);
             $table->tinyInteger('banned')->default(0);
             $table->string('referral_code', 255)->nullable();
             $table->integer('customer_package_id')->nullable();

@@ -15,12 +15,13 @@
                     <div class="col-md-4 col-xs-6">
                         <div class="shop">
                             <div class="shop-img">
-                                <img src="{{ asset('uploads/categories/' . $category->image) }}" alt="">
+                                <img src="{{ $category->image_url }}" alt="">
                             </div>
                             <div class="shop-body">
                                 <h3>{{ $category->name }}<br>Collection</h3>
                                 <a href="{{ route('category.products', ['slug' => $category->slug]) }}"
-                                    class="cta-btn">Shop now <i class="fa fa-arrow-circle-right"></i></a>
+                                    class="cta-btn">Shop
+                                    now <i class="fa fa-arrow-circle-right"></i></a>
                             </div>
                         </div>
                     </div>
@@ -66,8 +67,7 @@
                                     <div class="product">
                                         <a href="{{ route('product-details', ['slug' => $product->slug]) }}">
                                             <div class="product-img">
-                                                <img src="{{ asset('uploads/products/' . $product->image) }}"
-                                                    alt="">
+                                                <img src="{{ $product->image_url }}" alt="">
                                                 <div class="product-label">
                                                     @php
                                                         $price = $product->product_price - $product->sale_price;
@@ -98,7 +98,8 @@
                                                 <a class="add-to-compare"><i class="fa fa-exchange"></i><span
                                                         class="tooltipp">add to compare</span></a>
                                                 <a class="quick-view"><i class="fa fa-eye"></i><span
-                                                        class="tooltipp">quick view</span></a>
+                                                        class="tooltipp">quick
+                                                        view</span></a>
                                             </div>
                                         </div>
                                         <form action="{{ route('carts.store') }}" method="POST">
@@ -205,8 +206,7 @@
                                     <div class="product">
                                         <a href="{{ route('product-details', $bastSale->slug) }}">
                                             <div class="product-img">
-                                                <img src="{{ asset('uploads/products/' . $bastSale->image) }}"
-                                                    alt="">
+                                                <img src="{{ $bastSale->image_url }}" alt="">
                                                 <div class="product-label">
                                                     <span class="sale">-5%</span>
                                                     <span class="new">NEW</span>
@@ -238,7 +238,8 @@
                                                 <a class="add-to-compare"><i class="fa fa-exchange"></i><span
                                                         class="tooltipp">add to compare</span></a>
                                                 <a class="quick-view"><i class="fa fa-eye"></i><span
-                                                        class="tooltipp">quick view</span></a>
+                                                        class="tooltipp">quick
+                                                        view</span></a>
                                             </div>
                                         </div>
                                         <form action="{{ route('carts.store') }}" method="POST">

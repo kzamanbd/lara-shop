@@ -7,7 +7,6 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
-use Intervention\Image\Facades\Image;
 
 class CategoryController extends Controller
 {
@@ -20,7 +19,7 @@ class CategoryController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return mixed
      */
     public function index()
     {
@@ -31,7 +30,7 @@ class CategoryController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return mixed
      */
     public function create()
     {
@@ -83,40 +82,6 @@ class CategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -124,17 +89,7 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        Category::findOrfail($id);
-        foreach (Product::where('category_id', $id)->get() as $item) {
-            Product::where('id', $item->id)->delete();
-        }
 
-        if (Category::find($id)->image != 'default.jpg') {
-            $path = 'uploads/categories/' . Category::find($id)->image;
-            unlink($path);
-        }
-        Category::where('id', $id)->delete();
-        session()->flash('success', 'Category Deleted Successfully');
         return redirect()->route('category.index');
     }
 }

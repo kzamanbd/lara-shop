@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('alert_quantity');
             $table->string('quantity');
             $table->text('description');
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->boolean('status')->default(true);
             $table->boolean('sale_status')->default(false);
             $table->timestamps();

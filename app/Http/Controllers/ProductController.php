@@ -169,9 +169,7 @@ class ProductController extends Controller
     }
 
 
-    public function show(Product $product)
-    {
-    }
+    public function show(Product $product) {}
 
     /**
      * Show the form for editing the specified resource.
@@ -256,26 +254,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        $path = 'uploads/products/';
-        $product = Product::with('productImages', 'reviews')->findOrfail($id);
-        if ($product) {
-            if ($product->image != 'default.jpg') {
-                unlink($path . $product->image);
-            }
-            if ($product->productImages) {
-                foreach ($product->productImages as $getImage) {
-                    unlink($path . $getImage->image);
-                    ProductImages::findOrfail($getImage->id)->delete();
-                }
-            }
-            if ($product->reviews) {
-                foreach ($product->reviews as $review) {
-                    Review::findOrfail($review->id)->delete();
-                }
-            }
-            $product->delete();
-        }
-        Session::flash('success', 'Product Delete Successfully');
+
         return back();
     }
 }

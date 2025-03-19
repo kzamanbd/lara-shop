@@ -56,8 +56,8 @@
                                                     <td>{{ $product->category->name }}</td>
                                                     <td>{{ $product->product_price }}</td>
                                                     <td>{{ $product->quantity }}</td>
-                                                    <td><img src="{{ asset('uploads/products/' . $product->image) }}"
-                                                            width="100px" alt="Images"></td>
+                                                    <td><img src="{{ $product->image_url }}" width="100px" alt="Images">
+                                                    </td>
                                                     <td>{{ $product->status == 1 ? 'Published' : 'Unpublished' }}</td>
                                                     <td class="text-center">
                                                         <div class="btn-group-vertical">

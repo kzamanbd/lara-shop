@@ -50,8 +50,7 @@
 
                             @forelse ($carts as $cart)
                                 <tr>
-                                    <td><img src="{{ asset('uploads/products/' . $cart->product->image) }}"
-                                            width="80px" alt=""></td>
+                                    <td><img src="{{ $cart->product->image_url }}" width="80px" alt=""></td>
                                     <td><a href="#">{{ $cart->product->name }}</a></td>
                                     <td>{{ number_format($cart->product->sale_price, 2, '.', ',') }}</td>
                                     <td><span class="badge">{{ $cart->quantity }}</span></td>
