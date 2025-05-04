@@ -27,8 +27,7 @@ return new class extends Migration
             $table->double('balance')->default(0.00);
             $table->tinyInteger('banned')->default(0);
             $table->string('referral_code', 255)->nullable();
-            $table->integer('customer_package_id')->nullable();
-            $table->integer('remaining_uploads')->default(0);
+            $table->integer('package_id')->nullable();
             $table->timestamps();
         });
     }
