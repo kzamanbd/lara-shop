@@ -1,2 +1,2 @@
-import "./bootstrap";
-import "./theme";
+import './bootstrap';
+import './theme';

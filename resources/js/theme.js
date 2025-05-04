@@ -12,345 +12,255 @@
 import 'preline/preline';
 import 'simplebar';
 
-// Alpine & Plugins
-import persist from '@alpinejs/persist';
-import Alpine from 'alpinejs';
-
-window.Alpine = Alpine;
-Alpine.plugin(persist);
 // You will need a ResizeObserver polyfill for browsers that don't support it! (iOS Safari, Edge, ...)
 import ResizeObserver from 'resize-observer-polyfill';
 window.ResizeObserver = ResizeObserver;
 
-// initialize quill editor
+// Alpine
+import Alpine from 'alpinejs';
+window.Alpine = Alpine;
+Alpine.start();
+
+// quill editor
 import Quill from 'quill';
 window.Quill = Quill;
 
 (function () {
-    // set current year in footer
-    const yearEle = document.querySelector('#footer-year');
-    if (yearEle) {
-        yearEle.innerHTML = `© 2023 - ${new Date().getFullYear()}`;
+    const selector = (el, all = false) => {
+        return all ? document.querySelectorAll(el) : document.querySelector(el);
+    };
+
+    const twWrapper = selector('.tw--wrapper');
+    const verticalMenu = selector('.vertical-menu');
+    const verticalContent = selector('.vertical-content');
+    const navbar = selector('.navbar-nav');
+    const footer = selector('footer.footer');
+    const SETTINGS_KEY = 'themeConfig';
+
+    const initialize = {
+        theme: 'light',
+        themeVariant: 'default',
+        rtlClass: 'ltr',
+        menu: 'vertical',
+        layout: 'full-layout',
+        animation: 'animate__fadeIn',
+        navbar: 'navbar-fixed',
+        footer: 'footer-fixed',
+        semiDark: false,
+        hiddenSidebar: false,
+    };
+
+    const saveSettings = (key, value) => {
+        const settings = {
+            ...initialize,
+            ...(JSON.parse(localStorage.getItem(SETTINGS_KEY)) || {}),
+        };
+        if (key) settings[key] = value;
+        localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
+    };
+
+    const loadSettings = () => {
+        const settings = JSON.parse(localStorage.getItem(SETTINGS_KEY)) || initialize;
+        if (!settings) return;
+
+        if (!twWrapper) return;
+
+        twWrapper.classList.add(settings.theme);
+        twWrapper.classList.add(`theme-${settings.themeVariant}`);
+        twWrapper.classList.add(settings.layout);
+        navbar.classList.add(settings.navbar);
+        footer.classList.add(settings.footer);
+        settings.semiDark && verticalContent.classList.add('semi-dark');
+        settings.hiddenSidebar && twWrapper.classList.add('toggle-menu');
+        document.documentElement.setAttribute('dir', settings.rtlClass);
+
+        // active state
+        selector(`.theme-switcher[value="${settings.theme}"]`).checked = true;
+        selector(`.color-schema[value="${settings.themeVariant}"]`).checked = true;
+        selector(`.navigation-position[value="${settings.menu}"]`).checked = true;
+        selector(`.layout-style[value="${settings.layout}"]`).checked = true;
+        selector(`.layout-direction[value="${settings.rtlClass}"]`).checked = true;
+        selector('.sidebar-semi-dark').checked = settings.semiDark;
+        selector(`[name="navbarType"][value="${settings.navbar}"]`).checked = true;
+        selector(`[name="footerType"][value="${settings.footer}"]`).checked = true;
+        const sidebar = selector('.hidden-sidebar');
+        if (sidebar.type == 'checkbox') {
+            sidebar.checked = settings.hiddenSidebar;
+        }
+    };
+
+    // Set footer year
+    const footerText = selector('#footer-year');
+    if (footerText) {
+        footerText.innerHTML = `© 2023 - ${new Date().getFullYear()}`;
     }
 
-    // screen loader
-    const loading = document.querySelector('.loading');
-    loading?.remove();
+    // Remove screen loader
+    selector('.loading')?.remove();
 
-    // vertical menu active
-    let currentPath = window.location.href;
-    const menuItem = document.querySelector(`.tw-nav-menu a[href="${currentPath}"]`);
-
+    // Active menu logic
+    const currentPath = window.location.href;
+    const menuItem = selector(`.tw-nav-menu a[href="${currentPath}"]`);
     if (menuItem) {
-        // Add 'active' class to the selected menu item
         menuItem.classList.add('active');
-        const targetElement = menuItem.closest('.twd--menu')?.closest('.tw-menu-item')?.querySelector('.tw-menu-link');
-
-        if (targetElement) {
-            targetElement.parentElement.classList.add('active');
-            targetElement.nextElementSibling.style.display = 'block';
+        const target = menuItem.closest('.twd--menu')?.closest('.tw-menu-item')?.querySelector('.tw-menu-link');
+        if (target) {
+            target.parentElement.classList.add('active');
+            target.nextElementSibling.style.display = 'block';
         }
-
         let parentMenu = menuItem.closest('.twd--menu-item.hs-accordion');
-
         while (parentMenu) {
-            // Find the associated accordion toggle button
-            const toggleButton = parentMenu.querySelector('.hs-accordion-toggle');
-            const submenu = parentMenu.querySelector('.hs-accordion-content');
-
-            if (toggleButton) {
-                // Add 'active' class to the parent accordion button
-                toggleButton.classList.add('active');
-                parentMenu.classList.add('active');
-            }
-
-            if (submenu) {
-                submenu.style.display = 'block';
-            }
-            // Move up to the next parent accordion if present
+            parentMenu.classList.add('active');
+            parentMenu.querySelector('.hs-accordion-toggle')?.classList.add('active');
+            parentMenu.querySelector('.hs-accordion-content')?.style.setProperty('display', 'block');
             parentMenu = parentMenu.closest('.twd--menu-item.hs-accordion')?.parentElement.closest('.hs-accordion');
         }
     }
 
-    // for scroll sidebar menu
-    const content = document.querySelector('.tw-nav-menu');
-    const activeMenu = content?.querySelector('.tw-menu-link.active');
-    const activeSubmenu = content?.querySelector('.twd--link.active');
-    if (activeSubmenu) {
-        activeSubmenu.scrollIntoView({ block: 'center', behavior: 'smooth' });
-    } else if (activeMenu) {
-        activeMenu.scrollIntoView({ block: 'center', behavior: 'smooth' });
-    }
+    // Scroll sidebar menu into view
+    const activeSubmenu = selector('.tw-nav-menu .twd--link.active') || selector('.tw-nav-menu .tw-menu-link.active');
+    activeSubmenu?.scrollIntoView({ block: 'center', behavior: 'smooth' });
 
-    const verticalMenu = document.querySelector('.vertical-menu');
+    // Sidebar toggle on resize
     window.addEventListener('resize', () => {
-        if (window.innerWidth < 1024) {
-            verticalMenu.classList.remove('collapsed');
-        } else {
-            verticalMenu.classList.remove('expanded');
-        }
+        if (!verticalMenu) return;
+        window.innerWidth < 1024
+            ? verticalMenu.classList.remove('collapsed')
+            : verticalMenu.classList.remove('expanded');
     });
-    // window scroll
+
+    // Scroll header effect
     window.addEventListener('scroll', () => {
-        const header = document.querySelector('.navbar-nav');
-        if (!header) return;
-        if (document.documentElement.scrollTop > 0) {
-            // add class to header
-            header.classList.add('scrollable');
-        } else {
-            // remove class from header
-            header.classList.remove('scrollable');
+        navbar?.classList.toggle('scrollable', document.documentElement.scrollTop > 0);
+    });
+
+    // Sidebar toggle buttons
+    [...selector('.hidden-sidebar', true), ...selector('.toggle-sidebar', true)].forEach(item => {
+        item.addEventListener('click', () => {
+            if (item.classList.contains('hidden-sidebar')) {
+                const status = !twWrapper.classList.toggle('toggle-menu');
+                saveSettings('hiddenSidebar', status);
+            } else {
+                if (window.innerWidth < 1024) {
+                    selector('.menu-shadow')?.classList.toggle('hidden');
+                    verticalMenu.classList.toggle('expanded');
+                } else {
+                    verticalMenu.classList.toggle('collapsed');
+                }
+            }
+        });
+    });
+
+    // Theme switcher
+    selector('.theme-switcher', true).forEach(item => {
+        item.addEventListener('change', () => {
+            const newTheme = item.value || (twWrapper.classList.contains('dark') ? 'light' : 'dark');
+            twWrapper.classList.remove('light', 'dark', 'system');
+            twWrapper.classList.add(newTheme);
+            saveSettings('theme', newTheme);
+        });
+    });
+
+    // Fullscreen toggle
+    selector('.fullscreen-toggle')?.addEventListener('click', () => {
+        document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen();
+    });
+
+    // Color schema switcher
+    selector('.color-schema', true).forEach(item => {
+        item.addEventListener('click', () => {
+            const variant = item.value;
+            twWrapper.classList.remove(
+                'theme-default',
+                'theme-amber',
+                'theme-rose',
+                'theme-purple',
+                'theme-sky',
+                'theme-teal',
+            );
+            twWrapper.classList.add(`theme-${variant}`);
+            saveSettings('themeVariant', variant);
+        });
+    });
+
+    // Semi-dark sidebar toggle
+    selector('.sidebar-semi-dark')?.addEventListener('change', () => {
+        verticalContent.classList.toggle('semi-dark');
+        saveSettings('semiDark', verticalContent.classList.contains('semi-dark'));
+    });
+
+    // Navbar type toggle
+    selector('[name="navbarType"]', true).forEach(item => {
+        item.addEventListener('change', () => {
+            navbar.className = `navbar-nav ${item.value}`;
+            saveSettings('navbar', item.value);
+        });
+    });
+
+    // Footer type toggle
+    selector('[name="footerType"]', true).forEach(item => {
+        item.addEventListener('change', () => {
+            footer.className = `footer ${item.value}`;
+            saveSettings('footer', item.value);
+        });
+    });
+
+    // Layout type toggle
+    selector('.layout-style', true).forEach(item => {
+        item.addEventListener('change', () => {
+            twWrapper.classList.remove('boxed-layout', 'full');
+            twWrapper.classList.add(item.value);
+            saveSettings('layout', item.value);
+        });
+    });
+
+    // Layout direction toggle
+    selector('.layout-direction', true).forEach(item => {
+        item.addEventListener('change', () => {
+            document.documentElement.setAttribute('dir', item.value);
+            saveSettings('rtlClass', item.value);
+        });
+    });
+
+    // Navigation position toggle
+    selector('.navigation-position', true).forEach(item => {
+        item.addEventListener('change', () => {
+            const position = item.value;
+            saveSettings('menu', position);
+            if (position === 'collapsible') {
+                verticalMenu.classList.replace('expanded', 'collapsed');
+            } else if (position === 'horizontal' && !window.location.pathname.includes('horizontal')) {
+                window.location.href = '/pages/layouts/horizontal.html';
+            } else {
+                verticalMenu.classList.remove('collapsed');
+            }
+        });
+    });
+
+    // Quill editor initialization
+    selector('.quill-editor', true).forEach(item => {
+        const editor = new Quill(item, {
+            theme: 'snow',
+            placeholder: 'Compose an epic...',
+        });
+        const toolbar = editor.container.previousSibling;
+        const tooltips = {
+            '.ql-picker': 'Font Size',
+            'button.ql-bold': 'Bold',
+            'button.ql-italic': 'Italic',
+            'button.ql-link': 'Link',
+            'button.ql-underline': 'Underline',
+            'button.ql-clean': 'Clear Formatting',
+            '[value=ordered]': 'Ordered List',
+            '[value=bullet]': 'Bullet List',
+        };
+        for (let selector in tooltips) {
+            toolbar.querySelector(selector)?.setAttribute('title', tooltips[selector]);
         }
     });
 
-    // theme config
-    const initialize = {
-        locale: 'en', // en, da, de, el, es, fr, hu, it, ja, pl, pt, ru, sv, tr, zh
-        theme: 'light', // light, dark, system
-        themeVariant: 'default',
-        rtlClass: 'ltr', // rtl, ltr
-        menu: 'vertical', // vertical, horizontal, collapsible
-        layout: 'full', // full, boxed-layout
-        animation: 'animate__fadeIn', // animate__fadeIn, animate__fadeInDown, animate__fadeInUp, animate__fadeInLeft
-        navbar: 'navbar-fixed', // navbar-static, navbar-fixed, navbar-hidden
-        footer: 'footer-fixed', // footer-static, footer-fixed, footer-hidden
-        semiDark: false,
-        sidebar: false,
-    };
-
-    // theme config persist with alpine js store
-    Alpine.store('app', {
-        name: 'PrimeDash',
-        // theme
-        theme: Alpine.$persist(initialize.theme),
-        toggleTheme(val) {
-            let theme = val && val !== 'toggle' ? val : this.theme === 'dark' ? 'light' : 'dark';
-            this.semiDark = !theme === 'light';
-            this.theme = theme;
-        },
-        themeVariant: Alpine.$persist(initialize.themeVariant),
-        setThemeVariant(value) {
-            this.themeVariant = value;
-        },
-        // sidebar
-        sidebar: Alpine.$persist(initialize.sidebar),
-        toggleVMenu() {
-            this.sidebar = !this.sidebar;
-        },
-        sidebarCollapsed: 'compact', // expanded, compact, collapsed
-        collapsibleMenu() {
-            console.log('collapsibleMenu');
-        },
-
-        // navigation menu
-        menu: Alpine.$persist(initialize.menu),
-        toggleMenu(val) {
-            this.menu = val || this.menu || initialize.menu;
-            const verticalMenu = document.querySelector('.vertical-menu');
-            if (!verticalMenu) return;
-
-            switch (this.menu) {
-                case 'collapsible':
-                    verticalMenu.classList.replace('expanded', 'collapsed');
-                    break;
-                case 'horizontal':
-                    if (!window.location.pathname.includes('horizontal')) {
-                        window.location.href = '/pages/layouts/horizontal.html';
-                    }
-                    break;
-                default:
-                    verticalMenu.classList.remove('collapsed');
-            }
-        },
-
-        // layout
-        layout: Alpine.$persist(initialize.layout),
-        toggleLayout(val) {
-            this.layout = val || this.layout || initialize.layout;
-        },
-
-        // rtl support
-        rtlClass: Alpine.$persist(initialize.rtlClass),
-        toggleRTL(val) {
-            this.rtlClass = val || this.rtlClass || initialize.rtlClass; // rtl, ltr;
-            this.setRTLLayout();
-        },
-
-        setRTLLayout() {
-            const value = this.rtlClass || initialize.rtlClass;
-            document.querySelector('html').setAttribute('dir', value);
-        },
-
-        // animation
-        animation: Alpine.$persist(initialize.animation),
-        toggleAnimation(val) {
-            this.animation = val || this.animation || initialize.animation;
-        },
-
-        // navbar type
-        navbar: Alpine.$persist(initialize.navbar),
-        toggleNavbar(val) {
-            this.navbar = val || this.navbar || initialize.navbar;
-        },
-        // footer type
-        footer: Alpine.$persist(initialize.footer),
-        toggleFooter(val) {
-            this.footer = val || this.footer || initialize.footer;
-        },
-
-        // semi dark
-        semiDark: Alpine.$persist(initialize.semiDark),
-        toggleSemiDark() {
-            console.log('toggleSemiDark');
-        },
-    });
-
-    //? alpine data
-    Alpine.data('themeConfig', () => ({
-        fullscreen: false,
-        init() {
-            this.$store.app.setRTLLayout();
-            if (this.$store.app.menu != 'horizontal') {
-                this.$store.app.toggleMenu(this.$store.app.menu);
-            }
-            // if url is horizontal then change the layout
-            if (!window.location.pathname.includes('horizontal') && this.$store.app.menu == 'horizontal') {
-                this.$store.app.toggleMenu('vertical');
-            } else if (window.location.pathname.includes('horizontal')) {
-                this.$store.app.toggleMenu('horizontal');
-            }
-        },
-
-        toggleSidebar() {
-            if (window.innerWidth < 1024) {
-                this.$refs.menuShadow.classList.toggle('hidden');
-                this.$refs.verticalMenu.classList.toggle('expanded');
-            } else {
-                this.$refs.verticalMenu.classList.toggle('collapsed');
-            }
-        },
-        hiddenSidebar() {
-            this.$store.app.toggleVMenu();
-            if (window.innerWidth < 1024) {
-                this.toggleSidebar();
-            }
-        },
-        toggleTheme(value) {
-            this.$store.app.toggleTheme(value);
-        },
-        setThemeVariant(value) {
-            this.$store.app.setThemeVariant(value);
-        },
-        getCurrentVariant(value) {
-            const classMap = {
-                default: {
-                    active: 'bg-indigo-500 text-white',
-                    inactive: 'bg-indigo-50 text-indigo-500',
-                },
-                amber: {
-                    active: 'bg-amber-500 text-white',
-                    inactive: 'bg-amber-50 text-amber-500',
-                },
-                rose: {
-                    active: 'bg-rose-500 text-white',
-                    inactive: 'bg-rose-50 text-rose-500',
-                },
-                purple: {
-                    active: 'bg-purple-500 text-white',
-                    inactive: 'bg-purple-50 text-purple-500',
-                },
-                sky: {
-                    active: 'bg-sky-500 text-white',
-                    inactive: 'bg-sky-50 text-sky-500',
-                },
-                teal: {
-                    active: 'bg-teal-500 text-white',
-                    inactive: 'bg-teal-50 text-teal-500',
-                },
-            };
-            return this.$store.app.themeVariant == value ? classMap[value].active : classMap[value].inactive;
-        },
-        toggleFullscreen() {
-            if (this.fullscreen) {
-                document.exitFullscreen();
-            } else {
-                document.documentElement.requestFullscreen();
-            }
-            this.fullscreen = !this.fullscreen;
-        },
-        get appTheme() {
-            return this.$store.app.theme;
-        },
-        get appConfig() {
-            const app = this.$store.app;
-            let theme = this.appTheme;
-            if (theme == 'system') {
-                theme = !!window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-            }
-            return [app.sidebar && 'toggle-menu', theme, app.menu, app.layout, `theme-${app.themeVariant}`].filter(
-                Boolean,
-            );
-        },
-        get semiDarkMenu() {
-            return this.$store.app.semiDark ? 'semi-dark' : '';
-        },
-        get navbarType() {
-            return this.$store.app.navbar;
-        },
-        get footerType() {
-            return this.$store.app.footer;
-        },
-        get fullScreenIcon() {
-            return {
-                'icon-[mdi--fullscreen]': this.$store.app.fullscreen == 'fullscreen',
-                'icon-[mdi--fullscreen-exit]': this.$store.app.fullscreen !== 'fullscreen',
-            };
-        },
-        get brightnessIcon() {
-            return {
-                'icon-[mdi--brightness-6]': this.appTheme === 'light',
-                'icon-[mdi--brightness-2]': this.appTheme === 'dark',
-                'icon-[mdi--brightness-auto]': this.appTheme === 'system',
-            };
-        },
-        get themeIcon() {
-            return this.appTheme == 'system' ? 'brightness_auto' : `${this.appTheme}_mode`;
-        },
-        get appName() {
-            return 'Prime<span class="text-primary">Dash</span>';
-        },
-        get appLink() {
-            return 'https://draftscripts.com/prime-dash';
-        },
-        get themeDocs() {
-            return 'https://theme-docs.vercel.app';
-        },
-        get repoLink() {
-            return 'https://github.com/kzamanbd/prime-dash';
-        },
-    }));
-
-    // Editor initialization
-    Alpine.data('editor', () => ({
-        editor: null,
-        init() {
-            this.editor = new Quill('.quill-editor', {
-                theme: 'snow',
-                placeholder: 'Compose an epic...',
-            });
-            var toolbar = this.editor.container.previousSibling;
-            toolbar.querySelector('.ql-picker').setAttribute('title', 'Font Size');
-            toolbar.querySelector('button.ql-bold').setAttribute('title', 'Bold');
-            toolbar.querySelector('button.ql-italic').setAttribute('title', 'Italic');
-            toolbar.querySelector('button.ql-link').setAttribute('title', 'Link');
-            toolbar.querySelector('button.ql-underline').setAttribute('title', 'Underline');
-            toolbar.querySelector('button.ql-clean').setAttribute('title', 'Clear Formatting');
-            toolbar.querySelector('[value=ordered]').setAttribute('title', 'Ordered List');
-            toolbar.querySelector('[value=bullet]').setAttribute('title', 'Bullet List');
-        },
-    }));
-
-    Alpine.start();
+    // Load settings on page load
+    loadSettings();
 })();
 
 // Create a new MutationObserver instance
@@ -358,4 +268,17 @@ const observer = new MutationObserver(() => {
     window.HSStaticMethods.autoInit();
 });
 // Start observing the target node
-observer.observe(document.body, { attributes: true, childList: true, subtree: true });
+observer.observe(document.body, {
+    attributes: true,
+    childList: true,
+    subtree: true,
+});
+
+// add analytics code here
+import 'https://www.googletagmanager.com/gtag/js?id=G-NB5NCE8041';
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+    dataLayer.push(arguments);
+}
+gtag('js', new Date());
+gtag('config', 'G-NB5NCE8041');
