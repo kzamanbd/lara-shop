@@ -13,20 +13,6 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\DashboardController;
 use App\Livewire\Auth\Login;
 
-Route::view('/', 'welcome');
-
-Route::get('dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
-
-Route::view('profile', 'profile')
-    ->middleware(['auth'])
-    ->name('profile');
-
-require __DIR__ . '/auth.php';
-
-
-
 //cache clear commend
 Route::get('/clear', function () {
     Artisan::call('view:clear');
@@ -35,10 +21,8 @@ Route::get('/clear', function () {
     return redirect(url('/'));
 });
 
-
 //frontend route
 Route::get('/', [EShopController::class, 'index'])->name('home');
-
 Route::get('cart', [CartController::class, 'index'])->name('carts.index');
 Route::prefix('product')->group(function () {
     Route::get('/{slug}', [EShopController::class, 'productDetails'])->name('product-details');
@@ -58,8 +42,15 @@ Route::post('search/product', [EShopController::class, 'searchAjax']);
 Route::post('districts', [EShopController::class, 'districtsList']);
 Route::post('upazilas', [EShopController::class, 'upazilaList']);
 
-Route::middleware('auth')->prefix('feature')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin');
+
+
+Route::get('dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
+
+Route::prefix('feature')->group(function () {
+    Route::get('dashboard', [DashboardController::class, 'index'])->name('admin');
+    Route::view('profile', 'profile')->name('profile');
 
     Route::resource('category', CategoryController::class);
     Route::resource('products', ProductController::class);
@@ -75,9 +66,9 @@ Route::middleware('auth')->prefix('feature')->group(function () {
     Route::get('local-sales', [AdminController::class, 'orderManage'])->name('order.manage');
     Route::get('order-details/{id}', [AdminController::class, 'orderDetails'])->name('admin.order.details');
     Route::get('invoice/print={id}', [AdminController::class, 'orderInvoices'])->name('admin.order.invoice');
-});
+})->middleware(['auth']);
 
-Route::prefix('customer')->group(function () {
+Route::prefix('user')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('customer');
     Route::get('login', Login::class)->name('login');
 
@@ -87,3 +78,6 @@ Route::prefix('customer')->group(function () {
         Route::get('order-cancel/{id}', [CustomerController::class, 'orderCancel'])->name('customer.order.cancel');
     });
 });
+
+
+require __DIR__ . '/auth.php';

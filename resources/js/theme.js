@@ -16,11 +16,6 @@ import 'simplebar';
 import ResizeObserver from 'resize-observer-polyfill';
 window.ResizeObserver = ResizeObserver;
 
-// Alpine
-import Alpine from 'alpinejs';
-window.Alpine = Alpine;
-Alpine.start();
-
 // quill editor
 import Quill from 'quill';
 window.Quill = Quill;
@@ -266,6 +261,9 @@ window.Quill = Quill;
 // Create a new MutationObserver instance
 const observer = new MutationObserver(() => {
     window.HSStaticMethods.autoInit();
+    // Remove screen loader
+    document.querySelector('.loading')?.remove();
+    console.log('DOM changed, re-initializing components');
 });
 // Start observing the target node
 observer.observe(document.body, {

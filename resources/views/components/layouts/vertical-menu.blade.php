@@ -1,5 +1,5 @@
 <!-- menu shadow -->
-<div x-ref="menuShadow" class="menu-shadow hidden"></div>
+<div class="menu-shadow hidden"></div>
 
 <!-- start vertical-menu -->
 <aside class="vertical-menu">
