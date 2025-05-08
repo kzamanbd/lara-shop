@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\EShopController;
+use App\Http\Controllers\ShopController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\AdminController;
@@ -22,25 +22,25 @@ Route::get('/clear', function () {
 });
 
 //frontend route
-Route::get('/', [EShopController::class, 'index'])->name('home');
+Route::get('/', [ShopController::class, 'index'])->name('home');
 Route::get('cart', [CartController::class, 'index'])->name('carts.index');
 Route::prefix('product')->group(function () {
-    Route::get('/{slug}', [EShopController::class, 'productDetails'])->name('product-details');
+    Route::get('/{slug}', [ShopController::class, 'productDetails'])->name('product-details');
     Route::get('review', [ReviewController::class, 'index'])->name('review.index');
     Route::post('review', [ReviewController::class, 'store'])->name('review.store');
-    Route::post('shipping', [EShopController::class, 'shipping'])->name('shipping');
-    Route::get('category/{slug}', [EShopController::class, 'categoryProducts'])->name('category.products');
+    Route::post('shipping', [ShopController::class, 'shipping'])->name('shipping');
+    Route::get('category/{slug}', [ShopController::class, 'categoryProducts'])->name('category.products');
     Route::post('cart-store', [CartController::class, 'store'])->name('carts.store');
     Route::get('cart/{id}', [CartController::class, 'destroy'])->name('carts.destroy');
-    Route::get('search', [EShopController::class, 'search'])->name('search.show');
+    Route::get('search', [ShopController::class, 'search'])->name('search.show');
 });
 
 Route::get('checkout', [CartController::class, 'index'])->name('checkout');
-Route::post('checkout', [EShopController::class, 'checkout']);
-Route::post('search/product', [EShopController::class, 'searchAjax']);
+Route::post('checkout', [ShopController::class, 'checkout']);
+Route::post('search/product', [ShopController::class, 'searchAjax']);
 
-Route::post('districts', [EShopController::class, 'districtsList']);
-Route::post('upazilas', [EShopController::class, 'upazilaList']);
+Route::post('districts', [ShopController::class, 'districtsList']);
+Route::post('upazilas', [ShopController::class, 'upazilaList']);
 
 
 
