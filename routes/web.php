@@ -44,7 +44,7 @@ Route::post('upazilas', [ShopController::class, 'upazilaList']);
 
 
 
-Route::get('dashboard', [DashboardController::class, 'index'])
+Route::get('admin', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
