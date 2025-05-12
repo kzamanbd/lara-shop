@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 
-class EShopController extends Controller
+class ShopController extends Controller
 {
 
     /**
@@ -40,12 +40,6 @@ class EShopController extends Controller
             'bastSales'        => $bastSales,
             'categories'     => $categories,
         ]);
-
-        /*return view('frontend.aroma.index',[
-            'products'      => $products,
-            'bastSales'      => $bastSales,
-            'categories'    => $categories,
-        ]);*/
     }
 
     /**
@@ -59,13 +53,7 @@ class EShopController extends Controller
         if ($product) {
             $relatedProducts = Product::with('productImages')->where('category_id', $product->category_id)->where('slug', '!=', $slug)->take(4)->get();
 
-            return  view('frontend.product-details', [
-                'product'           => $product,
-                'categories'        => $categories,
-                'relatedProducts'   => $relatedProducts,
-            ]);
-
-            return  view('frontend.aroma.product-details', [
+            return view('frontend.product-details', [
                 'product'           => $product,
                 'categories'        => $categories,
                 'relatedProducts'   => $relatedProducts,
@@ -97,11 +85,9 @@ class EShopController extends Controller
 
     /**
      * @param string $product_id
-     * @return \Illuminate\Http\RedirectResponse
+     * @return void
      */
-    public function addToWishList($product_id = '')
-    {
-    }
+    public function addToWishList($product_id = '') {}
 
 
     /**
@@ -196,7 +182,7 @@ class EShopController extends Controller
         return $stringToSend;
     }
 
-    public function CreateAccount($request)
+    public function createAccount($request)
     {
         if ($request->create_account) {
             $this->validate($request, [
@@ -271,8 +257,6 @@ class EShopController extends Controller
      */
     public function shipping(Request $request)
     {
-        //return $request->all();
-
         $this->validate($request, [
             'name' => 'required|string',
             'division_id' => 'required',
@@ -280,14 +264,13 @@ class EShopController extends Controller
             'upazila_id' => 'required',
             'phone' => 'required|string',
             'zip_code' => 'required|string',
-            'phone' => 'required|string',
             'email' => 'required|string',
             'address' => 'required|string',
             'payment_type' => 'required',
             'shipping_method' => 'required',
         ]);
 
-        $customer_id = $this->CreateAccount($request);
+        $customer_id = $this->createAccount($request);
 
         if ($request->payment_type == 'cash') {
             $shipping_id = $this->productShipping($request, $customer_id);
@@ -295,12 +278,13 @@ class EShopController extends Controller
             $this->productBilling($order_id, $shipping_id);
             session()->flash('cart_status', 'Your Order Successfully Completed, <a href="https://mail.google.com" target="_blank">Please Check Confirmation Email Mail</a>');
             return redirect('/');
-        } else {
-            $shipping_id = $this->productShipping($request);
-            $order_id = $this->productSale($request, $shipping_id);
-            $this->productBilling($order_id, $shipping_id);
-            Session::put('sub_total', $request->sub_total);
-            return redirect()->route('stripe');
         }
+
+        $shipping_id = $this->productShipping($request);
+        $order_id = $this->productSale($request, $shipping_id);
+        $this->productBilling($order_id, $shipping_id);
+        Session::put('sub_total', $request->sub_total);
+
+        return redirect()->back();
     }
 }
