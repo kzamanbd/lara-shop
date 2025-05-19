@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Controllers\Auth\OAuthController;
 use App\Livewire\Auth\ConfirmPassword;
 use App\Livewire\Auth\ForgotPassword;
 use App\Livewire\Auth\Login;
@@ -30,3 +31,7 @@ Route::middleware('auth')->group(function () {
 
 Route::post('logout', App\Livewire\Actions\Logout::class)
     ->name('logout');
+
+
+Route::get("/auth/{driver}/redirect", [OAuthController::class, 'redirectToProvider'])->name('auth.redirect');
+Route::get('/auth/{driver}/callback', [OAuthController::class, 'handleProviderCallback']);
