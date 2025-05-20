@@ -23,7 +23,10 @@ class OAuthController extends Controller
             // Handle the user information as needed
             return response()->json($user);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Authentication failed'], 401);
+            if ($e->getMessage()) {
+                return response()->json(['error' => $e->getMessage()], $e->getCode());
+            }
+            return response()->json(['error' => 'Failed to authenticate with ' . $provider], 500);
         }
     }
 }
