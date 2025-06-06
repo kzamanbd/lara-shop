@@ -27,7 +27,7 @@
         @apply flex min-h-[calc(100%-3.5rem)] items-center justify-center;
     }
     .tw-modal-content {
-        @apply pointer-events-auto relative flex h-full w-full flex-col overflow-hidden rounded-md bg-white shadow-xl dark:bg-slate-800;
+        @apply dark:bg-dark pointer-events-auto relative flex h-full w-full flex-col overflow-hidden rounded-md bg-white shadow-xl;
     }
     .tw-modal-header,
     .tw-modal-body,
@@ -46,10 +46,10 @@
         @apply flex-grow overflow-auto;
     }
     .tw-modal-footer {
-        @apply flex items-center justify-end gap-x-2 border-t bg-gray-50 px-4 py-3 dark:border-gray-700 dark:bg-slate-700;
+        @apply dark:bg-dark flex items-center justify-end gap-x-2 border-t bg-gray-50 px-4 py-3 dark:border-gray-700;
     }
     .hs-overlay-backdrop {
-        @apply hs-overlay-backdrop-open:supports-[backdrop-filter]:bg-light/50 hs-overlay-backdrop-open:supports-[backdrop-filter]:backdrop-blur-sm hs-overlay-backdrop-open:dark:supports-[backdrop-filter]:bg-gray-700/60;
+        @apply hs-overlay-backdrop-open:supports-[backdrop-filter]:bg-gray-700/50 hs-overlay-backdrop-open:supports-[backdrop-filter]:backdrop-blur-sm hs-overlay-backdrop-open:dark:supports-[backdrop-filter]:bg-gray-700/60;
     }
     /* drawer */
     .tw-drawer {

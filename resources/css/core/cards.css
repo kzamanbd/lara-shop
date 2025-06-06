@@ -22,9 +22,11 @@
         @apply hidden overflow-hidden transition-[height] duration-300;
     }
     .login-card {
-        @apply relative z-[1] w-full max-w-md rounded-md before:absolute before:bg-[url('../../public/images/login-left.png')] dark:border dark:border-gray-500;
-        @apply before:top-[-70px] before:left-[-45px] before:z-[-1] before:h-[244px] before:w-[244px];
-        @apply after:absolute after:bg-[url('../../public/images/login-right.png')];
-        @apply after:right-[-50px] after:bottom-[-50px] after:z-[-1] after:h-[244px] after:w-[244px];
+        @apply relative z-10 w-full max-w-md;
+        @apply before:absolute before:top-[-70px] before:left-[-45px] before:z-[-1] before:h-[244px] before:w-[244px] before:bg-[url('/images/login-left.png')];
+        @apply after:absolute after:right-[-50px] after:bottom-[-50px] after:z-[-1] after:h-[244px] after:w-[244px] after:bg-[url('/images/login-right.png')];
+    }
+    .login-card .card-body {
+        @apply dark:bg-dark rounded-md bg-white px-8 py-6 shadow-md dark:border dark:border-gray-600 dark:text-gray-200;
     }
 }

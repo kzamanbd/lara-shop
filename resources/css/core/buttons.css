@@ -1,35 +1,40 @@
 @layer components {
     .btn {
-        @apply flex cursor-pointer items-center justify-center gap-0.5 rounded-md border border-gray-200 px-2.5 py-1.5 transition-colors duration-300 ease-in-out;
-        @apply text-sm font-medium dark:border-gray-700;
+        @apply flex cursor-pointer items-center justify-center gap-0.5 rounded-md border border-gray-200 px-2.5 py-1.5 text-sm font-medium dark:border-gray-700;
     }
     .btn-primary {
-        @apply bg-primary shadow-primary-100 hover:bg-primary-700 text-white;
+        @apply bg-primary shadow-primary-100 hover:bg-primary-700 border-primary text-white;
         @apply from-primary-400 to-primary-500 dark:bg-primary-600 dark:hover:bg-primary-700 bg-gradient-to-br;
+        @apply hover:from-primary-500 hover:to-primary-600;
     }
     .btn-secondary {
-        @apply bg-secondary shadow-secondary-100 text-white hover:bg-gray-600;
+        @apply bg-secondary shadow-secondary-100 border-secondary text-white hover:bg-gray-600;
         @apply bg-gradient-to-br from-gray-400 to-gray-500 dark:bg-gray-600 dark:hover:bg-gray-700;
+        @apply hover:from-gray-500 hover:to-gray-600;
     }
     .btn-success {
-        @apply bg-success shadow-success-100 text-white hover:bg-green-600;
+        @apply bg-success shadow-success-100 border-success text-white hover:bg-green-600;
         @apply bg-gradient-to-br from-green-400 to-green-500 dark:bg-green-600 dark:hover:bg-green-700;
+        @apply hover:from-green-500 hover:to-green-600;
     }
     .btn-danger {
-        @apply bg-danger shadow-danger-100 text-white hover:bg-red-600;
+        @apply bg-danger shadow-danger-100 border-danger text-white hover:bg-red-600;
         @apply bg-gradient-to-br from-red-400 to-red-500 dark:bg-red-600 dark:hover:bg-red-700;
+        @apply hover:from-red-500 hover:to-red-600;
     }
     .btn-warning {
-        @apply bg-warning shadow-warning-100 text-white hover:bg-yellow-600;
+        @apply bg-warning shadow-warning-100 border-warning text-white hover:bg-yellow-600;
         @apply bg-gradient-to-br from-yellow-400 to-yellow-500 dark:bg-yellow-600 dark:hover:bg-yellow-700;
+        @apply hover:from-yellow-500 hover:to-yellow-600;
     }
     .btn-info {
-        @apply bg-info shadow-info-100 hover:bg-info-600 text-white;
+        @apply bg-info shadow-info-100 hover:bg-info-600 border-info text-white;
         @apply from-info-400 to-info-500 dark:bg-info-600 dark:hover:bg-info-700 bg-gradient-to-br;
+        @apply hover:from-info-500 hover:to-info-600;
     }
     .btn-light {
         @apply bg-white text-gray-800 hover:bg-gray-50 hover:text-gray-900;
-        @apply dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700;
+        @apply dark:bg-gray-800 dark:text-white dark:hover:bg-gray-900 dark:hover:text-gray-200;
     }
     .btn-light.danger {
         @apply text-red-500 hover:text-red-600;

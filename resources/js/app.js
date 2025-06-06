@@ -1,2 +1,2 @@
+import './admin';
 import './bootstrap';
-import './theme';

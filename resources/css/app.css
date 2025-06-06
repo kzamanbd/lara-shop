@@ -1,17 +1,16 @@
 /*
-Theme Name: PrimeDash - Tailwind CSS Admin Template
+Theme Name: Metricon - Tailwind CSS Admin Template
 Support: kzamanbn@gmail.com
-Description: PrimeDash - PrimeDash is a modern, clean and very detailed UI kit. We designed 60+ beautiful UI pages, 500+ elements, 50+ icons. It's very easy to used and customize.
+Description: Metricon is a modern, clean and very detailed UI kit. We designed 60+ beautiful UI pages, 500+ elements, 50+ icons. It's very easy to used and customize.
 Version: 1.0
 */
 
-/*=============================
-1. Google Fonts
-===============================*/
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;900&display=swap');
-
+/* Extra Plugin */
+@import './plugins.css';
 /* Base */
 @import './tailwind.css';
+@import './core/themes.css';
 /* Core */
 @import './core/layout.css';
 @import './core/horizontal-menu.css';
@@ -24,8 +23,6 @@ Version: 1.0
 @import './core/dropdown.css';
 @import './core/tables.css';
 @import './core/modal.css';
-/* Extra Plugin */
-@import './plugins.css';
 /* Features */
 @import './common-ui.css';
 @import './features/file-upload.css';

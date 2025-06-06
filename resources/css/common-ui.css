@@ -2,54 +2,44 @@
     .upcoming-events-list li {
         @apply relative mb-6;
     }
-
     .notification-container li .un-read {
         @apply border-primary-300 border-l-4 border-solid;
     }
-
-    /* todo list */
     .todo-list-wrapper {
         @apply dark:bg-dark rounded-xl border border-gray-100 bg-white shadow-sm dark:border-gray-700 print:border-0; /* from core/cards.css */
         @apply absolute z-10 hidden h-full w-[20rem] max-w-full flex-none space-y-4 rounded-r-none p-4 xl:relative xl:block xl:h-auto xl:rounded-r-md;
     }
-
     .timeline {
         @apply relative;
     }
     .timeline::before {
-        @apply border-primary-300 absolute top-18 bottom-12 -ml-1.5 w-1 border border-dashed content-[''];
-        inset-inline-start: 20%;
-        margin-inline-start: -1.5px;
+        @apply border-primary-300 absolute start-1/5 top-18 bottom-12 -ms-px -ml-1.5 w-1 border border-dashed content-[''];
     }
     .timeline > li {
         @apply relative min-h-[3.125rem] px-0 py-[0.938rem];
     }
     .timeline .timeline-time {
-        @apply absolute top-[3.188rem] w-[18%];
-        inset-inline-start: 0;
+        @apply absolute start-0 top-[3.188rem] w-[18%];
     }
     .timeline .timeline-time .date,
     .timeline .timeline-time .time {
         @apply block font-medium;
     }
     .timeline .timeline-time .date {
-        @apply mb-0 text-[0.6rem] leading-[1] text-gray-400;
+        @apply mb-0 text-[10px] leading-[1] text-gray-400;
     }
     .timeline .timeline-time .time {
-        @apply text-[1.125rem] leading-[1.5rem] text-gray-400;
+        @apply text-lg leading-[1.5rem] text-gray-400;
     }
     .timeline .timeline-icon {
-        @apply absolute top-[3.188rem] w-[10%] text-center;
-        inset-inline-start: 15%;
+        @apply absolute start-1/6 top-[3.188rem] w-[10%] text-center;
     }
     .timeline .timeline-icon a {
-        @apply inline-block h-[0.625rem] w-[0.625rem] rounded-full border text-[0.875rem] leading-[0.625rem];
-        @apply border-primary-300 text-primary border-2 border-solid;
+        @apply inline-block h-[10px] w-[10px] rounded-full border text-sm leading-[10px];
+        @apply border-primary-300 text-primary border-2 border-solid max-sm:hidden;
     }
     .timeline .timeline-body {
-        @apply relative rounded-lg bg-white p-[0.875rem] pr-[1.25rem] pl-[1.25rem] shadow-sm md:top-[2.5rem] dark:bg-gray-600;
-        margin-inline-start: 22%;
-        margin-inline-end: 18%;
+        @apply relative ms-[22%] me-[18%] rounded-lg bg-white p-3.5 pr-[1.25rem] pl-[1.25rem] shadow-sm md:top-[2.5rem] dark:bg-gray-600;
     }
     .timeline .timeline-body > div + div {
         @apply mt-[0.938rem];
@@ -61,9 +51,6 @@
         @apply hidden;
     }
     @media (max-width: 575.98px) {
-        .timeline .timeline-icon a {
-            @apply hidden;
-        }
         .timeline li:before {
             @apply hidden;
         }
@@ -71,7 +58,7 @@
             @apply flex-col;
         }
         .timeline-body .media .main-img-user {
-            @apply mb-[0.625rem];
+            @apply mb-[10px];
         }
         .timeline .timeline-time {
             @apply absolute z-10 w-full;
@@ -83,129 +70,20 @@
             @apply relative m-0;
         }
         .timeline-badge {
-            @apply absolute top-[0.45rem];
-            inset-inline-start: 1.15rem;
+            @apply absolute start-6 top-[0.45rem];
         }
         .timeline .timeline-time .date,
         .timeline .timeline-time .time {
             @apply inline-flex;
         }
         .timeline .timeline-time .time {
-            @apply mx-[0.313rem] text-[0.688rem] text-gray-400;
+            @apply mx-[0.313rem] text-[10px] text-gray-400;
         }
     }
-
     /* sortable */
     .sortable-item-card {
         @apply rounded-md bg-[#f4f4f4] p-3 pb-5 shadow dark:bg-[#262e40];
     }
-
-    /* progress bar */
-    .striped-progress-bar {
-        background-image: linear-gradient(
-            45deg,
-            hsla(0, 0%, 100%, 0.15) 25%,
-            transparent 0,
-            transparent 50%,
-            hsla(0, 0%, 100%, 0.15) 0,
-            hsla(0, 0%, 100%, 0.15) 75%,
-            transparent 0,
-            transparent
-        );
-        background-size: 1rem 1rem;
-    }
-    .animated-progress-bar {
-        background-image: linear-gradient(
-            45deg,
-            hsla(0, 0%, 100%, 0.15) 25%,
-            transparent 0,
-            transparent 50%,
-            hsla(0, 0%, 100%, 0.15) 0,
-            hsla(0, 0%, 100%, 0.15) 75%,
-            transparent 0,
-            transparent
-        );
-        background-size: 1rem 1rem;
-    }
-    .striped-progress-bar2 {
-        background-image: linear-gradient(
-            45deg,
-            hsla(0, 0%, 100%, 0.15) 25%,
-            transparent 0,
-            transparent 50%,
-            hsla(0, 0%, 100%, 0.15) 0,
-            hsla(0, 0%, 100%, 0.15) 75%,
-            transparent 0,
-            transparent
-        );
-        background-size: 1rem 1rem;
-    }
-    .striped-progress-bar3 {
-        background-image: linear-gradient(
-            45deg,
-            hsla(0, 0%, 100%, 0.15) 25%,
-            transparent 0,
-            transparent 50%,
-            hsla(0, 0%, 100%, 0.15) 0,
-            hsla(0, 0%, 100%, 0.15) 75%,
-            transparent 0,
-            transparent
-        );
-        background-size: 1rem 1rem;
-    }
-    .pstriped-rogress-bar4 {
-        background-image: linear-gradient(
-            45deg,
-            hsla(0, 0%, 100%, 0.15) 25%,
-            transparent 0,
-            transparent 50%,
-            hsla(0, 0%, 100%, 0.15) 0,
-            hsla(0, 0%, 100%, 0.15) 75%,
-            transparent 0,
-            transparent
-        );
-        background-size: 1rem 1rem;
-    }
-    .animated-rogress-bar5 {
-        background-image: linear-gradient(
-            45deg,
-            hsla(0, 0%, 100%, 0.15) 25%,
-            transparent 0,
-            transparent 50%,
-            hsla(0, 0%, 100%, 0.15) 0,
-            hsla(0, 0%, 100%, 0.15) 75%,
-            transparent 0,
-            transparent
-        );
-        background-size: 1rem 1rem;
-    }
-    .animated-rogress-bar6 {
-        background-image: linear-gradient(
-            45deg,
-            hsla(0, 0%, 100%, 0.15) 25%,
-            transparent 0,
-            transparent 50%,
-            hsla(0, 0%, 100%, 0.15) 0,
-            hsla(0, 0%, 100%, 0.15) 75%,
-            transparent 0,
-            transparent
-        );
-        background-size: 1rem 1rem;
-    }
-    .animated-rogress-bar7 {
-        background-image: linear-gradient(
-            45deg,
-            hsla(0, 0%, 100%, 0.15) 25%,
-            transparent 0,
-            transparent 50%,
-            hsla(0, 0%, 100%, 0.15) 0,
-            hsla(0, 0%, 100%, 0.15) 75%,
-            transparent 0,
-            transparent
-        );
-        background-size: 1rem 1rem;
-    }
-
     .timeline-widget {
         @apply relative before:absolute before:top-0 before:left-12 before:h-full before:w-0.5 before:bg-gray-100 dark:before:bg-black/20;
     }
@@ -223,11 +101,119 @@
     }
 }
 .jvm-tooltip {
-    position: absolute;
+    @apply absolute;
 }
 .jvm-tooltip.active {
     @apply rounded bg-purple-400 px-2 py-1 text-white shadow-lg;
 }
 .jvm-tooltip:not(.active) {
-    display: none;
+    @apply hidden;
+}
+.flatpickr-day.selected {
+    @apply bg-primary-500 border-primary-500 hover:bg-primary-600 text-white;
+}
+/* progress bar */
+.striped-progress-bar {
+    background-image: linear-gradient(
+        45deg,
+        hsla(0, 0%, 100%, 0.15) 25%,
+        transparent 0,
+        transparent 50%,
+        hsla(0, 0%, 100%, 0.15) 0,
+        hsla(0, 0%, 100%, 0.15) 75%,
+        transparent 0,
+        transparent
+    );
+    background-size: 1rem 1rem;
+}
+.animated-progress-bar {
+    background-image: linear-gradient(
+        45deg,
+        hsla(0, 0%, 100%, 0.15) 25%,
+        transparent 0,
+        transparent 50%,
+        hsla(0, 0%, 100%, 0.15) 0,
+        hsla(0, 0%, 100%, 0.15) 75%,
+        transparent 0,
+        transparent
+    );
+    background-size: 1rem 1rem;
+}
+.striped-progress-bar2 {
+    background-image: linear-gradient(
+        45deg,
+        hsla(0, 0%, 100%, 0.15) 25%,
+        transparent 0,
+        transparent 50%,
+        hsla(0, 0%, 100%, 0.15) 0,
+        hsla(0, 0%, 100%, 0.15) 75%,
+        transparent 0,
+        transparent
+    );
+    background-size: 1rem 1rem;
+}
+.striped-progress-bar3 {
+    background-image: linear-gradient(
+        45deg,
+        hsla(0, 0%, 100%, 0.15) 25%,
+        transparent 0,
+        transparent 50%,
+        hsla(0, 0%, 100%, 0.15) 0,
+        hsla(0, 0%, 100%, 0.15) 75%,
+        transparent 0,
+        transparent
+    );
+    background-size: 1rem 1rem;
+}
+.pstriped-rogress-bar4 {
+    background-image: linear-gradient(
+        45deg,
+        hsla(0, 0%, 100%, 0.15) 25%,
+        transparent 0,
+        transparent 50%,
+        hsla(0, 0%, 100%, 0.15) 0,
+        hsla(0, 0%, 100%, 0.15) 75%,
+        transparent 0,
+        transparent
+    );
+    background-size: 1rem 1rem;
+}
+.animated-rogress-bar5 {
+    background-image: linear-gradient(
+        45deg,
+        hsla(0, 0%, 100%, 0.15) 25%,
+        transparent 0,
+        transparent 50%,
+        hsla(0, 0%, 100%, 0.15) 0,
+        hsla(0, 0%, 100%, 0.15) 75%,
+        transparent 0,
+        transparent
+    );
+    background-size: 1rem 1rem;
+}
+.animated-rogress-bar6 {
+    background-image: linear-gradient(
+        45deg,
+        hsla(0, 0%, 100%, 0.15) 25%,
+        transparent 0,
+        transparent 50%,
+        hsla(0, 0%, 100%, 0.15) 0,
+        hsla(0, 0%, 100%, 0.15) 75%,
+        transparent 0,
+        transparent
+    );
+    background-size: 1rem 1rem;
+}
+.animated-rogress-bar7 {
+    background-image: linear-gradient(
+        45deg,
+        hsla(0, 0%, 100%, 0.15) 25%,
+        transparent 0,
+        transparent 50%,
+        hsla(0, 0%, 100%, 0.15) 0,
+        hsla(0, 0%, 100%, 0.15) 75%,
+        transparent 0,
+        transparent
+    );
+    background-size: 1rem 1rem;
 }
