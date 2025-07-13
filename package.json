@@ -7,7 +7,7 @@
         "build": "vite build"
     },
     "dependencies": {
-        "@iconify/json": "^2.2.314",
+        "@iconify-json/mdi": "^1.2.3",
         "@iconify/tailwind4": "^1.0.6",
         "@tailwindcss/forms": "^0.5.10",
         "@tailwindcss/vite": "^4.1.8",
