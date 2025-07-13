@@ -22,6 +22,6 @@ class Storefront extends Component
      */
     public function render(): View
     {
-        return view('components.layouts.storefront');
+        return view('storefront.layouts.app');
     }
 }

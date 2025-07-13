@@ -19,7 +19,7 @@
         <!-- Animation CSS -->
         <link rel="stylesheet" href="{{ asset('storefront/css/animate.css') }}">
         <!-- Latest Bootstrap min CSS -->
-        <link rel="stylesheet" href="{{ asset('storefront/bootstrap/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('storefront/vendor/bootstrap/css/bootstrap.min.css') }}">
         <!-- Google Font -->
         <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900&display=swap"
             rel="stylesheet">
@@ -33,9 +33,9 @@
         <link rel="stylesheet" href="{{ asset('storefront/css/flaticon.css') }}">
         <link rel="stylesheet" href="{{ asset('storefront/css/simple-line-icons.css') }}">
         <!--- owl carousel CSS-->
-        <link rel="stylesheet" href="{{ asset('storefront/owlcarousel/css/owl.carousel.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('storefront/owlcarousel/css/owl.theme.css') }}">
-        <link rel="stylesheet" href="{{ asset('storefront/owlcarousel/css/owl.theme.default.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('storefront/vendor/owlcarousel/css/owl.carousel.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('storefront/vendor/owlcarousel/css/owl.theme.css') }}">
+        <link rel="stylesheet" href="{{ asset('storefront/vendor/owlcarousel/css/owl.theme.default.min.css') }}">
         <!-- Magnific Popup CSS -->
         <link rel="stylesheet" href="{{ asset('storefront/css/magnific-popup.css') }}">
         <!-- Slick CSS -->
@@ -59,14 +59,14 @@
         </div>
         <!-- END LOADER -->
 
-        @include('frontend.layouts.header')
+        @include('storefront.layouts.header')
 
         <!-- END MAIN CONTENT -->
         {{ $slot }}
         <!-- END MAIN CONTENT -->
 
         <!-- START FOOTER -->
-        @include('frontend.layouts.footer')
+        @include('storefront.layouts.footer')
         <!-- END FOOTER -->
 
         <a href="#" class="scrollup" style="display: none;">
@@ -78,9 +78,9 @@
         <!-- popper min js -->
         <script src="{{ asset('storefront/js/popper.min.js') }}"></script>
         <!-- Latest compiled and minified Bootstrap -->
-        <script src="{{ asset('storefront/bootstrap/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('storefront/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
         <!-- owl-carousel min js  -->
-        <script src="{{ asset('storefront/owlcarousel/js/owl.carousel.min.js') }}"></script>
+        <script src="{{ asset('storefront/vendor/owlcarousel/js/owl.carousel.min.js') }}"></script>
         <!-- magnific-popup min js  -->
         <script src="{{ asset('storefront/js/magnific-popup.min.js') }}"></script>
         <!-- waypoints min js  -->

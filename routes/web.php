@@ -83,5 +83,5 @@ Route::prefix('user')->group(function () {
 require __DIR__ . '/auth.php';
 
 Route::get('/', function () {
-    return view('frontend.home');
+    return view('storefront.home');
 })->name('home');
