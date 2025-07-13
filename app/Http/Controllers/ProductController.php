@@ -255,4 +255,53 @@ class ProductController extends Controller
 
         return back();
     }
+
+    /**
+     * Get New Arrival products
+     */
+    public function newArrivals()
+    {
+        $products = Product::newArrival()->with('category')->latest()->paginate(12);
+        return view('frontend.products.new-arrivals', compact('products'));
+    }
+
+    /**
+     * Get Best Selling products
+     */
+    public function bestSelling()
+    {
+        $products = Product::bestSelling()->with('category')->latest()->paginate(12);
+        return view('frontend.products.best-selling', compact('products'));
+    }
+
+    /**
+     * Get Featured products
+     */
+    public function featured()
+    {
+        $products = Product::featured()->with('category')->latest()->paginate(12);
+        return view('frontend.products.featured', compact('products'));
+    }
+
+    /**
+     * Get Special Offer products
+     */
+    public function specialOffers()
+    {
+        $products = Product::specialOffer()->with('category')->latest()->paginate(12);
+        return view('frontend.products.special-offers', compact('products'));
+    }
+
+    /**
+     * Get products for homepage sections
+     */
+    public function getHomepageProducts()
+    {
+        return [
+            'newArrivals' => Product::newArrival()->with('category')->latest()->take(8)->get(),
+            'bestSelling' => Product::bestSelling()->with('category')->latest()->take(8)->get(),
+            'featured' => Product::featured()->with('category')->latest()->take(8)->get(),
+            'specialOffers' => Product::specialOffer()->with('category')->latest()->take(8)->get(),
+        ];
+    }
 }

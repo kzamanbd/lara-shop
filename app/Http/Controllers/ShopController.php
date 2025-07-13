@@ -33,11 +33,17 @@ class ShopController extends Controller
     {
         $categories = Category::where('status', 1)->get();
         $products = Product::with('category')->where('status', 1)->paginate(8);
-        $bastSales = Product::with('category')->where('status', 1)->where('sale_status', 1)->paginate(8);
+        $newProducts = Product::with('category')->where('status', 1)->orderBy('created_at', 'desc')->take(8)->get();
+        $bestSellers = Product::with('category')->where('status', 1)->where('sale_status', 1)->take(8)->get();
+        $featuredProducts = Product::with('category')->where('status', 1)->inRandomOrder()->take(8)->get();
+        $specialOffers = Product::with('category')->where('status', 1)->where('sale_status', 1)->take(8)->get();
 
-        return view('frontend.index', [
-            'products'      => $products,
-            'bastSales'        => $bastSales,
+        return view('storefront.home', [
+            'products'       => $products,
+            'newProducts'    => $newProducts,
+            'bestSellers'    => $bestSellers,
+            'featuredProducts' => $featuredProducts,
+            'specialOffers'  => $specialOffers,
             'categories'     => $categories,
         ]);
     }

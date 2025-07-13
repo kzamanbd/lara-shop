@@ -35,6 +35,12 @@ Route::prefix('product')->group(function () {
     Route::get('search', [ShopController::class, 'search'])->name('search.show');
 });
 
+// Product Type Routes
+Route::get('new-arrivals', [ProductController::class, 'newArrivals'])->name('products.new-arrivals');
+Route::get('best-selling', [ProductController::class, 'bestSelling'])->name('products.best-selling');
+Route::get('featured', [ProductController::class, 'featured'])->name('products.featured');
+Route::get('special-offers', [ProductController::class, 'specialOffers'])->name('products.special-offers');
+
 Route::get('checkout', [CartController::class, 'index'])->name('checkout');
 Route::post('checkout', [ShopController::class, 'checkout']);
 Route::post('search/product', [ShopController::class, 'searchAjax']);
@@ -81,7 +87,3 @@ Route::prefix('user')->group(function () {
 
 
 require __DIR__ . '/auth.php';
-
-Route::get('/', function () {
-    return view('storefront.home');
-})->name('home');

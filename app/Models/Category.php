@@ -12,11 +12,11 @@ class Category extends Model
     protected $appends = ['image_url'];
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function products()
     {
-        return $this->belongsTo(Product::class);
+        return $this->hasMany(Product::class);
     }
 
     public function getImageUrlAttribute()

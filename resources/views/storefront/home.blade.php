@@ -16,7 +16,7 @@
                                         <h2 class="staggered-animation" data-animation="slideInLeft"
                                             data-animation-delay="1s">Woman Fashion</h2>
                                         <a class="btn btn-fill-out rounded-0 staggered-animation text-uppercase"
-                                            href="shop-left-sidebar.html" data-animation="slideInLeft"
+                                            href="{{ route('search.show') }}" data-animation="slideInLeft"
                                             data-animation-delay="1.5s">Shop Now</a>
                                     </div>
                                 </div>
@@ -84,7 +84,7 @@
                             <div class="single_banner_info">
                                 <h5 class="single_bn_title1">Super Sale</h5>
                                 <h3 class="single_bn_title">New Collection</h3>
-                                <a href="shop-left-sidebar.html" class="single_bn_link">Shop Now</a>
+                                <a href="{{ route('search.show') }}" class="single_bn_link">Shop Now</a>
                             </div>
                         </div>
                     </div>
@@ -94,7 +94,7 @@
                             <div class="single_banner_info">
                                 <h3 class="single_bn_title">New Season</h3>
                                 <h4 class="single_bn_title1">Sale 40% Off</h4>
-                                <a href="shop-left-sidebar.html" class="single_bn_link">Shop Now</a>
+                                <a href="{{ route('search.show') }}" class="single_bn_link">Shop Now</a>
                             </div>
                         </div>
                     </div>
@@ -142,57 +142,73 @@
                             <div class="tab-pane fade show active" id="arrival" role="tabpanel"
                                 aria-labelledby="arrival-tab">
                                 <div class="row shop_container">
-                                    <div class="col-lg-3 col-md-4 col-6">
-                                        <div class="product">
-                                            <div class="product_img">
-                                                <a href="shop-product-detail.html">
-                                                    <img src="{{ asset('storefront/images/product_img1.jpg') }}"
-                                                        alt="product_img1">
-                                                </a>
-                                                <div class="product_action_box">
-                                                    <ul class="list_none pr_action_btn">
-                                                        <li class="add-to-cart"><a href="#"><i
-                                                                    class="icon-basket-loaded"></i> Add To Cart</a>
-                                                        </li>
-                                                        <li><a href="shop-compare.html" class="popup-ajax"><i
-                                                                    class="icon-shuffle"></i></a></li>
-                                                        <li><a href="shop-quick-view.html" class="popup-ajax"><i
-                                                                    class="icon-magnifier-add"></i></a></li>
-                                                        <li><a href="#"><i class="icon-heart"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="product_info">
-                                                <h6 class="product_title"><a href="shop-product-detail.html">Blue
-                                                        Dress For Woman</a></h6>
-                                                <div class="product_price">
-                                                    <span class="price">$45.00</span>
-                                                    <del>$55.25</del>
-                                                    <div class="on_sale">
-                                                        <span>35% Off</span>
+                                    @foreach ($newProducts as $product)
+                                        <div class="col-lg-3 col-md-4 col-6">
+                                            <div class="product">
+                                                <span class="pr_flash">New</span>
+                                                <div class="product_img">
+                                                    <a href="{{ route('product-details', $product->slug) }}">
+                                                        <img src="{{ $product->image_url }}"
+                                                            alt="{{ $product->name }}">
+                                                    </a>
+                                                    <div class="product_action_box">
+                                                        <ul class="list_none pr_action_btn">
+                                                            <li class="add-to-cart"><a href="#"><i
+                                                                        class="icon-basket-loaded"></i> Add To Cart</a>
+                                                            </li>
+                                                            <li><a href="shop-compare.html" class="popup-ajax"><i
+                                                                        class="icon-shuffle"></i></a></li>
+                                                            <li><a href="shop-quick-view.html" class="popup-ajax"><i
+                                                                        class="icon-magnifier-add"></i></a></li>
+                                                            <li><a href="#"><i class="icon-heart"></i></a></li>
+                                                        </ul>
                                                     </div>
                                                 </div>
-                                                <div class="rating_wrap">
-                                                    <div class="rating">
-                                                        <div class="product_rate" style="width:80%"></div>
+                                                <div class="product_info">
+                                                    <h6 class="product_title">
+                                                        <a href="{{ route('product-details', $product->slug) }}">
+                                                            {{ $product->name }}
+                                                        </a>
+                                                    </h6>
+                                                    <div class="product_price">
+                                                        <span class="price">
+                                                            ${{ number_format($product->sale_price, 2) }}
+                                                        </span>
+                                                        @if ($product->product_price > $product->sale_price)
+                                                            <del>${{ number_format($product->product_price, 2) }}</del>
+                                                            @php
+                                                                $discount =
+                                                                    (($product->product_price - $product->sale_price) /
+                                                                        $product->product_price) *
+                                                                    100;
+                                                            @endphp
+                                                            <div class="on_sale">
+                                                                <span>{{ number_format($discount) }}% Off</span>
+                                                            </div>
+                                                        @endif
                                                     </div>
-                                                    <span class="rating_num">(21)</span>
-                                                </div>
-                                                <div class="pr_desc">
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                                        Phasellus blandit massa enim. Nullam id varius nunc id
-                                                        varius nunc.</p>
-                                                </div>
-                                                <div class="pr_switch_wrap">
-                                                    <div class="product_color_switch">
-                                                        <span class="active" data-color="#87554B"></span>
-                                                        <span data-color="#333333"></span>
-                                                        <span data-color="#DA323F"></span>
+                                                    <div class="rating_wrap">
+                                                        <div class="rating">
+                                                            <div class="product_rate" style="width:80%"></div>
+                                                        </div>
+                                                        <span class="rating_num">
+                                                            ({{ $product->reviews->count() }})
+                                                        </span>
+                                                    </div>
+                                                    <div class="pr_desc">
+                                                        <p>{{ Str::limit($product->description, 100) }}</p>
+                                                    </div>
+                                                    <div class="pr_switch_wrap">
+                                                        <div class="product_color_switch">
+                                                            <span class="active" data-color="#847764"></span>
+                                                            <span data-color="#0393B5"></span>
+                                                            <span data-color="#DA323F"></span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    @endforeach
                                     <div class="col-lg-3 col-md-4 col-6">
                                         <div class="product">
                                             <div class="product_img">
@@ -554,57 +570,75 @@
                             </div>
                             <div class="tab-pane fade" id="sellers" role="tabpanel" aria-labelledby="sellers-tab">
                                 <div class="row shop_container">
-                                    <div class="col-lg-3 col-md-4 col-6">
-                                        <div class="product">
-                                            <div class="product_img">
-                                                <a href="shop-product-detail.html">
-                                                    <img src="{{ asset('storefront/images/product_img9.jpg') }}"
-                                                        alt="product_img9">
-                                                </a>
-                                                <div class="product_action_box">
-                                                    <ul class="list_none pr_action_btn">
-                                                        <li class="add-to-cart"><a href="#"><i
-                                                                    class="icon-basket-loaded"></i> Add To Cart</a>
-                                                        </li>
-                                                        <li><a href="shop-compare.html" class="popup-ajax"><i
-                                                                    class="icon-shuffle"></i></a></li>
-                                                        <li><a href="shop-quick-view.html" class="popup-ajax"><i
-                                                                    class="icon-magnifier-add"></i></a></li>
-                                                        <li><a href="#"><i class="icon-heart"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="product_info">
-                                                <h6 class="product_title"><a href="shop-product-detail.html">T-Shirt
-                                                        Form Girls</a></h6>
-                                                <div class="product_price">
-                                                    <span class="price">$45.00</span>
-                                                    <del>$55.25</del>
-                                                    <div class="on_sale">
-                                                        <span>35% Off</span>
+                                    @foreach ($bestSellers as $product)
+                                        <div class="col-lg-3 col-md-4 col-6">
+                                            <div class="product">
+                                                <div class="product_img">
+                                                    <a href="{{ route('product-details', $product->slug) }}">
+                                                        <img src="{{ $product->image_url }}"
+                                                            alt="{{ $product->name }}">
+                                                    </a>
+                                                    <div class="product_action_box">
+                                                        <ul class="list_none pr_action_btn">
+                                                            <form action="{{ route('carts.store') }}" method="POST"
+                                                                style="display: inline;">
+                                                                @csrf
+                                                                <input type="hidden" name="product_id"
+                                                                    value="{{ $product->id }}">
+                                                                <li class="add-to-cart"><button type="submit"
+                                                                        style="background: none; border: none; color: inherit; cursor: pointer;"><i
+                                                                            class="icon-basket-loaded"></i> Add To
+                                                                        Cart</button>
+                                                                </li>
+                                                            </form>
+                                                            <li><a href="#"><i class="icon-shuffle"></i></a>
+                                                            </li>
+                                                            <li><a href="#"><i
+                                                                        class="icon-magnifier-add"></i></a></li>
+                                                            <li><a href="#"><i class="icon-heart"></i></a></li>
+                                                        </ul>
                                                     </div>
                                                 </div>
-                                                <div class="rating_wrap">
-                                                    <div class="rating">
-                                                        <div class="product_rate" style="width:80%"></div>
+                                                <div class="product_info">
+                                                    <h6 class="product_title"><a
+                                                            href="{{ route('product-details', $product->slug) }}">{{ $product->name }}</a>
+                                                    </h6>
+                                                    <div class="product_price">
+                                                        <span
+                                                            class="price">${{ number_format($product->sale_price, 2) }}</span>
+                                                        @if ($product->product_price > $product->sale_price)
+                                                            <del>${{ number_format($product->product_price, 2) }}</del>
+                                                            @php
+                                                                $discount =
+                                                                    (($product->product_price - $product->sale_price) /
+                                                                        $product->product_price) *
+                                                                    100;
+                                                            @endphp
+                                                            <div class="on_sale">
+                                                                <span>{{ number_format($discount) }}% Off</span>
+                                                            </div>
+                                                        @endif
                                                     </div>
-                                                    <span class="rating_num">(21)</span>
-                                                </div>
-                                                <div class="pr_desc">
-                                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                                        Phasellus blandit massa enim. Nullam id varius nunc id
-                                                        varius nunc.</p>
-                                                </div>
-                                                <div class="pr_switch_wrap">
-                                                    <div class="product_color_switch">
-                                                        <span class="active" data-color="#B5B6BB"></span>
-                                                        <span data-color="#333333"></span>
-                                                        <span data-color="#DA323F"></span>
+                                                    <div class="rating_wrap">
+                                                        <div class="rating">
+                                                            <div class="product_rate" style="width:80%"></div>
+                                                        </div>
+                                                        <span
+                                                            class="rating_num">({{ $product->reviews->count() }})</span>
+                                                    </div>
+                                                    <div class="pr_desc">
+                                                        <p>{{ Str::limit($product->description, 100) }}</p>
+                                                    </div>
+                                                    <div class="pr_switch_wrap">
+                                                        <div class="product_color_switch">
+                                                            <span class="active"
+                                                                data-color="{{ $product->product_color }}"></span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    @endforeach
                                     <div class="col-lg-3 col-md-4 col-6">
                                         <div class="product">
                                             <span class="pr_flash bg-danger">Hot</span>
@@ -1845,7 +1879,7 @@
                                 <h2>Best Summer Collection</h2>
                             </div>
                             <h5 class="mb-4">Sale Get up to 50% Off</h5>
-                            <a href="shop-left-sidebar.html" class="btn btn-fill-out rounded-0">Shop Now</a>
+                            <a href="{{ route('search.show') }}" class="btn btn-fill-out rounded-0">Shop Now</a>
                         </div>
                         <div class="medium_divider clearfix"></div>
                     </div>
@@ -1874,250 +1908,74 @@
                         <div class="product_slider carousel_slider owl-carousel owl-theme nav_style1"
                             data-loop="true" data-dots="false" data-nav="true" data-margin="20"
                             data-responsive='{"0":{"items": "1"}, "481":{"items": "2"}, "768":{"items": "3"}, "1199":{"items": "4"}}'>
-                            <div class="item">
-                                <div class="product">
-                                    <div class="product_img">
-                                        <a href="shop-product-detail.html">
-                                            <img src="{{ asset('storefront/images/product_img1.jpg') }}"
-                                                alt="product_img1">
-                                        </a>
-                                        <div class="product_action_box">
-                                            <ul class="list_none pr_action_btn">
-                                                <li class="add-to-cart"><a href="#"><i
-                                                            class="icon-basket-loaded"></i> Add To Cart</a></li>
-                                                <li><a href="shop-compare.html" class="popup-ajax"><i
-                                                            class="icon-shuffle"></i></a></li>
-                                                <li><a href="shop-quick-view.html" class="popup-ajax"><i
-                                                            class="icon-magnifier-add"></i></a></li>
-                                                <li><a href="#"><i class="icon-heart"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="product_info">
-                                        <h6 class="product_title"><a href="shop-product-detail.html">Blue Dress
-                                                For Woman</a></h6>
-                                        <div class="product_price">
-                                            <span class="price">$45.00</span>
-                                            <del>$55.25</del>
-                                            <div class="on_sale">
-                                                <span>35% Off</span>
+                            @foreach ($featuredProducts as $product)
+                                <div class="item">
+                                    <div class="product">
+                                        <div class="product_img">
+                                            <a href="{{ route('product-details', $product->slug) }}">
+                                                <img src="{{ $product->image_url }}" alt="{{ $product->name }}">
+                                            </a>
+                                            <div class="product_action_box">
+                                                <ul class="list_none pr_action_btn">
+                                                    <form action="{{ route('carts.store') }}" method="POST"
+                                                        style="display: inline;">
+                                                        @csrf
+                                                        <input type="hidden" name="product_id"
+                                                            value="{{ $product->id }}">
+                                                        <li class="add-to-cart">
+                                                            <button type="submit"
+                                                                style="background: none; border: none; color: inherit; cursor: pointer;">
+                                                                <i class="icon-basket-loaded"></i> Add To Cart
+                                                            </button>
+                                                        </li>
+                                                    </form>
+                                                    <li><a href="#"><i class="icon-shuffle"></i></a></li>
+                                                    <li><a href="#"><i class="icon-magnifier-add"></i></a>
+                                                    </li>
+                                                    <li><a href="#"><i class="icon-heart"></i></a></li>
+                                                </ul>
                                             </div>
                                         </div>
-                                        <div class="rating_wrap">
-                                            <div class="rating">
-                                                <div class="product_rate" style="width:80%"></div>
+                                        <div class="product_info">
+                                            <h6 class="product_title">
+                                                <a
+                                                    href="{{ route('product-details', $product->slug) }}">{{ $product->name }}</a>
+                                            </h6>
+                                            <div class="product_price">
+                                                <span
+                                                    class="price">${{ number_format($product->sale_price, 2) }}</span>
+                                                @if ($product->product_price > $product->sale_price)
+                                                    <del>${{ number_format($product->product_price, 2) }}</del>
+                                                    @php
+                                                        $discount =
+                                                            (($product->product_price - $product->sale_price) /
+                                                                $product->product_price) *
+                                                            100;
+                                                    @endphp
+                                                    <div class="on_sale">
+                                                        <span>{{ number_format($discount) }}% Off</span>
+                                                    </div>
+                                                @endif
                                             </div>
-                                            <span class="rating_num">(21)</span>
-                                        </div>
-                                        <div class="pr_desc">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-                                                blandit massa enim. Nullam id varius nunc id varius nunc.</p>
-                                        </div>
-                                        <div class="pr_switch_wrap">
-                                            <div class="product_color_switch">
-                                                <span class="active" data-color="#87554B"></span>
-                                                <span data-color="#333333"></span>
-                                                <span data-color="#DA323F"></span>
+                                            <div class="rating_wrap">
+                                                <div class="rating">
+                                                    <div class="product_rate" style="width:80%"></div>
+                                                </div>
+                                                <span class="rating_num">({{ $product->reviews->count() }})</span>
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="product">
-                                    <div class="product_img">
-                                        <a href="shop-product-detail.html">
-                                            <img src="{{ asset('storefront/images/product_img2.jpg') }}"
-                                                alt="product_img2">
-                                        </a>
-                                        <div class="product_action_box">
-                                            <ul class="list_none pr_action_btn">
-                                                <li class="add-to-cart"><a href="#"><i
-                                                            class="icon-basket-loaded"></i> Add To Cart</a></li>
-                                                <li><a href="shop-compare.html" class="popup-ajax"><i
-                                                            class="icon-shuffle"></i></a></li>
-                                                <li><a href="shop-quick-view.html" class="popup-ajax"><i
-                                                            class="icon-magnifier-add"></i></a></li>
-                                                <li><a href="#"><i class="icon-heart"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="product_info">
-                                        <h6 class="product_title"><a href="shop-product-detail.html">Lether Gray
-                                                Tuxedo</a></h6>
-                                        <div class="product_price">
-                                            <span class="price">$55.00</span>
-                                            <del>$95.00</del>
-                                            <div class="on_sale">
-                                                <span>25% Off</span>
+                                            <div class="pr_desc">
+                                                <p>{{ Str::limit($product->description, 100) }}</p>
                                             </div>
-                                        </div>
-                                        <div class="rating_wrap">
-                                            <div class="rating">
-                                                <div class="product_rate" style="width:68%"></div>
-                                            </div>
-                                            <span class="rating_num">(15)</span>
-                                        </div>
-                                        <div class="pr_desc">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-                                                blandit massa enim. Nullam id varius nunc id varius nunc.</p>
-                                        </div>
-                                        <div class="pr_switch_wrap">
-                                            <div class="product_color_switch">
-                                                <span class="active" data-color="#847764"></span>
-                                                <span data-color="#0393B5"></span>
-                                                <span data-color="#DA323F"></span>
+                                            <div class="pr_switch_wrap">
+                                                <div class="product_color_switch">
+                                                    <span class="active"
+                                                        data-color="{{ $product->product_color }}"></span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="item">
-                                <div class="product">
-                                    <span class="pr_flash">New</span>
-                                    <div class="product_img">
-                                        <a href="shop-product-detail.html">
-                                            <img src="{{ asset('storefront/images/product_img3.jpg') }}"
-                                                alt="product_img3">
-                                        </a>
-                                        <div class="product_action_box">
-                                            <ul class="list_none pr_action_btn">
-                                                <li class="add-to-cart"><a href="#"><i
-                                                            class="icon-basket-loaded"></i> Add To Cart</a></li>
-                                                <li><a href="shop-compare.html" class="popup-ajax"><i
-                                                            class="icon-shuffle"></i></a></li>
-                                                <li><a href="shop-quick-view.html" class="popup-ajax"><i
-                                                            class="icon-magnifier-add"></i></a></li>
-                                                <li><a href="#"><i class="icon-heart"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="product_info">
-                                        <h6 class="product_title"><a href="shop-product-detail.html">woman full
-                                                sliv dress</a></h6>
-                                        <div class="product_price">
-                                            <span class="price">$68.00</span>
-                                            <del>$99.00</del>
-                                        </div>
-                                        <div class="rating_wrap">
-                                            <div class="rating">
-                                                <div class="product_rate" style="width:87%"></div>
-                                            </div>
-                                            <span class="rating_num">(25)</span>
-                                        </div>
-                                        <div class="pr_desc">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-                                                blandit massa enim. Nullam id varius nunc id varius nunc.</p>
-                                        </div>
-                                        <div class="pr_switch_wrap">
-                                            <div class="product_color_switch">
-                                                <span class="active" data-color="#333333"></span>
-                                                <span data-color="#7C502F"></span>
-                                                <span data-color="#2F366C"></span>
-                                                <span data-color="#874A3D"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="product">
-                                    <div class="product_img">
-                                        <a href="shop-product-detail.html">
-                                            <img src="{{ asset('storefront/images/product_img4.jpg') }}"
-                                                alt="product_img4">
-                                        </a>
-                                        <div class="product_action_box">
-                                            <ul class="list_none pr_action_btn">
-                                                <li class="add-to-cart"><a href="#"><i
-                                                            class="icon-basket-loaded"></i> Add To Cart</a></li>
-                                                <li><a href="shop-compare.html" class="popup-ajax"><i
-                                                            class="icon-shuffle"></i></a></li>
-                                                <li><a href="shop-quick-view.html" class="popup-ajax"><i
-                                                            class="icon-magnifier-add"></i></a></li>
-                                                <li><a href="#"><i class="icon-heart"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="product_info">
-                                        <h6 class="product_title"><a href="shop-product-detail.html">light blue
-                                                Shirt</a></h6>
-                                        <div class="product_price">
-                                            <span class="price">$69.00</span>
-                                            <del>$89.00</del>
-                                            <div class="on_sale">
-                                                <span>20% Off</span>
-                                            </div>
-                                        </div>
-                                        <div class="rating_wrap">
-                                            <div class="rating">
-                                                <div class="product_rate" style="width:70%"></div>
-                                            </div>
-                                            <span class="rating_num">(22)</span>
-                                        </div>
-                                        <div class="pr_desc">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-                                                blandit massa enim. Nullam id varius nunc id varius nunc.</p>
-                                        </div>
-                                        <div class="pr_switch_wrap">
-                                            <div class="product_color_switch">
-                                                <span class="active" data-color="#333333"></span>
-                                                <span data-color="#A92534"></span>
-                                                <span data-color="#B9C2DF"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <div class="product">
-                                    <div class="product_img">
-                                        <a href="shop-product-detail.html">
-                                            <img src="{{ asset('storefront/images/product_img5.jpg') }}"
-                                                alt="product_img5">
-                                        </a>
-                                        <div class="product_action_box">
-                                            <ul class="list_none pr_action_btn">
-                                                <li class="add-to-cart"><a href="#"><i
-                                                            class="icon-basket-loaded"></i> Add To Cart</a></li>
-                                                <li><a href="shop-compare.html" class="popup-ajax"><i
-                                                            class="icon-shuffle"></i></a></li>
-                                                <li><a href="shop-quick-view.html" class="popup-ajax"><i
-                                                            class="icon-magnifier-add"></i></a></li>
-                                                <li><a href="#"><i class="icon-heart"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="product_info">
-                                        <h6 class="product_title"><a href="shop-product-detail.html">blue dress
-                                                for woman</a></h6>
-                                        <div class="product_price">
-                                            <span class="price">$45.00</span>
-                                            <del>$55.25</del>
-                                            <div class="on_sale">
-                                                <span>35% Off</span>
-                                            </div>
-                                        </div>
-                                        <div class="rating_wrap">
-                                            <div class="rating">
-                                                <div class="product_rate" style="width:80%"></div>
-                                            </div>
-                                            <span class="rating_num">(21)</span>
-                                        </div>
-                                        <div class="pr_desc">
-                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus
-                                                blandit massa enim. Nullam id varius nunc id varius nunc.</p>
-                                        </div>
-                                        <div class="pr_switch_wrap">
-                                            <div class="product_color_switch">
-                                                <span class="active" data-color="#87554B"></span>
-                                                <span data-color="#333333"></span>
-                                                <span data-color="#5FB7D4"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>

@@ -12,12 +12,19 @@ class Product extends Model
 
     protected $appends = ['image_url'];
 
+    protected $casts = [
+        'is_new_arrival' => 'boolean',
+        'is_best_selling' => 'boolean',
+        'is_featured' => 'boolean',
+        'is_special_offer' => 'boolean',
+    ];
+
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function category()
     {
-        return $this->hasOne(Category::class, 'id', 'category_id');
+        return $this->belongsTo(Category::class);
     }
 
     public function productImages()
@@ -36,5 +43,26 @@ class Product extends Model
             return asset('images/product-default.jpg');
         }
         return Storage::url($this->image);
+    }
+
+    // Scope methods for filtering products by type
+    public function scopeNewArrival($query)
+    {
+        return $query->where('is_new_arrival', true);
+    }
+
+    public function scopeBestSelling($query)
+    {
+        return $query->where('is_best_selling', true);
+    }
+
+    public function scopeFeatured($query)
+    {
+        return $query->where('is_featured', true);
+    }
+
+    public function scopeSpecialOffer($query)
+    {
+        return $query->where('is_special_offer', true);
     }
 }
