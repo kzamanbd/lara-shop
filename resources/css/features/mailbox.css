@@ -24,7 +24,7 @@
         @apply bg-light text-primary dark:text-primary dark:bg-slate-700;
     }
     .mailbox-pills {
-        @apply self-center rounded border border-orange-300 bg-orange-50 px-2 py-0.5 text-[11px] font-medium text-orange-500 focus:outline-none;
+        @apply self-center rounded border border-orange-300 bg-orange-50 px-2 py-0.5 text-xs font-medium text-orange-500 focus:outline-none;
     }
     .mailbox-pills.draft {
         @apply border-slate-300 bg-slate-50 text-slate-500;

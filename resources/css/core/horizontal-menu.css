@@ -1,13 +1,11 @@
 @layer components {
     .vertical .horizontal-menu,
-    .collapsible .horizontal-logo {
-        @apply hidden;
-    }
-    .vertical .horizontal-logo {
-        @apply flex lg:hidden;
-    }
-    .horizontal .vertical-menu,
+    .vertical .horizontal-logo,
+    .collapsible .horizontal-logo,
     .horizontal .hidden-sidebar {
+        @apply hidden!;
+    }
+    .horizontal .vertical-menu {
         @apply lg:hidden;
     }
     .horizontal .navbar-nav {
@@ -17,14 +15,11 @@
         @apply dark:border-dark dark:bg-dark hidden flex-wrap items-center border-t border-gray-200 bg-white px-6 py-1.5 font-semibold lg:flex lg:gap-1.5 xl:gap-4;
     }
     .horizontal-logo {
-        @apply flex items-center;
-    }
-    .horizontal-logo .app-name {
-        @apply hidden sm:flex;
+        @apply hidden items-center lg:flex;
     }
     .horizontal .tw-menu-item,
     .horizontal .twd--menu-item {
-        @apply relative;
+        @apply relative text-sm;
     }
     .horizontal-menu .tw-arrow {
         @apply flex;

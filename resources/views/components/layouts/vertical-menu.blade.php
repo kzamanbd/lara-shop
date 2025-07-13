@@ -6,16 +6,29 @@
     <div class="vertical-content">
         <!-- Menu Logo -->
         <div id="brand-logo" class="tw-brand-logo">
-            <a href="{{ route('dashboard') }}" class="flex items-center">
+            <div class="flex items-center">
                 <svg class="tw-logo" width="50" height="39" viewBox="0 0 50 39" fill="none"
                     xmlns="http://www.w3.org/2000/svg">
-                    <path d="M16.4992 2H37.5808L22.0816 24.9729H1L16.4992 2Z" class="ccompli1"
-                        fill="var(--color-primary-500, #007AFF)"></path>
+                    <path d="M16.4992 2H37.5808L22.0816 24.9729H1L16.4992 2Z" fill="var(--color-primary-500, #007AFF)">
+                    </path>
                     <path d="M17.4224 27.102L11.4192 36H33.5008L49 13.0271H32.7024L23.2064 27.102H17.4224Z"
-                        class="ccustom" fill="var(--color-primary-900, #312ECB)"></path>
+                        fill="var(--color-primary-900, #312ECB)"></path>
                 </svg>
-                <div class="app-name">Prime<span class="text-primary">Dash</span></div>
-            </a>
+                <div class="app-name gap-2">
+                    <a href="{{ route('dashboard') }}" class="text-primary">{{ config('app.name') }}</a>
+                    <a href="{{ route('home') }}" target="_blank">
+                        <sup>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="text-primary size-4">
+                                <path d="M15 3h6v6" />
+                                <path d="M10 14 21 3" />
+                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                            </svg>
+                        </sup>
+                    </a>
+                </div>
+            </div>
             <button type="button" class="toggle-sidebar">
                 <span class="collapsed-icon">
                     <i class="icon-[mdi--radiobox-blank]"></i>
@@ -120,8 +133,8 @@
 
             <div class="hs-dropdown-menu dropdown-menu">
                 <button class="tw-nav-footer-item group">
-                    <svg class="size-5 shrink-0 dark:text-neutral-500" xmlns="http://www.w3.org/2000/svg" width="16"
-                        height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <svg class="size-5 shrink-0 dark:text-neutral-500" xmlns="http://www.w3.org/2000/svg"
+                        width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                         <path
                             d="M7 2a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7 5a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zM7 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm-3 3a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm3 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z">
                         </path>

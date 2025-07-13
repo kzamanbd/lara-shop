@@ -19,8 +19,9 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('slug')->unique();
             $table->text('description')->nullable();
+            $table->string('image')->nullable();
             $table->foreignId('parent_id')->nullable()->constrained('categories')->onDelete('cascade');
-            $table->enum('status', Status::cases())->default(Status::ACTIVE);
+            $table->enum('status', array_column(Status::cases(), 'value'))->default(Status::ACTIVE->value);
             $table->timestamps();
         });
     }
